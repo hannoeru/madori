@@ -31,9 +31,7 @@ function submitSearch(): void {
         </UButton>
       </header>
       <section class="max-w-3xl py-16 sm:py-24">
-        <p class="text-sm font-semibold text-primary">
-          TOKYO 23 WARDS
-        </p><h1 class="mt-3 text-4xl font-bold tracking-tight text-highlighted sm:text-6xl">
+        <h1 class="text-4xl font-bold tracking-tight text-highlighted sm:text-6xl">
           在東京，找到適合你的家。
         </h1><p class="mt-6 text-lg text-toned">
           以繁體中文比較新成屋與中古房產，取得清楚、完整的物件資訊。

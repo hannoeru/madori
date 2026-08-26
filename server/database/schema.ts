@@ -19,8 +19,8 @@ export const properties = sqliteTable('properties', {
   nextUpdateOn: text('next_update_on').notNull(),
   publishedAt: text('published_at'),
   withdrawnAt: text('withdrawn_at'),
-  createdAt: text('created_at').notNull(),
-  updatedAt: text('updated_at').notNull(),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+  updatedAt: text('updated_at').notNull().$defaultFn(() => new Date().toISOString()).$onUpdateFn(() => new Date().toISOString()),
 }, table => [
   check('properties_status_check', sql`${table.status} IN ('draft', 'published', 'withdrawn')`),
   check('properties_type_check', sql`${table.propertyType} IN ('condominium', 'detached_house')`),
