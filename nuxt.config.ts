@@ -4,33 +4,34 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui',
     '@nuxtjs/seo',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
   ],
 
   devtools: {
-    enabled: true
+    enabled: true,
   },
 
   css: ['~/assets/css/main.css'],
 
   routeRules: {
     '/api/**': {
-      cors: true
-    }
+      cors: true,
+    },
   },
 
   compatibilityDate: '2026-08-26',
 
   nitro: {
-    preset: 'cloudflare_module'
+    preset: 'cloudflare_module',
   },
 
   eslint: {
     config: {
+      standalone: false,
       stylistic: {
         commaDangle: 'never',
-        braceStyle: '1tbs'
-      }
-    }
-  }
+        braceStyle: '1tbs',
+      },
+    },
+  },
 })

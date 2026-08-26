@@ -4,9 +4,9 @@ useHead({
   meta: [
     { charset: 'utf-8' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    { name: 'theme-color', content: '#16a34a' }
+    { name: 'theme-color', content: '#16a34a' },
   ],
-  link: [{ rel: 'icon', href: '/favicon.ico' }]
+  link: [{ rel: 'icon', href: '/favicon.ico' }],
 })
 </script>
 
