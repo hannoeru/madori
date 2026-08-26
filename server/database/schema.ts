@@ -1,10 +1,10 @@
+import { createId } from '@paralleldrive/cuid2'
 import { sql } from 'drizzle-orm'
 import { check, index, integer, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 export const properties = sqliteTable('properties', {
-  id: text().primaryKey(),
+  id: text().primaryKey().$defaultFn(createId),
   propertyNumber: text('property_number').notNull().unique(),
-  slug: text().notNull().unique(),
   status: text({ enum: ['draft', 'published', 'withdrawn'] }).notNull(),
   propertyType: text('property_type', { enum: ['condominium', 'detached_house'] }).notNull(),
   buildStatus: text('build_status', { enum: ['new', 'resale'] }).notNull(),
@@ -32,7 +32,7 @@ export const properties = sqliteTable('properties', {
 ])
 
 export const propertyTransitEntries = sqliteTable('property_transit_entries', {
-  id: text().primaryKey(),
+  id: text().primaryKey().$defaultFn(createId),
   propertyId: text('property_id').notNull().references(() => properties.id, { onDelete: 'cascade' }),
   lineNameZhTw: text('line_name_zh_tw').notNull(),
   stationNameZhTw: text('station_name_zh_tw').notNull(),
@@ -43,7 +43,7 @@ export const propertyTransitEntries = sqliteTable('property_transit_entries', {
 ])
 
 export const propertyImages = sqliteTable('property_images', {
-  id: text().primaryKey(),
+  id: text().primaryKey().$defaultFn(createId),
   propertyId: text('property_id').notNull().references(() => properties.id, { onDelete: 'cascade' }),
   objectKey: text('object_key').notNull().unique(),
   kind: text({ enum: ['floor_plan', 'photo'] }).notNull(),

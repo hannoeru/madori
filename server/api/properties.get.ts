@@ -39,7 +39,6 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
 
   return propertyRows.map(property => ({
     id: property.id,
-    slug: property.slug,
     titleZhTw: property.titleZhTw,
     priceYen: property.priceYen,
     ward: property.ward,

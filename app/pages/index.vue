@@ -87,7 +87,7 @@ function submitSearch(): void {
           </h2><span class="text-sm text-muted">{{ properties?.length ?? 0 }} 件</span>
         </div>
         <div v-if="properties?.length" class="mt-6 divide-y divide-default">
-          <NuxtLink v-for="property in properties" :key="property.id" :to="`/properties/${property.slug}`" class="grid gap-4 py-5 sm:grid-cols-[220px_1fr]">
+          <NuxtLink v-for="property in properties" :key="property.id" :to="`/properties/${property.id}`" class="grid gap-4 py-5 sm:grid-cols-[220px_1fr]">
             <div class="aspect-[4/3] rounded-lg bg-muted" aria-hidden="true" /><article>
               <p class="text-sm text-primary">
                 {{ property.propertyType === 'condominium' ? '公寓' : '獨棟住宅' }}

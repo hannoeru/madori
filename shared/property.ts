@@ -28,7 +28,6 @@ export const propertyTransitEntrySchema = v.object({
 
 export const propertySummarySchema = v.object({
   id: v.string(),
-  slug: v.string(),
   titleZhTw: v.string(),
   priceYen: v.number(),
   ward: v.string(),
@@ -40,5 +39,27 @@ export const propertySummarySchema = v.object({
   transitEntries: v.array(propertyTransitEntrySchema),
 })
 
+export const propertyDetailSchema = v.object({
+  id: v.string(),
+  titleZhTw: v.string(),
+  descriptionZhTw: v.string(),
+  priceYen: v.number(),
+  ward: v.string(),
+  addressZhTw: v.string(),
+  layout: v.string(),
+  floorAreaSqm: v.number(),
+  builtOn: v.string(),
+  propertyType: v.picklist(['condominium', 'detached_house']),
+  buildStatus: v.picklist(['new', 'resale']),
+  nextUpdateOn: v.string(),
+  transitEntries: v.array(v.object({
+    id: v.string(),
+    lineNameZhTw: v.string(),
+    stationNameZhTw: v.string(),
+    walkingMinutes: v.number(),
+  })),
+})
+
+export type PropertyDetail = v.InferOutput<typeof propertyDetailSchema>
 export type PropertyQuery = v.InferOutput<typeof propertyQuerySchema>
 export type PropertySummary = v.InferOutput<typeof propertySummarySchema>
