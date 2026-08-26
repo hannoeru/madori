@@ -1,0 +1,2 @@
+DROP INDEX listing_transit_search_idx;
+CREATE INDEX property_transit_search_idx ON property_transit_entries(station_name_zh_tw, walking_minutes, property_id);

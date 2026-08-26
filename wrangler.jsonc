@@ -14,10 +14,30 @@
   },
   "env": {
     "preview": {
-      "name": "madori-preview"
+      "name": "madori-preview",
+      "d1_databases": [{
+        "binding": "DB",
+        "database_name": "madori-preview",
+        "database_id": "a623a70a-cf58-4502-8134-ef64a240d88f",
+        "migrations_dir": "migrations"
+      }],
+      "r2_buckets": [{
+        "binding": "LISTING_IMAGES",
+        "bucket_name": "madori-preview-images"
+      }]
     },
     "production": {
-      "name": "madori-production"
+      "name": "madori-production",
+      "d1_databases": [{
+        "binding": "DB",
+        "database_name": "madori-production",
+        "database_id": "9157479f-f5b3-4422-ac14-1ebfd8c96370",
+        "migrations_dir": "migrations"
+      }],
+      "r2_buckets": [{
+        "binding": "LISTING_IMAGES",
+        "bucket_name": "madori-production-images"
+      }]
     }
   }
 }
