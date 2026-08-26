@@ -4,6 +4,7 @@
 - **Buyer**: A zh-TW user who searches Madori for a home to buy.
 - **Applicable fact**: A required Listing fact that applies to its property type; condominium and detached-house facts differ.
 - **Floor plan**: The one required image that represents a Listing’s layout.
+- **Freshness review queue**: The dashboard list of Published Listings due or overdue for manual review.
 - **Listing**: A new or resale condominium or detached house offered for sale in Tokyo’s 23 wards.
 - **Property photo**: One of one to twenty ordered images that show a Listing.
 - **Published Listing**: A Listing visible to Buyers.
