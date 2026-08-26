@@ -18,7 +18,7 @@
       "d1_databases": [{
         "binding": "DB",
         "database_name": "madori-preview",
-        "database_id": "a623a70a-cf58-4502-8134-ef64a240d88f",
+        "database_id": "89749563-c38c-4747-be8d-ec5a53535496",
         "migrations_dir": "migrations"
       }],
       "r2_buckets": [{
@@ -31,7 +31,7 @@
       "d1_databases": [{
         "binding": "DB",
         "database_name": "madori-production",
-        "database_id": "9157479f-f5b3-4422-ac14-1ebfd8c96370",
+        "database_id": "5c80e0e1-93e0-4e9c-a8ff-677184f65c67",
         "migrations_dir": "migrations"
       }],
       "r2_buckets": [{
