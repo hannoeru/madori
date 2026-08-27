@@ -11,11 +11,12 @@ interface AdminProperty {
 
 const query = ref('')
 const status = ref<'all' | AdminProperty['status']>('all')
-const { data: properties } = await useFetch<AdminProperty[]>('/api/admin/properties')
-const visibleProperties = computed(() => (properties.value ?? []).filter((property) => {
-  const matchesQuery = `${property.propertyNumber} ${property.titleZhTw}`.toLowerCase().includes(query.value.toLowerCase())
-  return matchesQuery && (status.value === 'all' || property.status === status.value)
-}))
+const { data: properties } = await useFetch<AdminProperty[]>('/api/admin/properties', {
+  query: computed(() => ({
+    query: query.value || undefined,
+    status: status.value === 'all' ? undefined : status.value,
+  })),
+})
 
 const statusLabels = { draft: '草稿', published: '已發布', withdrawn: '已撤下' } as const
 </script>
@@ -42,8 +43,8 @@ const statusLabels = { draft: '草稿', published: '已發布', withdrawn: '已�
           <div class="flex flex-wrap gap-3">
             <UInput v-model="query" class="min-w-64" icon="i-lucide-search" placeholder="搜尋編號或標題" /><USelect v-model="status" :items="[{ label: '全部狀態', value: 'all' }, { label: '草稿', value: 'draft' }, { label: '已發布', value: 'published' }, { label: '已撤下', value: 'withdrawn' }]" />
           </div><UCard class="mt-6">
-            <UEmpty v-if="!visibleProperties.length" icon="i-lucide-house" title="沒有符合條件的物件" /><ul v-else class="divide-y divide-default">
-              <li v-for="property in visibleProperties" :key="property.id" class="flex items-center justify-between gap-4 py-4">
+            <UEmpty v-if="!properties?.length" icon="i-lucide-house" title="沒有符合條件的物件" /><ul v-else class="divide-y divide-default">
+              <li v-for="property in properties" :key="property.id" class="flex items-center justify-between gap-4 py-4">
                 <div>
                   <p class="font-medium">
                     {{ property.titleZhTw }}
