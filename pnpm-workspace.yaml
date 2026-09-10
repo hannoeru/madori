@@ -1,6 +1,10 @@
 shellEmulator: true
 
 trustPolicy: no-downgrade
+# semver@6 was never published with provenance; pnpm compares trust evidence
+# against newer semver@7 releases and falsely flags 6.3.1 as a takeover.
+trustPolicyExclude:
+  - 'semver@6.3.1'
 
 allowBuilds:
   '@parcel/watcher': false
