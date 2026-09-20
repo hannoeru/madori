@@ -14,6 +14,11 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    emailFrom: 'login@madori.yohaku.ink',
+    emailFromName: 'Madori',
+  },
+
   routeRules: {
     '/api/**': {
       cors: true,
