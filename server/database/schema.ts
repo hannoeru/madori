@@ -2,9 +2,45 @@ import { createId } from '@paralleldrive/cuid2'
 import { sql } from 'drizzle-orm'
 import { check, index, integer, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
+export const agencies = sqliteTable('agencies', {
+  id: text().primaryKey().$defaultFn(createId),
+  name: text().notNull(),
+  email: text().notNull().unique(),
+  license: text().notNull(),
+  lineUrl: text('line_url').notNull(),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+  updatedAt: text('updated_at').notNull().$defaultFn(() => new Date().toISOString()).$onUpdateFn(() => new Date().toISOString()),
+})
+
+export const authTokens = sqliteTable('auth_tokens', {
+  id: text().primaryKey().$defaultFn(createId),
+  email: text().notNull(),
+  tokenHash: text('token_hash').notNull().unique(),
+  expiresAt: text('expires_at').notNull(),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+}, table => [
+  index('auth_tokens_email_idx').on(table.email),
+])
+
+export const lines = sqliteTable('lines', {
+  id: text().primaryKey().$defaultFn(createId),
+  nameJa: text('name_ja').notNull().unique(),
+  nameZhTw: text('name_zh_tw').notNull(),
+})
+
+export const stations = sqliteTable('stations', {
+  id: text().primaryKey().$defaultFn(createId),
+  lineId: text('line_id').notNull().references(() => lines.id, { onDelete: 'cascade' }),
+  nameJa: text('name_ja').notNull(),
+  nameZhTw: text('name_zh_tw').notNull(),
+}, table => [
+  uniqueIndex('stations_line_name_idx').on(table.lineId, table.nameJa),
+])
+
 export const properties = sqliteTable('properties', {
   id: text().primaryKey().$defaultFn(createId),
   propertyNumber: text('property_number').notNull().unique(),
+  agencyId: text('agency_id').references(() => agencies.id, { onDelete: 'set null' }),
   status: text({ enum: ['draft', 'published', 'withdrawn'] }).notNull(),
   propertyType: text('property_type', { enum: ['condominium', 'detached_house'] }).notNull(),
   buildStatus: text('build_status', { enum: ['new', 'resale'] }).notNull(),
@@ -14,8 +50,18 @@ export const properties = sqliteTable('properties', {
   ward: text().notNull(),
   addressZhTw: text('address_zh_tw').notNull(),
   layout: text().notNull(),
-  floorAreaSqm: real('floor_area_sqm').notNull(),
+  floorAreaSqm: real('floor_area_sqm'),
+  landAreaSqm: real('land_area_sqm'),
+  buildingAreaSqm: real('building_area_sqm'),
   builtOn: text('built_on').notNull(),
+  structure: text(),
+  floorNumber: integer('floor_number'),
+  totalFloors: integer('total_floors'),
+  landRights: text('land_rights'),
+  managementFeeYen: integer('management_fee_yen'),
+  repairReserveYen: integer('repair_reserve_yen'),
+  transactionMode: text('transaction_mode'),
+  equipmentZhTw: text('equipment_zh_tw'),
   nextUpdateOn: text('next_update_on').notNull(),
   publishedAt: text('published_at'),
   withdrawnAt: text('withdrawn_at'),
@@ -26,9 +72,14 @@ export const properties = sqliteTable('properties', {
   check('properties_type_check', sql`${table.propertyType} IN ('condominium', 'detached_house')`),
   check('properties_build_status_check', sql`${table.buildStatus} IN ('new', 'resale')`),
   check('properties_price_check', sql`${table.priceYen} > 0`),
-  check('properties_area_check', sql`${table.floorAreaSqm} > 0`),
+  check('properties_floor_area_check', sql`${table.floorAreaSqm} IS NULL OR ${table.floorAreaSqm} > 0`),
+  check('properties_land_area_check', sql`${table.landAreaSqm} IS NULL OR ${table.landAreaSqm} > 0`),
+  check('properties_building_area_check', sql`${table.buildingAreaSqm} IS NULL OR ${table.buildingAreaSqm} > 0`),
+  check('properties_fee_check', sql`${table.managementFeeYen} IS NULL OR ${table.managementFeeYen} >= 0`),
+  check('properties_reserve_check', sql`${table.repairReserveYen} IS NULL OR ${table.repairReserveYen} >= 0`),
   index('properties_public_search_idx').on(table.status, table.ward, table.propertyType, table.buildStatus, table.priceYen, table.floorAreaSqm),
   index('properties_freshness_idx').on(table.status, table.nextUpdateOn),
+  index('properties_agency_idx').on(table.agencyId),
 ])
 
 export const propertyTransitEntries = sqliteTable('property_transit_entries', {
@@ -55,24 +106,4 @@ export const propertyImages = sqliteTable('property_images', {
   check('property_images_kind_check', sql`${table.kind} IN ('floor_plan', 'photo')`),
   check('property_images_position_check', sql`${table.position} >= 0`),
   uniqueIndex('property_images_position_idx').on(table.propertyId, table.kind, table.position),
-])
-
-export const agencies = sqliteTable('agencies', {
-  id: text().primaryKey().$defaultFn(createId),
-  name: text().notNull(),
-  email: text().notNull().unique(),
-  license: text().notNull(),
-  lineUrl: text('line_url').notNull(),
-  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
-  updatedAt: text('updated_at').notNull().$defaultFn(() => new Date().toISOString()).$onUpdateFn(() => new Date().toISOString()),
-})
-
-export const authTokens = sqliteTable('auth_tokens', {
-  id: text().primaryKey().$defaultFn(createId),
-  email: text().notNull(),
-  tokenHash: text('token_hash').notNull().unique(),
-  expiresAt: text('expires_at').notNull(),
-  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
-}, table => [
-  index('auth_tokens_email_idx').on(table.email),
 ])

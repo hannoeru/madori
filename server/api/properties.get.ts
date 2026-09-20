@@ -44,6 +44,8 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
     ward: property.ward,
     layout: property.layout,
     floorAreaSqm: property.floorAreaSqm,
+    landAreaSqm: property.landAreaSqm,
+    buildingAreaSqm: property.buildingAreaSqm,
     builtOn: property.builtOn,
     propertyType: property.propertyType,
     images: images.filter(image => image.propertyId === property.id).map(image => ({ id: image.id, isCover: image.isCover })),

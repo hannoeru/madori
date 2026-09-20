@@ -22,6 +22,13 @@
       "when": 1789878767791,
       "tag": "0002_nappy_the_hand",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789887570376,
+      "tag": "0003_romantic_night_thrasher",
+      "breakpoints": true
     }
   ]
 }
