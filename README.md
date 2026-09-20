@@ -16,7 +16,7 @@ pnpm install
 pnpm dev
 ```
 
-The D1 and R2 bindings only exist under a Cloudflare runtime, not `pnpm dev`. To run against local D1, build then use wrangler:
+`pnpm dev` runs against the local D1 — the top-level `DB` binding in `wrangler.jsonc` provides it. To test the production build instead:
 
 ```bash
 pnpm build
@@ -52,4 +52,10 @@ Seed the station/line master (`db/seed.sql`):
 pnpm exec wrangler d1 execute madori-preview --local --env preview --file=db/seed.sql
 pnpm exec wrangler d1 execute madori-preview --remote --env preview --file=db/seed.sql
 pnpm exec wrangler d1 execute madori-production --remote --env production --file=db/seed.sql
+```
+
+Seed demo agencies and listings for local development (`db/seed-demo.sql`):
+
+```bash
+pnpm exec wrangler d1 execute madori-preview --local --env preview --file=db/seed-demo.sql
 ```

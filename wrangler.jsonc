@@ -12,6 +12,16 @@
     "enabled": true,
     "head_sampling_rate": 1
   },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "madori-preview",
+    "database_id": "89749563-c38c-4747-be8d-ec5a53535496",
+    "migrations_dir": "migrations"
+  }],
+  "r2_buckets": [{
+    "binding": "LISTING_IMAGES",
+    "bucket_name": "madori-preview-images"
+  }],
   "env": {
     "preview": {
       "name": "madori-preview",

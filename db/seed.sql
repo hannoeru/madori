@@ -1,4 +1,4 @@
-INSERT INTO lines (id, name_ja, name_zh_tw) VALUES
+INSERT OR IGNORE INTO lines (id, name_ja, name_zh_tw) VALUES
   ('line-yamanote', '山手線', '山手線'),
   ('line-chuo', '中央線', '中央線'),
   ('line-ginza', '銀座線', '銀座線'),
@@ -7,7 +7,7 @@ INSERT INTO lines (id, name_ja, name_zh_tw) VALUES
   ('line-toyoko', '東急東横線', '東急東橫線'),
   ('line-inokashira', '京王井の頭線', '京王井之頭線');
 
-INSERT INTO stations (id, line_id, name_ja, name_zh_tw) VALUES
+INSERT OR IGNORE INTO stations (id, line_id, name_ja, name_zh_tw) VALUES
   ('st-yamanote-tokyo', 'line-yamanote', '東京', '東京'),
   ('st-yamanote-shinjuku', 'line-yamanote', '新宿', '新宿'),
   ('st-yamanote-shibuya', 'line-yamanote', '渋谷', '澀谷'),
@@ -47,3 +47,58 @@ INSERT INTO stations (id, line_id, name_ja, name_zh_tw) VALUES
   ('st-inokashira-shibuya', 'line-inokashira', '渋谷', '澀谷'),
   ('st-inokashira-shimokitazawa', 'line-inokashira', '下北沢', '下北澤'),
   ('st-inokashira-kichijoji', 'line-inokashira', '吉祥寺', '吉祥寺');
+
+INSERT OR IGNORE INTO lines (id, name_ja, name_zh_tw) VALUES
+  ('line-hibiya', '日比谷線', '日比谷線'),
+  ('line-chiyoda', '千代田線', '千代田線'),
+  ('line-yurakucho', '有楽町線', '有樂町線'),
+  ('line-hanzomon', '半蔵門線', '半藏門線'),
+  ('line-namboku', '南北線', '南北線'),
+  ('line-keihintohoku', '京浜東北線', '京濱東北線'),
+  ('line-sobu', '総武線', '總武線'),
+  ('line-saikyo', '埼京線', '埼京線'),
+  ('line-denentoshi', '田園都市線', '田園都市線'),
+  ('line-oedo', '大江戸線', '大江戶線');
+
+INSERT OR IGNORE INTO stations (id, line_id, name_ja, name_zh_tw) VALUES
+  ('st-hibiya-nakameguro', 'line-hibiya', '中目黒', '中目黑'),
+  ('st-hibiya-ebisu', 'line-hibiya', '恵比寿', '惠比壽'),
+  ('st-hibiya-roppongi', 'line-hibiya', '六本木', '六本木'),
+  ('st-hibiya-ginza', 'line-hibiya', '銀座', '銀座'),
+  ('st-hibiya-ueno', 'line-hibiya', '上野', '上野'),
+  ('st-hibiya-kitasenju', 'line-hibiya', '北千住', '北千住'),
+  ('st-chiyoda-meijijingumae', 'line-chiyoda', '明治神宮前', '明治神宮前'),
+  ('st-chiyoda-omotesando', 'line-chiyoda', '表参道', '表參道'),
+  ('st-chiyoda-otemachi', 'line-chiyoda', '大手町', '大手町'),
+  ('st-chiyoda-kitasenju', 'line-chiyoda', '北千住', '北千住'),
+  ('st-yurakucho-toyosu', 'line-yurakucho', '豊洲', '豐洲'),
+  ('st-yurakucho-yurakucho', 'line-yurakucho', '有楽町', '有樂町'),
+  ('st-yurakucho-ikebukuro', 'line-yurakucho', '池袋', '池袋'),
+  ('st-hanzomon-shibuya', 'line-hanzomon', '渋谷', '澀谷'),
+  ('st-hanzomon-omotesando', 'line-hanzomon', '表参道', '表參道'),
+  ('st-hanzomon-hanzomon', 'line-hanzomon', '半蔵門', '半藏門'),
+  ('st-hanzomon-otemachi', 'line-hanzomon', '大手町', '大手町'),
+  ('st-namboku-meguro', 'line-namboku', '目黒', '目黑'),
+  ('st-namboku-azabujuban', 'line-namboku', '麻布十番', '麻布十番'),
+  ('st-namboku-roppongiichome', 'line-namboku', '六本木一丁目', '六本木一丁目'),
+  ('st-namboku-akabaneiwabuchi', 'line-namboku', '赤羽岩淵', '赤羽岩淵'),
+  ('st-keihintohoku-tokyo', 'line-keihintohoku', '東京', '東京'),
+  ('st-keihintohoku-hamamatsucho', 'line-keihintohoku', '浜松町', '濱松町'),
+  ('st-keihintohoku-tamachi', 'line-keihintohoku', '田町', '田町'),
+  ('st-keihintohoku-shinagawa', 'line-keihintohoku', '品川', '品川'),
+  ('st-keihintohoku-kamata', 'line-keihintohoku', '蒲田', '蒲田'),
+  ('st-sobu-akihabara', 'line-sobu', '秋葉原', '秋葉原'),
+  ('st-sobu-shinjuku', 'line-sobu', '新宿', '新宿'),
+  ('st-sobu-yoyogi', 'line-sobu', '代々木', '代代木'),
+  ('st-sobu-sendagaya', 'line-sobu', '千駄ケ谷', '千駄谷'),
+  ('st-saikyo-osaki', 'line-saikyo', '大崎', '大崎'),
+  ('st-saikyo-shibuya', 'line-saikyo', '渋谷', '澀谷'),
+  ('st-saikyo-shinjuku', 'line-saikyo', '新宿', '新宿'),
+  ('st-saikyo-ikebukuro', 'line-saikyo', '池袋', '池袋'),
+  ('st-denentoshi-shibuya', 'line-denentoshi', '渋谷', '澀谷'),
+  ('st-denentoshi-sangenjaya', 'line-denentoshi', '三軒茶屋', '三軒茶屋'),
+  ('st-denentoshi-futakotamagawa', 'line-denentoshi', '二子玉川', '二子玉川'),
+  ('st-oedo-tochomae', 'line-oedo', '都庁前', '都廳前'),
+  ('st-oedo-roppongi', 'line-oedo', '六本木', '六本木'),
+  ('st-oedo-tsukishima', 'line-oedo', '月島', '月島'),
+  ('st-oedo-ryogoku', 'line-oedo', '両国', '兩國');
