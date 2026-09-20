@@ -15,6 +15,13 @@
       "when": 1787751847123,
       "tag": "0001_add_property_constraints",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789878767791,
+      "tag": "0002_nappy_the_hand",
+      "breakpoints": true
     }
   ]
 }

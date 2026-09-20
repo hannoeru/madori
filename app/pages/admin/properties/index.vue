@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ middleware: 'auth' })
+
 interface AdminProperty {
   id: string
   propertyNumber: string

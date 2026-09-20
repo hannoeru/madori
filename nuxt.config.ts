@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/seo',
     '@vueuse/nuxt',
+    'nuxt-auth-utils',
   ],
 
   devtools: {

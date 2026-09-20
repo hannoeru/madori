@@ -1,4 +1,14 @@
 <script setup lang="ts">
+definePageMeta({ middleware: 'auth' })
+
+const { user, clear } = useUserSession()
+
+async function logout(): Promise<void> {
+  await $fetch('/api/auth/logout', { method: 'POST' })
+  await clear()
+  await navigateTo('/login')
+}
+
 interface AdminProperty {
   id: string
   propertyNumber: string
@@ -30,6 +40,10 @@ useSeoMeta({ title: '管理員｜Madori', robots: 'noindex, nofollow' })
       <template #header>
         <UDashboardNavbar title="管理總覽">
           <template #right>
+            <span class="text-sm text-muted">{{ user?.name }}</span>
+            <UButton color="neutral" variant="ghost" @click="logout">
+              登出
+            </UButton>
             <UButton to="/admin/properties/new" icon="i-lucide-plus">
               新增物件
             </UButton>

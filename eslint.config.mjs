@@ -8,6 +8,12 @@ export default withNuxt(
     typescript: true,
   }),
   {
+    ignores: [
+      'migrations/**',
+      'pnpm-workspace.yaml',
+    ],
+  },
+  {
     rules: {
       'nuxt/nuxt-config-keys-order': 'error',
     },

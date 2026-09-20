@@ -56,3 +56,23 @@ export const propertyImages = sqliteTable('property_images', {
   check('property_images_position_check', sql`${table.position} >= 0`),
   uniqueIndex('property_images_position_idx').on(table.propertyId, table.kind, table.position),
 ])
+
+export const agencies = sqliteTable('agencies', {
+  id: text().primaryKey().$defaultFn(createId),
+  name: text().notNull(),
+  email: text().notNull().unique(),
+  license: text().notNull(),
+  lineUrl: text('line_url').notNull(),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+  updatedAt: text('updated_at').notNull().$defaultFn(() => new Date().toISOString()).$onUpdateFn(() => new Date().toISOString()),
+})
+
+export const authTokens = sqliteTable('auth_tokens', {
+  id: text().primaryKey().$defaultFn(createId),
+  email: text().notNull(),
+  tokenHash: text('token_hash').notNull().unique(),
+  expiresAt: text('expires_at').notNull(),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+}, table => [
+  index('auth_tokens_email_idx').on(table.email),
+])
