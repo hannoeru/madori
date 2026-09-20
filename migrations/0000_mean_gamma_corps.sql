@@ -91,14 +91,14 @@ CREATE UNIQUE INDEX `property_images_position_idx` ON `property_images` (`proper
 CREATE TABLE `property_transit_entries` (
 	`id` text PRIMARY KEY NOT NULL,
 	`property_id` text NOT NULL,
-	`line_name_zh_tw` text NOT NULL,
-	`station_name_zh_tw` text NOT NULL,
+	`station_id` text NOT NULL,
 	`walking_minutes` integer NOT NULL,
 	FOREIGN KEY (`property_id`) REFERENCES `properties`(`id`) ON UPDATE no action ON DELETE cascade,
+	FOREIGN KEY (`station_id`) REFERENCES `stations`(`id`) ON UPDATE no action ON DELETE restrict,
 	CONSTRAINT "property_transit_walk_check" CHECK("property_transit_entries"."walking_minutes" >= 0)
 );
 --> statement-breakpoint
-CREATE INDEX `property_transit_search_idx` ON `property_transit_entries` (`station_name_zh_tw`,`walking_minutes`,`property_id`);--> statement-breakpoint
+CREATE INDEX `property_transit_search_idx` ON `property_transit_entries` (`station_id`,`walking_minutes`,`property_id`);--> statement-breakpoint
 CREATE TABLE `stations` (
 	`id` text PRIMARY KEY NOT NULL,
 	`line_id` text NOT NULL,

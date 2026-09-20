@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "063bc2e0-eebc-4be9-8450-d0ec65b58e20",
+  "id": "e3237f7b-3271-42c8-b635-4c14d8a22d90",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "agencies": {
@@ -593,15 +593,8 @@
           "notNull": true,
           "autoincrement": false
         },
-        "line_name_zh_tw": {
-          "name": "line_name_zh_tw",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "station_name_zh_tw": {
-          "name": "station_name_zh_tw",
+        "station_id": {
+          "name": "station_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -619,7 +612,7 @@
         "property_transit_search_idx": {
           "name": "property_transit_search_idx",
           "columns": [
-            "station_name_zh_tw",
+            "station_id",
             "walking_minutes",
             "property_id"
           ],
@@ -638,6 +631,19 @@
             "id"
           ],
           "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "property_transit_entries_station_id_stations_id_fk": {
+          "name": "property_transit_entries_station_id_stations_id_fk",
+          "tableFrom": "property_transit_entries",
+          "tableTo": "stations",
+          "columnsFrom": [
+            "station_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "restrict",
           "onUpdate": "no action"
         }
       },

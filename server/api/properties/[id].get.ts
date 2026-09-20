@@ -2,7 +2,7 @@ import type { PropertyDetail } from '../../../shared/property'
 import { asc, eq } from 'drizzle-orm'
 import { getRouterParam } from 'h3'
 import { useDatabase } from '../../database/client'
-import { properties, propertyTransitEntries } from '../../database/schema'
+import { lines, properties, propertyTransitEntries, stations } from '../../database/schema'
 
 export default defineEventHandler(async (event): Promise<PropertyDetail> => {
   const id = getRouterParam(event, 'id')
@@ -14,7 +14,20 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
   if (!property || property.status !== 'published')
     throw createError({ statusCode: 404, statusMessage: '找不到此物件。' })
 
-  const transitEntries = await database.select().from(propertyTransitEntries).where(eq(propertyTransitEntries.propertyId, property.id)).orderBy(asc(propertyTransitEntries.walkingMinutes))
+  const transitEntries = await database
+    .select({
+      id: propertyTransitEntries.id,
+      lineNameZhTw: lines.nameZhTw,
+      stationNameZhTw: stations.nameZhTw,
+      lineNameJa: lines.nameJa,
+      stationNameJa: stations.nameJa,
+      walkingMinutes: propertyTransitEntries.walkingMinutes,
+    })
+    .from(propertyTransitEntries)
+    .innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id))
+    .innerJoin(lines, eq(stations.lineId, lines.id))
+    .where(eq(propertyTransitEntries.propertyId, property.id))
+    .orderBy(asc(propertyTransitEntries.walkingMinutes))
 
   return {
     id: property.id,

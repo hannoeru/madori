@@ -4,7 +4,7 @@ import { getQuery } from 'h3'
 import * as v from 'valibot'
 import { propertyQuerySchema } from '../../shared/property'
 import { useDatabase } from '../database/client'
-import { properties, propertyImages, propertyTransitEntries } from '../database/schema'
+import { properties, propertyImages, propertyTransitEntries, stations } from '../database/schema'
 
 export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
   const parsedQuery = v.safeParse(propertyQuerySchema, getQuery(event))
@@ -14,11 +14,13 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
   const query = parsedQuery.output
   const database = useDatabase(event)
   const transitFilter = query.station || query.maxWalkingMinutes !== undefined
-    ? exists(database.select({ id: propertyTransitEntries.id }).from(propertyTransitEntries).where(and(
-        eq(propertyTransitEntries.propertyId, properties.id),
-        query.station ? eq(propertyTransitEntries.stationNameZhTw, query.station) : undefined,
-        query.maxWalkingMinutes === undefined ? undefined : lte(propertyTransitEntries.walkingMinutes, query.maxWalkingMinutes),
-      )))
+    ? exists(database.select({ id: propertyTransitEntries.id }).from(propertyTransitEntries)
+        .innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id))
+        .where(and(
+          eq(propertyTransitEntries.propertyId, properties.id),
+          query.station ? eq(stations.nameZhTw, query.station) : undefined,
+          query.maxWalkingMinutes === undefined ? undefined : lte(propertyTransitEntries.walkingMinutes, query.maxWalkingMinutes),
+        )))
     : undefined
   const propertyRows = await database.select().from(properties).where(and(
     eq(properties.status, 'published'),
@@ -35,7 +37,14 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
 
   const ids = propertyRows.map(property => property.id)
   const images = ids.length ? await database.select().from(propertyImages).where(inArray(propertyImages.propertyId, ids)) : []
-  const transitEntries = ids.length ? await database.select().from(propertyTransitEntries).where(inArray(propertyTransitEntries.propertyId, ids)) : []
+  const transitEntries = ids.length
+    ? await database.select({
+        id: propertyTransitEntries.id,
+        propertyId: propertyTransitEntries.propertyId,
+        stationNameZhTw: stations.nameZhTw,
+        walkingMinutes: propertyTransitEntries.walkingMinutes,
+      }).from(propertyTransitEntries).innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id)).where(inArray(propertyTransitEntries.propertyId, ids))
+    : []
 
   return propertyRows.map(property => ({
     id: property.id,

@@ -10,6 +10,7 @@ const adminPropertyQuerySchema = v.object({
 })
 
 export default defineEventHandler(async (event) => {
+  const { user } = await requireUserSession(event)
   const parsedQuery = v.safeParse(adminPropertyQuerySchema, getQuery(event))
   if (!parsedQuery.success)
     throw createError({ statusCode: 400, statusMessage: '篩選條件無效。' })
@@ -26,6 +27,7 @@ export default defineEventHandler(async (event) => {
     nextUpdateOn: properties.nextUpdateOn,
     updatedAt: properties.updatedAt,
   }).from(properties).where(and(
+    eq(properties.agencyId, user.id),
     query.status ? eq(properties.status, query.status) : undefined,
     search ? or(like(properties.propertyNumber, `%${search}%`), like(properties.titleZhTw, `%${search}%`)) : undefined,
   )).orderBy(asc(properties.nextUpdateOn))

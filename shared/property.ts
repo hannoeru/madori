@@ -68,6 +68,8 @@ export const propertyDetailSchema = v.object({
     id: v.string(),
     lineNameZhTw: v.string(),
     stationNameZhTw: v.string(),
+    lineNameJa: v.string(),
+    stationNameJa: v.string(),
     walkingMinutes: v.number(),
   })),
 })

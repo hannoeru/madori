@@ -85,12 +85,11 @@ export const properties = sqliteTable('properties', {
 export const propertyTransitEntries = sqliteTable('property_transit_entries', {
   id: text().primaryKey().$defaultFn(createId),
   propertyId: text('property_id').notNull().references(() => properties.id, { onDelete: 'cascade' }),
-  lineNameZhTw: text('line_name_zh_tw').notNull(),
-  stationNameZhTw: text('station_name_zh_tw').notNull(),
+  stationId: text('station_id').notNull().references(() => stations.id, { onDelete: 'restrict' }),
   walkingMinutes: integer('walking_minutes').notNull(),
 }, table => [
   check('property_transit_walk_check', sql`${table.walkingMinutes} >= 0`),
-  index('property_transit_search_idx').on(table.stationNameZhTw, table.walkingMinutes, table.propertyId),
+  index('property_transit_search_idx').on(table.stationId, table.walkingMinutes, table.propertyId),
 ])
 
 export const propertyImages = sqliteTable('property_images', {
