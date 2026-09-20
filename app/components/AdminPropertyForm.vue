@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { TOKYO_23_WARDS } from '#shared/tokyo'
+
 const props = defineProps<{ propertyId?: string }>()
 
 const router = useRouter()
-
-const wards = ['千代田區', '中央區', '港區', '新宿區', '文京區', '台東區', '墨田區', '江東區', '品川區', '目黑區', '大田區', '世田谷區', '澀谷區', '中野區', '杉並區', '豐島區', '北區', '荒川區', '板橋區', '練馬區', '足立區', '葛飾區', '江戶川區']
 
 const propertyTypeOptions = [{ label: '公寓', value: 'condominium' }, { label: '獨棟住宅', value: 'detached_house' }]
 const buildStatusOptions = [{ label: '新成屋', value: 'new' }, { label: '中古', value: 'resale' }]
@@ -169,7 +169,7 @@ async function submit(): Promise<void> {
 
       <div class="grid gap-4 sm:grid-cols-2">
         <UFormField label="東京23區" required>
-          <USelect v-model="ward" :items="wards" placeholder="選擇區域" />
+          <USelect v-model="ward" :items="TOKYO_23_WARDS" placeholder="選擇區域" />
         </UFormField>
         <UFormField label="所在地" required>
           <UInput v-model="addressZhTw" />

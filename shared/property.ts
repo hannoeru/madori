@@ -11,8 +11,11 @@ export const propertyQuerySchema = v.object({
   maxPrice: optionalNumber,
   minFloorArea: optionalNumber,
   maxFloorArea: optionalNumber,
-  station: v.optional(v.string()),
+  lineId: v.optional(v.string()),
+  stationId: v.optional(v.string()),
+  maxAgeYears: optionalNumber,
   maxWalkingMinutes: optionalNumber,
+  sort: v.optional(v.picklist(['newest', 'price_asc', 'price_desc', 'area_desc'])),
 })
 
 export const propertyImageSummarySchema = v.object({
@@ -64,6 +67,11 @@ export const propertyDetailSchema = v.object({
   propertyType: v.picklist(['condominium', 'detached_house']),
   buildStatus: v.picklist(['new', 'resale']),
   nextUpdateOn: v.string(),
+  agency: v.object({
+    name: v.string(),
+    license: v.string(),
+    lineUrl: v.string(),
+  }),
   transitEntries: v.array(v.object({
     id: v.string(),
     lineNameZhTw: v.string(),

@@ -1,10 +1,12 @@
 import type { PropertySummary } from '../../shared/property'
-import { and, asc, eq, exists, gte, inArray, lte } from 'drizzle-orm'
+import { and, asc, desc, eq, exists, gte, inArray, lte, sql } from 'drizzle-orm'
 import { getQuery } from 'h3'
 import * as v from 'valibot'
 import { propertyQuerySchema } from '../../shared/property'
 import { useDatabase } from '../database/client'
 import { properties, propertyImages, propertyTransitEntries, stations } from '../database/schema'
+
+const primaryArea = sql`coalesce(${properties.floorAreaSqm}, ${properties.landAreaSqm})`
 
 export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
   const parsedQuery = v.safeParse(propertyQuerySchema, getQuery(event))
@@ -13,15 +15,26 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
 
   const query = parsedQuery.output
   const database = useDatabase(event)
-  const transitFilter = query.station || query.maxWalkingMinutes !== undefined
+
+  const transitFilter = query.stationId || query.lineId || query.maxWalkingMinutes !== undefined
     ? exists(database.select({ id: propertyTransitEntries.id }).from(propertyTransitEntries)
         .innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id))
         .where(and(
           eq(propertyTransitEntries.propertyId, properties.id),
-          query.station ? eq(stations.nameZhTw, query.station) : undefined,
+          query.stationId ? eq(propertyTransitEntries.stationId, query.stationId) : undefined,
+          query.lineId ? eq(stations.lineId, query.lineId) : undefined,
           query.maxWalkingMinutes === undefined ? undefined : lte(propertyTransitEntries.walkingMinutes, query.maxWalkingMinutes),
         )))
     : undefined
+
+  const orderBy = query.sort === 'price_asc'
+    ? asc(properties.priceYen)
+    : query.sort === 'price_desc'
+      ? desc(properties.priceYen)
+      : query.sort === 'area_desc'
+        ? desc(primaryArea)
+        : desc(properties.publishedAt)
+
   const propertyRows = await database.select().from(properties).where(and(
     eq(properties.status, 'published'),
     query.ward ? eq(properties.ward, query.ward) : undefined,
@@ -30,10 +43,11 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
     query.layout ? eq(properties.layout, query.layout) : undefined,
     query.minPrice === undefined ? undefined : gte(properties.priceYen, query.minPrice),
     query.maxPrice === undefined ? undefined : lte(properties.priceYen, query.maxPrice),
-    query.minFloorArea === undefined ? undefined : gte(properties.floorAreaSqm, query.minFloorArea),
-    query.maxFloorArea === undefined ? undefined : lte(properties.floorAreaSqm, query.maxFloorArea),
+    query.minFloorArea === undefined ? undefined : sql`${primaryArea} >= ${query.minFloorArea}`,
+    query.maxFloorArea === undefined ? undefined : sql`${primaryArea} <= ${query.maxFloorArea}`,
+    query.maxAgeYears === undefined ? undefined : gte(properties.builtOn, `${new Date().getFullYear() - query.maxAgeYears}-01`),
     transitFilter,
-  )).orderBy(asc(properties.priceYen))
+  )).orderBy(orderBy)
 
   const ids = propertyRows.map(property => property.id)
   const images = ids.length ? await database.select().from(propertyImages).where(inArray(propertyImages.propertyId, ids)) : []

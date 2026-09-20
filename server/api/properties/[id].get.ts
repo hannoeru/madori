@@ -2,7 +2,7 @@ import type { PropertyDetail } from '../../../shared/property'
 import { asc, eq } from 'drizzle-orm'
 import { getRouterParam } from 'h3'
 import { useDatabase } from '../../database/client'
-import { lines, properties, propertyTransitEntries, stations } from '../../database/schema'
+import { agencies, lines, properties, propertyTransitEntries, stations } from '../../database/schema'
 
 export default defineEventHandler(async (event): Promise<PropertyDetail> => {
   const id = getRouterParam(event, 'id')
@@ -10,7 +10,14 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
     throw createError({ statusCode: 400, statusMessage: '缺少物件識別碼。' })
 
   const database = useDatabase(event)
-  const [property] = await database.select().from(properties).where(eq(properties.id, id)).limit(1)
+  const [row] = await database.select({
+    property: properties,
+    agencyName: agencies.name,
+    agencyLicense: agencies.license,
+    agencyLineUrl: agencies.lineUrl,
+  }).from(properties).innerJoin(agencies, eq(properties.agencyId, agencies.id)).where(eq(properties.id, id)).limit(1)
+
+  const property = row?.property
   if (!property || property.status !== 'published')
     throw createError({ statusCode: 404, statusMessage: '找不到此物件。' })
 
@@ -52,6 +59,11 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
     propertyType: property.propertyType,
     buildStatus: property.buildStatus,
     nextUpdateOn: property.nextUpdateOn,
+    agency: {
+      name: row.agencyName,
+      license: row.agencyLicense,
+      lineUrl: row.agencyLineUrl,
+    },
     transitEntries,
   }
 })
