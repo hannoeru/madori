@@ -2,6 +2,7 @@
 const email = ref('')
 const sent = ref(false)
 const error = ref('')
+const devLink = ref('')
 
 const route = useRoute()
 const queryError = route.query.error
@@ -15,7 +16,8 @@ useSeoMeta({ title: '公司登入｜Madori', robots: 'noindex, nofollow' })
 async function submit(): Promise<void> {
   error.value = ''
   try {
-    await $fetch('/api/auth/login', { method: 'POST', body: { email: email.value } })
+    const res = await $fetch<{ ok: boolean, link?: string }>('/api/auth/login', { method: 'POST', body: { email: email.value } })
+    devLink.value = res.link ?? ''
     sent.value = true
   }
   catch (err) {
@@ -34,7 +36,13 @@ async function submit(): Promise<void> {
           </h1>
         </template>
         <div v-if="sent" class="space-y-4">
-          <p class="text-toned">
+          <p v-if="devLink" class="text-toned">
+            開發模式下不會寄送電子郵件，請點擊下方連結登入：
+          </p>
+          <UButton v-if="devLink" :to="devLink" block color="primary" icon="i-lucide-zap">
+            點此登入
+          </UButton>
+          <p v-else class="text-toned">
             已寄出登入連結，請到信箱點擊完成登入。
           </p>
         </div>

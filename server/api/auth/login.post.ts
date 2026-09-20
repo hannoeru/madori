@@ -31,5 +31,5 @@ export default defineEventHandler(async (event) => {
   const link = `${getRequestURL(event).origin}/api/auth/verify?token=${token}`
   await sendMagicLink(email, link)
 
-  return { ok: true }
+  return import.meta.dev ? { ok: true, link } : { ok: true }
 })
