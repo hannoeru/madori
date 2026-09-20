@@ -23,7 +23,7 @@ const { data: properties } = await useFetch<AdminProperty[]>('/api/admin/propert
 const today = new Date().toISOString().slice(0, 10)
 const freshnessQueue = computed(() => properties.value?.filter(property => property.status === 'published' && property.nextUpdateOn <= today) ?? [])
 
-useSeoMeta({ title: '管理員｜Madori', robots: 'noindex, nofollow' })
+useSeoMeta({ title: '公司後台｜Madori', robots: 'noindex, nofollow' })
 </script>
 
 <template>
@@ -38,7 +38,7 @@ useSeoMeta({ title: '管理員｜Madori', robots: 'noindex, nofollow' })
     </UDashboardSidebar>
     <UDashboardPanel id="admin-home">
       <template #header>
-        <UDashboardNavbar title="管理總覽">
+        <UDashboardNavbar title="總覽">
           <template #right>
             <span class="text-sm text-muted">{{ user?.name }}</span>
             <UButton color="neutral" variant="ghost" @click="logout">

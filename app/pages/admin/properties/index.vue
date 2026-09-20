@@ -1,7 +1,7 @@
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' })
 
-useSeoMeta({ robots: 'noindex, nofollow' })
+useSeoMeta({ title: '所有物件｜Madori', robots: 'noindex, nofollow' })
 
 interface AdminProperty {
   id: string

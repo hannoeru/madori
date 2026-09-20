@@ -12,7 +12,18 @@ export default defineNuxtConfig({
     enabled: true,
   },
 
+  app: {
+    head: {
+      titleTemplate: '%s',
+    },
+  },
+
   css: ['~/assets/css/main.css'],
+
+  site: {
+    name: 'Madori',
+    url: 'https://madori.yohaku.ink',
+  },
 
   runtimeConfig: {
     emailFrom: 'login@madori.yohaku.ink',

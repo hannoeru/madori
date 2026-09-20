@@ -105,7 +105,7 @@ useSeoMeta({
             </h2>
             <ul class="mt-4 space-y-2 text-toned">
               <li v-for="entry in property.transitEntries" :key="entry.id">
-                {{ formatStationName(entry.lineNameZhTw, entry.lineNameJa) }}「{{ formatStationName(entry.stationNameZhTw, entry.stationNameJa) }}」站 步行{{ entry.walkingMinutes }}分鐘
+                {{ entry.lineNameZhTw }}「{{ formatStationName(entry.stationNameZhTw, entry.stationNameJa) }}」站 步行{{ entry.walkingMinutes }}分鐘
               </li>
             </ul>
           </section>

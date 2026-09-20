@@ -90,9 +90,9 @@ useSeoMeta({ title: 'Madori｜東京23區房產搜尋', description: '以繁體�
             </UFormField>
           </div>
           <div class="mt-4 flex items-center justify-between gap-4">
-            <div class="w-56">
+            <UFormField label="排序" class="w-56">
               <USelect v-model="search.sort" :items="sortOptions" placeholder="排序" />
-            </div>
+            </UFormField>
             <UButton icon="i-lucide-search" @click="refresh()">
               搜尋物件
             </UButton>
