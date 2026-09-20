@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' })
 
+useSeoMeta({ robots: 'noindex, nofollow' })
+
 interface AdminProperty {
   id: string
   propertyNumber: string

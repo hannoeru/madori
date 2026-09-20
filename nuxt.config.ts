@@ -18,6 +18,15 @@ export default defineNuxtConfig({
     '/api/**': {
       cors: true,
     },
+    '/admin/**': {
+      robots: false,
+    },
+    '/login': {
+      robots: false,
+    },
+    '/register': {
+      robots: false,
+    },
   },
 
   compatibilityDate: '2026-08-26',
@@ -30,5 +39,9 @@ export default defineNuxtConfig({
     config: {
       standalone: false,
     },
+  },
+
+  sitemap: {
+    sources: ['/api/sitemap-urls'],
   },
 })
