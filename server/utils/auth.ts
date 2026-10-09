@@ -1,14 +1,11 @@
 import type { H3Event } from 'h3'
+import type { useDatabase } from '../database/client'
+import { createId } from '@paralleldrive/cuid2'
+import { eq } from 'drizzle-orm'
+import { getRequestURL } from 'h3'
+import { authTokens } from '../database/schema'
 
-interface EmailClient {
-  send: (input: {
-    to: string
-    from: { email: string, name: string }
-    subject: string
-    html: string
-    text: string
-  }) => Promise<unknown>
-}
+export const MAGIC_LINK_TTL_MS = 1000 * 60 * 15
 
 export async function sha256(input: string): Promise<string> {
   const data = new TextEncoder().encode(input)
@@ -18,11 +15,11 @@ export async function sha256(input: string): Promise<string> {
 
 export async function sendMagicLink(event: H3Event, email: string, link: string): Promise<void> {
   const config = useRuntimeConfig(event)
-  const env = (event.context.cloudflare as { env?: { EMAIL?: EmailClient } } | undefined)?.env
+  const emailClient = event.context.cloudflare?.env.EMAIL
 
-  if (env?.EMAIL) {
+  if (emailClient) {
     try {
-      await env.EMAIL.send({
+      await emailClient.send({
         to: email,
         from: { email: config.emailFrom, name: config.emailFromName },
         subject: 'Madori 登入連結',
@@ -36,5 +33,24 @@ export async function sendMagicLink(event: H3Event, email: string, link: string)
     }
   }
 
-  console.warn(`[auth] Magic link for ${email}: ${link}`)
+  if (import.meta.dev)
+    console.warn(`[auth] Magic link for ${email}: ${link}`)
+}
+
+export async function issueMagicLink(
+  database: ReturnType<typeof useDatabase>,
+  event: H3Event,
+  email: string,
+): Promise<string> {
+  const token = createId()
+  await database.delete(authTokens).where(eq(authTokens.email, email))
+  await database.insert(authTokens).values({
+    email,
+    tokenHash: await sha256(token),
+    expiresAt: new Date(Date.now() + MAGIC_LINK_TTL_MS).toISOString(),
+  })
+
+  const link = `${getRequestURL(event).origin}/api/auth/verify?token=${token}`
+  await sendMagicLink(event, email, link)
+  return link
 }

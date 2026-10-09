@@ -6,14 +6,8 @@ defineProps<{
 }>()
 
 useSeoMeta({
-  title: 'Page not found',
-  description: 'We are sorry but this page could not be found.',
-})
-
-useHead({
-  htmlAttrs: {
-    lang: 'en',
-  },
+  title: '找不到頁面',
+  description: '很抱歉，找不到此頁面。',
 })
 </script>
 

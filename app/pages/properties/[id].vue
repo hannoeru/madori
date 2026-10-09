@@ -10,7 +10,7 @@ const property = computed(() => data.value!)
 
 useSeoMeta({
   title: `${property.value.titleZhTw}｜Madori`,
-  description: `${property.value.ward}・${property.value.layout}・${formatPropertyArea(property.value.propertyType, property.value.floorAreaSqm, property.value.landAreaSqm, property.value.buildingAreaSqm)}`,
+  description: `${property.value.ward}・${property.value.layout}・${formatPropertyArea(property.value)}`,
 })
 </script>
 
@@ -22,7 +22,8 @@ useSeoMeta({
       </UButton>
       <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
         <article>
-          <div class="aspect-[16/9] rounded-xl bg-muted" aria-hidden="true" />
+          <img v-if="coverImageId(property.images)" :src="`/api/property-images/${coverImageId(property.images)}`" :alt="property.titleZhTw" class="aspect-[16/9] w-full rounded-xl object-cover">
+          <div v-else class="aspect-[16/9] rounded-xl bg-muted" aria-hidden="true" />
           <p class="mt-6 text-sm font-semibold text-primary">
             {{ property.propertyType === 'condominium' ? '公寓' : '獨棟住宅' }} · {{ property.buildStatus === 'new' ? '新成屋' : '中古' }}
           </p>
@@ -47,7 +48,7 @@ useSeoMeta({
                 <dt class="text-muted">
                   格局 / 面積
                 </dt>
-                <dd>{{ property.layout }} / {{ formatPropertyArea(property.propertyType, property.floorAreaSqm, property.landAreaSqm, property.buildingAreaSqm) }}</dd>
+                <dd>{{ property.layout }} / {{ formatPropertyArea(property) }}</dd>
               </div>
               <div class="grid grid-cols-[9rem_1fr] gap-4 py-3">
                 <dt class="text-muted">
@@ -90,6 +91,14 @@ useSeoMeta({
                   交易型態
                 </dt>
                 <dd>{{ property.transactionMode }}</dd>
+              </div>
+              <div v-if="property.equipmentZhTw" class="grid grid-cols-[9rem_1fr] gap-4 py-3">
+                <dt class="text-muted">
+                  設備
+                </dt>
+                <dd class="whitespace-pre-line">
+                  {{ property.equipmentZhTw }}
+                </dd>
               </div>
               <div class="grid grid-cols-[9rem_1fr] gap-4 py-3">
                 <dt class="text-muted">

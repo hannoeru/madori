@@ -67,6 +67,7 @@ export const propertyDetailSchema = v.object({
   propertyType: v.picklist(['condominium', 'detached_house']),
   buildStatus: v.picklist(['new', 'resale']),
   nextUpdateOn: v.string(),
+  images: v.array(propertyImageSummarySchema),
   agency: v.object({
     name: v.string(),
     license: v.string(),

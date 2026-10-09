@@ -11,6 +11,7 @@ export default withNuxt(
     ignores: [
       'migrations/**',
       'pnpm-workspace.yaml',
+      'worker-configuration.d.ts',
     ],
   },
   {

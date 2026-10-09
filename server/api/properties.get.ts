@@ -60,6 +60,23 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
       }).from(propertyTransitEntries).innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id)).where(inArray(propertyTransitEntries.propertyId, ids))
     : []
 
+  const imagesByProperty = new Map<string, typeof images>()
+  for (const image of images) {
+    const list = imagesByProperty.get(image.propertyId)
+    if (list)
+      list.push(image)
+    else
+      imagesByProperty.set(image.propertyId, [image])
+  }
+  const transitByProperty = new Map<string, typeof transitEntries>()
+  for (const entry of transitEntries) {
+    const list = transitByProperty.get(entry.propertyId)
+    if (list)
+      list.push(entry)
+    else
+      transitByProperty.set(entry.propertyId, [entry])
+  }
+
   return propertyRows.map(property => ({
     id: property.id,
     titleZhTw: property.titleZhTw,
@@ -71,7 +88,7 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
     buildingAreaSqm: property.buildingAreaSqm,
     builtOn: property.builtOn,
     propertyType: property.propertyType,
-    images: images.filter(image => image.propertyId === property.id).map(image => ({ id: image.id, isCover: image.isCover })),
-    transitEntries: transitEntries.filter(entry => entry.propertyId === property.id).map(entry => ({ id: entry.id, stationNameZhTw: entry.stationNameZhTw, walkingMinutes: entry.walkingMinutes })),
+    images: (imagesByProperty.get(property.id) ?? []).map(image => ({ id: image.id, isCover: image.isCover })),
+    transitEntries: (transitByProperty.get(property.id) ?? []).map(entry => ({ id: entry.id, stationNameZhTw: entry.stationNameZhTw, walkingMinutes: entry.walkingMinutes })),
   }))
 })

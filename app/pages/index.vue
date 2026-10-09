@@ -108,7 +108,8 @@ useSeoMeta({ title: 'Madori｜東京23區房產搜尋', description: '以繁體�
         </div>
         <div v-if="properties?.length" class="mt-6 divide-y divide-default">
           <NuxtLink v-for="property in properties" :key="property.id" :to="`/properties/${property.id}`" class="grid gap-4 py-5 sm:grid-cols-[220px_1fr]">
-            <div class="aspect-[4/3] rounded-lg bg-muted" aria-hidden="true" />
+            <img v-if="coverImageId(property.images)" :src="`/api/property-images/${coverImageId(property.images)}`" :alt="property.titleZhTw" class="aspect-[4/3] w-full rounded-lg object-cover">
+            <div v-else class="aspect-[4/3] rounded-lg bg-muted" aria-hidden="true" />
             <article>
               <p class="text-sm text-primary">
                 {{ property.propertyType === 'condominium' ? '公寓' : '獨棟住宅' }}
@@ -120,7 +121,7 @@ useSeoMeta({ title: 'Madori｜東京23區房產搜尋', description: '以繁體�
                 {{ formatManPrice(property.priceYen) }}
               </p>
               <p class="mt-2 text-sm text-toned">
-                {{ property.ward }} · {{ property.layout }} · {{ formatPropertyArea(property.propertyType, property.floorAreaSqm, property.landAreaSqm, property.buildingAreaSqm) }} · {{ formatBuiltOn(property.builtOn) }}
+                {{ property.ward }} · {{ property.layout }} · {{ formatPropertyArea(property) }} · {{ formatBuiltOn(property.builtOn) }}
               </p>
               <p v-if="property.transitEntries[0]" class="mt-2 text-sm text-muted">
                 {{ property.transitEntries[0].stationNameZhTw }}站 步行{{ property.transitEntries[0].walkingMinutes }}分鐘

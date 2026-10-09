@@ -2,7 +2,7 @@ import type { PropertyDetail } from '../../../shared/property'
 import { asc, eq } from 'drizzle-orm'
 import { getRouterParam } from 'h3'
 import { useDatabase } from '../../database/client'
-import { agencies, lines, properties, propertyTransitEntries, stations } from '../../database/schema'
+import { agencies, lines, properties, propertyImages, propertyTransitEntries, stations } from '../../database/schema'
 
 export default defineEventHandler(async (event): Promise<PropertyDetail> => {
   const id = getRouterParam(event, 'id')
@@ -36,6 +36,11 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
     .where(eq(propertyTransitEntries.propertyId, property.id))
     .orderBy(asc(propertyTransitEntries.walkingMinutes))
 
+  const images = await database
+    .select({ id: propertyImages.id, isCover: propertyImages.isCover })
+    .from(propertyImages)
+    .where(eq(propertyImages.propertyId, property.id))
+
   return {
     id: property.id,
     titleZhTw: property.titleZhTw,
@@ -59,6 +64,7 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
     propertyType: property.propertyType,
     buildStatus: property.buildStatus,
     nextUpdateOn: property.nextUpdateOn,
+    images,
     agency: {
       name: row.agencyName,
       license: row.agencyLicense,

@@ -1,9 +1,8 @@
-import { createId } from '@paralleldrive/cuid2'
 import { eq } from 'drizzle-orm'
 import * as v from 'valibot'
 import { useDatabase } from '../../database/client'
-import { agencies, authTokens } from '../../database/schema'
-import { sendMagicLink, sha256 } from '../../utils/auth'
+import { agencies } from '../../database/schema'
+import { issueMagicLink } from '../../utils/auth'
 
 const loginSchema = v.object({
   email: v.pipe(v.string(), v.trim(), v.email(), v.maxLength(254)),
@@ -20,16 +19,6 @@ export default defineEventHandler(async (event) => {
   if (!agency.length)
     throw createError({ statusCode: 404, statusMessage: '查無此帳號。' })
 
-  const token = createId()
-  await database.delete(authTokens).where(eq(authTokens.email, email))
-  await database.insert(authTokens).values({
-    email,
-    tokenHash: await sha256(token),
-    expiresAt: new Date(Date.now() + 1000 * 60 * 15).toISOString(),
-  })
-
-  const link = `${getRequestURL(event).origin}/api/auth/verify?token=${token}`
-  await sendMagicLink(event, email, link)
-
+  const link = await issueMagicLink(database, event, email)
   return import.meta.dev ? { ok: true, link } : { ok: true }
 })

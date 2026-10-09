@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { AdminImageSummary, AdminPropertyDetail } from '#shared/admin-property'
 import { TOKYO_23_WARDS } from '#shared/tokyo'
 
 const props = defineProps<{ propertyId?: string }>()
@@ -31,8 +32,11 @@ const landRights = ref('')
 const managementFeeYen = ref('')
 const repairReserveYen = ref('')
 const transactionMode = ref('')
+const equipmentZhTw = ref('')
 const nextUpdateOn = ref('')
 const transitEntries = ref<{ stationId: string, walkingMinutes: string }[]>([])
+const images = ref<AdminImageSummary[]>([])
+const coverInput = ref<HTMLInputElement>()
 const error = ref('')
 const saving = ref(false)
 
@@ -49,8 +53,15 @@ function toNumberOrNull(value: string): number | null {
   return value === '' ? null : Number(value)
 }
 
+async function reloadImages(): Promise<void> {
+  if (!props.propertyId)
+    return
+  const detail = await $fetch<AdminPropertyDetail>(`/api/admin/properties/${props.propertyId}`)
+  images.value = detail.images
+}
+
 if (props.propertyId) {
-  const { data } = await useFetch<Record<string, any>>(() => `/api/admin/properties/${props.propertyId}`)
+  const { data } = await useFetch<AdminPropertyDetail>(() => `/api/admin/properties/${props.propertyId}`)
   if (data.value) {
     const p = data.value
     propertyType.value = p.propertyType
@@ -73,8 +84,10 @@ if (props.propertyId) {
     managementFeeYen.value = p.managementFeeYen == null ? '' : String(p.managementFeeYen)
     repairReserveYen.value = p.repairReserveYen == null ? '' : String(p.repairReserveYen)
     transactionMode.value = p.transactionMode ?? ''
+    equipmentZhTw.value = p.equipmentZhTw ?? ''
     nextUpdateOn.value = p.nextUpdateOn
-    transitEntries.value = (p.transitEntries ?? []).map((entry: any) => ({ stationId: entry.stationId, walkingMinutes: String(entry.walkingMinutes) }))
+    transitEntries.value = p.transitEntries.map(entry => ({ stationId: entry.stationId, walkingMinutes: String(entry.walkingMinutes) }))
+    images.value = p.images
   }
 }
 
@@ -84,6 +97,45 @@ function addTransit(): void {
 
 function removeTransit(index: number): void {
   transitEntries.value.splice(index, 1)
+}
+
+async function onCoverUpload(event: Event): Promise<void> {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (!file || !props.propertyId)
+    return
+
+  error.value = ''
+  saving.value = true
+  try {
+    const body = new FormData()
+    body.append('file', file)
+    body.append('kind', 'photo')
+    body.append('isCover', 'true')
+    body.append('alt', titleZhTw.value || '封面圖片')
+    await $fetch(`/api/admin/properties/${props.propertyId}/images`, { method: 'POST', body })
+    await reloadImages()
+  }
+  catch (err) {
+    error.value = (err as { data?: { statusMessage?: string } })?.data?.statusMessage ?? '上傳失敗。'
+  }
+  finally {
+    saving.value = false
+    input.value = ''
+  }
+}
+
+async function deleteCover(): Promise<void> {
+  const id = coverImageId(images.value)
+  if (!id || !props.propertyId)
+    return
+  try {
+    await $fetch(`/api/admin/properties/${props.propertyId}/images/${id}`, { method: 'DELETE' })
+    await reloadImages()
+  }
+  catch (err) {
+    error.value = (err as { data?: { statusMessage?: string } })?.data?.statusMessage ?? '刪除失敗。'
+  }
 }
 
 async function submit(): Promise<void> {
@@ -110,6 +162,7 @@ async function submit(): Promise<void> {
     managementFeeYen: toNumberOrNull(managementFeeYen.value),
     repairReserveYen: toNumberOrNull(repairReserveYen.value),
     transactionMode: transactionMode.value || null,
+    equipmentZhTw: equipmentZhTw.value || null,
     nextUpdateOn: nextUpdateOn.value,
     transitEntries: transitEntries.value.map(entry => ({ stationId: entry.stationId, walkingMinutes: Number(entry.walkingMinutes) })),
   }
@@ -138,6 +191,27 @@ async function submit(): Promise<void> {
     </template>
 
     <div class="grid gap-4">
+      <section v-if="propertyId" class="grid gap-2">
+        <p class="text-sm font-medium">
+          封面圖片
+        </p>
+        <div class="flex items-center gap-4">
+          <img v-if="coverImageId(images)" :src="`/api/property-images/${coverImageId(images)}`" alt="封面圖片" class="h-24 w-32 rounded-lg object-cover">
+          <div v-else class="flex h-24 w-32 items-center justify-center rounded-lg bg-muted text-xs text-muted">
+            無封面
+          </div>
+          <div class="flex items-center gap-2">
+            <UButton color="neutral" variant="outline" :loading="saving" icon="i-lucide-upload" @click="coverInput?.click()">
+              上傳封面
+            </UButton>
+            <UButton v-if="coverImageId(images)" color="error" variant="ghost" icon="i-lucide-trash-2" @click="deleteCover">
+              移除封面
+            </UButton>
+          </div>
+        </div>
+        <input ref="coverInput" type="file" accept="image/*" class="hidden" @change="onCoverUpload">
+      </section>
+
       <div class="grid gap-4 sm:grid-cols-3">
         <UFormField label="物件類型" required>
           <USelect v-model="propertyType" :items="propertyTypeOptions" />
@@ -225,6 +299,10 @@ async function submit(): Promise<void> {
           <USelect v-model="transactionMode" :items="transactionModeOptions" placeholder="選擇" clear />
         </UFormField>
       </div>
+
+      <UFormField label="設備">
+        <UInput v-model="equipmentZhTw" placeholder="例如 系統廚具、浴室乾濕分離…" />
+      </UFormField>
 
       <div>
         <div class="flex items-center justify-between">

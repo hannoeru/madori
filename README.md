@@ -1,6 +1,6 @@
 # Madori
 
-Madori is a zh-TW property-search site for new and resale condominiums and detached houses in Tokyo’s 23 wards. It includes a single-administrator dashboard for managing Properties, their media, and their publication lifecycle.
+Madori is a zh-TW property-search site for new and resale condominiums and detached houses in Tokyo’s 23 wards. It includes a per-agency dashboard where each Agency manages its own Properties — their cover images and publication lifecycle.
 
 ## Stack
 
