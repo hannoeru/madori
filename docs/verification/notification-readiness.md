@@ -65,4 +65,4 @@ No part of this sequence has been run with real email. This document is preparat
 
 Current checks pass lint, typecheck, 128 tests and production build. See `delivery-review.md`, `auth-issuance.md`, `public-accessibility-followup.md`, `registration-freshness.md`, `mobile-workflows.md` and `mobile-publication.md`.
 
-Complete manual accessibility, actual browser zoom/text resize, real provider/operator interruption recovery and deployed Worker limits retain their stated limitations. Browser context loss remains unresolved. No email, customer message, deployment, production change or commit occurred. The goal remains incomplete.
+Complete manual accessibility, actual browser zoom/text resize, real provider/operator interruption recovery and deployed Worker limits retain their stated limitations. Browser context loss remains unresolved. No email, customer message, deployment or production change occurred. The goal remains incomplete.

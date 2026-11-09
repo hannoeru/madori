@@ -90,4 +90,4 @@ Applying remote migrations, configuring remote secrets, changing bindings or dep
 
 The current checkpoint passes lint, typecheck, 128 tests and the production build. Desktop/mobile Buyer and Agency workflows have local browser evidence, including original image uploads and publication lifecycle checks.
 
-Actual Notification receipt remains deferred. Complete manual accessibility, real provider/operator interruption recovery and deployed Worker resource limits are not verified. Browser context loss remains unresolved. No email, customer message, deployment, production change or commit occurred. The overall goal is not complete.
+Actual Notification receipt remains deferred. Complete manual accessibility, real provider/operator interruption recovery and deployed Worker resource limits are not verified. Browser context loss remains unresolved. No email, customer message, deployment or production change occurred. The overall goal is not complete.

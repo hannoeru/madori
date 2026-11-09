@@ -2,7 +2,7 @@
 
 ## Goal progress
 
-Research, design, domain, marketplace, Agency, Buyer and local verification milestones are complete. Inquiry delivery remains open, so the overall goal is incomplete. Desktop/mobile Buyer and Agency workflows passed local browser checks, and current checks/diff review are recorded with their limits. Complete manual accessibility, real provider-outage/operator recovery and actual Notification receipt remain unverified. No deployment, production migration, customer message, or commit occurred.
+Research, design, domain, marketplace, Agency, Buyer and local verification milestones are complete. Inquiry delivery remains open, so the overall goal is incomplete. Desktop/mobile Buyer and Agency workflows passed local browser checks, and current checks/diff review are recorded with their limits. Complete manual accessibility, real provider-outage/operator recovery and actual Notification receipt remain unverified. No deployment, production migration or customer message occurred.
 
 All model-driven work uses `openai/gpt-6.1-sol`. Coordinator and helpers verified their provider/model environment. Two helper turns stopped after completion waits stalled and one reported an OpenAI stream error. The coordinator confirmed both idle before taking over final checks. No other model was used.
 
@@ -41,7 +41,7 @@ See `docs/verification/final-review.md` for the earlier independent source revie
 
 ## Historical consolidated verification
 
-The earlier 114-test source checkpoint passed all four checks below. The current 124-test checkpoint above supersedes it; these logs remain evidence for their original scope:
+The earlier 114-test source checkpoint passed all four checks below. The current 128-test checkpoint above supersedes it; these logs remain evidence for their original scope:
 
 | Check | Result | Evidence |
 | --- | --- | --- |
