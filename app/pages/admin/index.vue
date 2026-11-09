@@ -2,7 +2,7 @@
 import type { AdminPropertyListItem } from '#shared/property'
 
 definePageMeta({ middleware: 'auth' })
-useSeoMeta({ title: '物件管理｜Madori', robots: 'noindex, nofollow' })
+useSeoMeta({ title: '物件管理｜瑞哥看房', robots: 'noindex, nofollow' })
 
 const { data: properties, error, refresh } = await useFetch<AdminPropertyListItem[]>('/api/admin/properties')
 </script>

@@ -4,7 +4,7 @@ import { zh_tw } from '@nuxt/ui/locale'
 
 const { error } = defineProps<{ error: NuxtError }>()
 const notFound = computed(() => error.statusCode === 404)
-useHead({ htmlAttrs: { lang: 'zh-Hant' }, title: `${notFound.value ? '找不到此頁面' : '目前無法載入'}｜Madori` })
+useHead({ htmlAttrs: { lang: 'zh-Hant' }, title: `${notFound.value ? '找不到此頁面' : '目前無法載入'}｜瑞哥看房` })
 </script>
 
 <template>

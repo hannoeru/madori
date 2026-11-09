@@ -6,7 +6,7 @@ const route = useRoute()
 const router = useRouter()
 const { data: properties, error, status, refresh } = await useFetch<PropertySummary[]>('/api/properties')
 
-useSeoMeta({ title: 'Madori｜東京購屋，用中文看懂', description: '東京23區的公寓與獨棟住宅，用繁體中文看懂價格、格局與每月費用，直接用 LINE 詢問房仲。' })
+useSeoMeta({ title: '瑞哥看房｜東京購屋，用中文看懂', description: '東京23區的公寓與獨棟住宅，用繁體中文看懂價格、格局與每月費用，直接用 LINE 詢問房仲。' })
 
 function queryFilter(key: string, fallback = 'all') {
   return computed({

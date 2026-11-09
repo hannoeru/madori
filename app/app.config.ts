@@ -9,9 +9,9 @@ export default defineAppConfig({
     select: { slots: { base: 'min-h-11' } },
   },
   agent: {
-    name: '（請填入房仲姓名）',
-    company: '（請填入公司名稱）',
-    license: '（請填入宅地建物取引業免許號碼）',
+    name: '瑞哥',
+    company: '瑞哥看房（示範資料）',
+    license: '宅地建物取引業免許（示範資料，非真實號碼）',
     lineUrl: 'https://line.me/',
     intro: '我在東京協助台灣買方購屋。從挑選物件、確認費用到安排看屋，都用中文和你溝通。',
   },

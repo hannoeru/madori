@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' })
-useSeoMeta({ title: '編輯物件｜Madori', robots: 'noindex, nofollow' })
+useSeoMeta({ title: '編輯物件｜瑞哥看房', robots: 'noindex, nofollow' })
 
 const route = useRoute()
 </script>

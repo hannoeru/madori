@@ -1,6 +1,6 @@
 # Madori
 
-Madori is a website for one real-estate agent in Tokyo. Taiwanese customers look at the agent's homes in Traditional Chinese and contact the agent by LINE. The agent manages the homes on a password-protected page.
+瑞哥看房 (repository name: Madori) is a website for one real-estate agent in Tokyo. Taiwanese customers look at the agent's homes in Traditional Chinese and contact the agent by LINE. The agent manages the homes on a password-protected page.
 
 Read [CONTEXT.md](CONTEXT.md) for the domain vocabulary and [docs/product-design.md](docs/product-design.md) for the product scope.
 
@@ -14,7 +14,7 @@ Read [CONTEXT.md](CONTEXT.md) for the domain vocabulary and [docs/product-design
 
 ## Agent details
 
-Replace the placeholder values under `agent` in `app/app.config.ts` before launch: name, company, license number, LINE link and introduction.
+The values under `agent` in `app/app.config.ts` are demo data. Replace them before launch: name, company, license number, LINE link and introduction.
 
 ## Local development
 

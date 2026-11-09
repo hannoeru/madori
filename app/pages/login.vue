@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useSeoMeta({ title: '管理登入｜Madori', robots: 'noindex, nofollow' })
+useSeoMeta({ title: '管理登入｜瑞哥看房', robots: 'noindex, nofollow' })
 
 const { fetch: refreshSession, loggedIn } = useUserSession()
 if (loggedIn.value)

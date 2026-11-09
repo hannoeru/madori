@@ -30,7 +30,7 @@ const facts = [
   { label: '設備', value: detail.equipmentZhTw },
 ].filter(fact => fact.value)
 
-useSeoMeta({ title: `${detail.titleZhTw}｜Madori`, description: `${detail.ward} ${detail.layout} ${formatManPrice(detail.priceYen)}` })
+useSeoMeta({ title: `${detail.titleZhTw}｜瑞哥看房`, description: `${detail.ward} ${detail.layout} ${formatManPrice(detail.priceYen)}` })
 </script>
 
 <template>

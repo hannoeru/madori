@@ -29,7 +29,7 @@ export default defineNuxtConfig({
 
   site: {
     defaultLocale: 'zh-TW',
-    name: 'Madori',
+    name: '瑞哥看房',
     url: 'https://madori.yohaku.ink',
   },
 
