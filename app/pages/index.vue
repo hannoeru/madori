@@ -1,104 +1,156 @@
 <script setup lang="ts">
-import { TOKYO_23_WARDS } from '#shared/tokyo'
+import type { PropertySummary } from '#shared/property'
 
-const ward = ref<string>()
-const budget = ref<string>()
-const propertyType = ref<string>()
-const budgets = [
-  { label: '5,000 萬日圓', value: '50000000' },
-  { label: '8,000 萬日圓', value: '80000000' },
-  { label: '1 億日圓', value: '100000000' },
-]
-const types = [{ label: '公寓', value: 'condominium' }, { label: '獨棟住宅', value: 'detached_house' }]
-const { data, status, error, refresh } = await useFetch('/api/properties', { query: { pageSize: '3' } })
+const { agent } = useAppConfig()
+const route = useRoute()
+const router = useRouter()
+const { data: properties, error, status, refresh } = await useFetch<PropertySummary[]>('/api/properties')
 
-useSeoMeta({ title: 'Madori｜用熟悉的語言，找到東京的家', description: '以繁體中文探索東京23區的公寓與獨棟住宅。比較格局、面積、通勤與費用，聯絡刊登房仲公司。' })
+useSeoMeta({ title: 'Madori｜東京購屋，用中文看懂', description: '東京23區的公寓與獨棟住宅，用繁體中文看懂價格、格局與每月費用，直接用 LINE 詢問房仲。' })
 
-function search() {
-  return navigateTo({ path: '/search', query: { ward: ward.value, maxPrice: budget.value, propertyType: propertyType.value } })
+function queryFilter(key: string, fallback = 'all') {
+  return computed({
+    get: () => typeof route.query[key] === 'string' ? route.query[key] : fallback,
+    set: value => router.replace({ query: { ...route.query, [key]: value === fallback ? undefined : value } }),
+  })
 }
+
+const ward = queryFilter('ward')
+const propertyType = queryFilter('type')
+const budget = queryFilter('budget')
+const sort = queryFilter('sort', 'newest')
+
+const wardOptions = computed(() => [
+  { label: '全部區域', value: 'all' },
+  ...[...new Set(properties.value?.map(property => property.ward))].map(value => ({ label: value, value })),
+])
+const typeOptions = [{ label: '全部類型', value: 'all' }, { label: '公寓', value: 'condominium' }, { label: '獨棟住宅', value: 'detached_house' }]
+const budgetOptions = [{ label: '不限預算', value: 'all' }, { label: '5,000萬日圓以下', value: '50000000' }, { label: '8,000萬日圓以下', value: '80000000' }, { label: '1億日圓以下', value: '100000000' }]
+const sortOptions = [{ label: '最新物件', value: 'newest' }, { label: '價格由低到高', value: 'price_asc' }, { label: '價格由高到低', value: 'price_desc' }]
+
+const results = computed(() => {
+  const matches = (properties.value ?? []).filter(property =>
+    (ward.value === 'all' || property.ward === ward.value)
+    && (propertyType.value === 'all' || property.propertyType === propertyType.value)
+    && (budget.value === 'all' || property.priceYen <= Number(budget.value)))
+  if (sort.value === 'price_asc')
+    return matches.toSorted((a, b) => a.priceYen - b.priceYen)
+  if (sort.value === 'price_desc')
+    return matches.toSorted((a, b) => b.priceYen - a.priceYen)
+  return matches
+})
+
+function clearFilters() {
+  return router.replace({ query: {} })
+}
+
+const steps = [
+  { title: '傳 LINE 告訴我條件', description: '預算、想住的區域、自住或投資都可以先聊。' },
+  { title: '確認物件與完整費用', description: '我會確認物件現況，用中文說明每月費用與購屋成本。' },
+  { title: '安排看屋', description: '可以來東京實地看屋，也可以先用視訊看。' },
+]
 </script>
 
 <template>
   <div>
-    <MarketHeader />
+    <SiteHeader />
     <main id="main-content">
-      <UContainer>
-        <section class="grid gap-12 py-6 sm:py-10 lg:grid-cols-[1.1fr_1fr] lg:py-14" aria-labelledby="home-title">
-          <div class="self-center">
-            <p class="hidden text-xs tracking-[.25em] text-muted sm:block">
-              A PLACE IN TOKYO. A LIFE OF YOUR OWN.
-            </p>
-            <h1 id="home-title" class="market-heading mt-3 text-3xl leading-normal text-highlighted sm:text-5xl lg:text-6xl">
-              東京的下一站，<br><span class="text-primary">是你的日常。</span>
+      <section class="plan-grid" aria-labelledby="home-title">
+        <UContainer class="grid items-center gap-10 py-12 lg:grid-cols-[1fr_1.05fr] lg:py-20">
+          <div>
+            <h1 id="home-title" class="site-heading text-4xl leading-snug sm:text-6xl sm:leading-tight">
+              東京的家，<br>用中文看懂。
             </h1>
-            <p class="mt-5 max-w-lg text-base leading-relaxed text-muted sm:text-lg">
-              <span class="sm:hidden">繁體中文，探索東京23區的住宅。</span>
-              <span class="hidden sm:inline">用熟悉的語言，找到適合你的家。從街區、通勤到每月費用，把買房需要的資訊看清楚。</span>
+            <p class="mt-6 max-w-md text-lg text-toned">
+              {{ agent.intro }}
             </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <UButton to="#listings" size="lg">
+                看目前物件
+              </UButton>
+              <LineButton />
+            </div>
           </div>
-          <TokyoScene class="hidden min-h-72 lg:block" />
-        </section>
-        <form class="grid grid-cols-2 gap-4 rounded-md border border-default bg-elevated p-5 lg:grid-cols-[1.3fr_1fr_1fr_auto] lg:p-6" @submit.prevent="search">
-          <UFormField label="想住在哪裡？" class="col-span-2 lg:col-span-1">
-            <USelect v-model="ward" :items="TOKYO_23_WARDS" placeholder="東京23區・不限區域" class="w-full" size="lg" />
-          </UFormField>
-          <UFormField label="預算上限">
-            <USelect v-model="budget" :items="budgets" placeholder="不限預算" class="w-full" size="lg" />
-          </UFormField>
-          <UFormField label="物件類型">
-            <USelect v-model="propertyType" :items="types" placeholder="所有住宅" class="w-full" size="lg" />
-          </UFormField>
-          <UButton type="submit" size="lg" icon="i-lucide-search" class="col-span-2 justify-center self-end lg:col-span-1">
-            搜尋物件
-          </UButton>
-        </form>
-        <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm text-muted">
-          <span>從生活開始</span>
-          <ULink to="/search?maxWalkingMinutes=10" class="underline decoration-default underline-offset-4">
-            車站步行10分鐘內
-          </ULink>
-          <ULink to="/search?layout=2LDK" class="underline decoration-default underline-offset-4">
-            探索2LDK
-          </ULink>
-          <ULink to="/search?ward=目黑區" class="underline decoration-default underline-offset-4">
-            探索目黑區
-          </ULink>
-        </div>
-        <section class="mt-8 sm:mt-16" aria-labelledby="latest-title">
-          <div class="mb-6 flex items-baseline justify-between gap-4">
-            <h2 id="latest-title" class="market-heading text-2xl text-highlighted sm:text-3xl">
-              找到下一個家的可能
-            </h2>
-            <UButton to="/search" variant="link" trailing-icon="i-lucide-arrow-up-right">
-              所有物件
+          <FloorPlanDrawing class="hidden sm:block" />
+        </UContainer>
+      </section>
+
+      <UContainer>
+        <section id="listings" class="scroll-mt-6 pt-14" aria-labelledby="listings-title">
+          <h2 id="listings-title" class="site-heading text-3xl">
+            目前物件
+          </h2>
+          <div class="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <UFormField label="區域">
+              <USelect v-model="ward" :items="wardOptions" class="w-full" />
+            </UFormField>
+            <UFormField label="類型">
+              <USelect v-model="propertyType" :items="typeOptions" class="w-full" />
+            </UFormField>
+            <UFormField label="預算">
+              <USelect v-model="budget" :items="budgetOptions" class="w-full" />
+            </UFormField>
+            <UFormField label="排序">
+              <USelect v-model="sort" :items="sortOptions" class="w-full" />
+            </UFormField>
+          </div>
+
+          <UAlert v-if="error" class="mt-8" color="error" title="無法載入物件" description="請檢查網路連線後重試。" :actions="[{ label: '重試', onClick: () => { refresh() } }]" />
+          <div v-else-if="status === 'pending'" class="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3" aria-label="正在載入物件">
+            <USkeleton v-for="i in 3" :key="i" class="aspect-[4/3]" />
+          </div>
+          <div v-else-if="results.length" class="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            <PropertyCard v-for="property in results" :key="property.id" :property="property" />
+          </div>
+          <div v-else-if="properties?.length" class="mt-8 bg-elevated p-8">
+            <p class="font-medium">
+              沒有符合條件的物件。
+            </p>
+            <p class="mt-1 text-muted">
+              放寬條件，或傳 LINE 告訴我你的需求。
+            </p>
+            <UButton class="mt-4" variant="outline" @click="clearFilters">
+              清除條件
             </UButton>
           </div>
-          <div v-if="status === 'pending'" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-label="正在載入物件">
-            <USkeleton v-for="i in 3" :key="i" class="h-96" />
+          <div v-else class="mt-8 bg-elevated p-8">
+            <p class="font-medium">
+              新物件整理中。
+            </p>
+            <p class="mt-1 text-muted">
+              傳 LINE 告訴我你的預算和想住的區域，我會直接提供合適的物件。
+            </p>
+            <LineButton class="mt-4" />
           </div>
-          <UAlert v-else-if="error" title="目前無法載入物件" description="請稍後再試，不會影響您的搜尋條件。" color="error" :actions="[{ label: '重試', onClick: () => refresh() }]" />
-          <div v-else-if="data?.items.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <PropertyCard v-for="property in data.items" :key="property.id" :property="property" />
-          </div>
-          <UEmpty v-else icon="i-lucide-house" title="新的家，值得等待" description="目前尚無公開物件。您可以先了解東京購屋需要確認的資訊。" :actions="[{ label: '閱讀購屋指南', to: '/guide' }]" />
         </section>
-        <section class="mt-16 grid gap-8 border-y border-default py-10 sm:grid-cols-[1fr_auto]" aria-labelledby="guide-title">
+
+        <section class="mt-24 grid gap-10 lg:grid-cols-[1fr_1.6fr]" aria-labelledby="process-title">
           <div>
-            <p class="text-xs tracking-widest text-muted">
-              BEFORE YOU BUY
-            </p><h2 id="guide-title" class="market-heading mt-3 text-2xl sm:text-3xl">
-              先看懂資訊，再決定下一步。
-            </h2><p class="mt-3 max-w-2xl text-muted">
-              LDK 怎麼看？專有面積與坪數有何不同？管理費、修繕積立金如何影響持有成本？
+            <h2 id="process-title" class="site-heading text-3xl">
+              從第一則訊息到看屋
+            </h2>
+            <p class="mt-4 text-muted">
+              想先了解 LDK、坪數和管理費？請看<ULink to="/guide" class="text-primary underline underline-offset-4">
+                購屋指南
+              </ULink>。
             </p>
           </div>
-          <UButton to="/guide" size="lg" color="neutral" variant="outline" trailing-icon="i-lucide-arrow-right" class="self-center justify-center">
-            東京購屋指南
-          </UButton>
+          <ol class="grid gap-8 sm:grid-cols-3">
+            <li v-for="(step, index) in steps" :key="step.title" class="border-t-2 border-primary pt-4">
+              <p class="site-price text-primary">
+                {{ index + 1 }}
+              </p>
+              <h3 class="mt-2 font-semibold text-highlighted">
+                {{ step.title }}
+              </h3>
+              <p class="mt-2 text-sm text-muted">
+                {{ step.description }}
+              </p>
+            </li>
+          </ol>
         </section>
       </UContainer>
     </main>
-    <MarketFooter />
+    <SiteFooter />
   </div>
 </template>

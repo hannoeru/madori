@@ -22,9 +22,6 @@
     "binding": "LISTING_IMAGES",
     "bucket_name": "madori-preview-images"
   }],
-  "send_email": [{
-    "name": "EMAIL"
-  }],
   "env": {
     "preview": {
       "name": "madori-preview",
@@ -37,9 +34,6 @@
       "r2_buckets": [{
         "binding": "LISTING_IMAGES",
         "bucket_name": "madori-preview-images"
-      }],
-      "send_email": [{
-        "name": "EMAIL"
       }]
     },
     "production": {
@@ -53,9 +47,6 @@
       "r2_buckets": [{
         "binding": "LISTING_IMAGES",
         "bucket_name": "madori-production-images"
-      }],
-      "send_email": [{
-        "name": "EMAIL"
       }]
     }
   }

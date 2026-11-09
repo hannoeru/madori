@@ -1,21 +1,21 @@
-import { eq } from 'drizzle-orm'
 import * as v from 'valibot'
-import { loginSchema } from '../../../shared/account'
-import { useDatabase } from '../../database/client'
-import { agencies, buyers } from '../../database/schema'
-import { issueMagicLink } from '../../utils/auth'
+
+const loginSchema = v.object({ password: v.string() })
+
+async function digest(value: string): Promise<string> {
+  const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value))
+  return Array.from(new Uint8Array(bytes), byte => byte.toString(16).padStart(2, '0')).join('')
+}
 
 export default defineEventHandler(async (event) => {
-  const parsed = v.safeParse(loginSchema, await readBody(event))
-  if (!parsed.success)
-    throw createError({ statusCode: 400, statusMessage: '電子郵件或帳號類型無效。' })
+  const { adminPassword } = useRuntimeConfig(event)
+  if (!adminPassword)
+    throw createError({ statusCode: 500, statusMessage: '尚未設定管理密碼。' })
 
-  const { role } = parsed.output
-  const email = parsed.output.email.toLowerCase()
-  const database = useDatabase(event)
-  const table = role === 'agency' ? agencies : buyers
-  const [account] = await database.select({ id: table.id }).from(table).where(eq(table.email, email)).limit(1)
-  if (!account)
-    return { ok: true }
-  return issueMagicLink({ database, event, email, role })
+  const parsed = v.safeParse(loginSchema, await readBody(event))
+  if (!parsed.success || await digest(parsed.output.password) !== await digest(adminPassword))
+    throw createError({ statusCode: 401, statusMessage: '密碼不正確。' })
+
+  await setUserSession(event, { user: { role: 'owner' } })
+  return { ok: true }
 })

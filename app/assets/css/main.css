@@ -2,42 +2,57 @@
 @import "@nuxt/ui";
 
 @theme static {
-  --font-sans: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-  --font-display: 'Songti TC', 'Noto Serif TC', serif;
-  --color-forest-50: #f0f5f0;
-  --color-forest-100: #deeadf;
-  --color-forest-200: #bfd5c4;
-  --color-forest-300: #96b8a0;
-  --color-forest-400: #6e997c;
-  --color-forest-500: #517b60;
-  --color-forest-600: #3e624d;
-  --color-forest-700: #31584a;
-  --color-forest-800: #29463b;
-  --color-forest-900: #223c35;
-  --color-forest-950: #12251f;
+  --font-sans: 'PingFang TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+  --color-line: #06c755;
+  --color-ai-50: #f1f5f9;
+  --color-ai-100: #dfe8f0;
+  --color-ai-200: #c1d2e1;
+  --color-ai-300: #96b2cb;
+  --color-ai-400: #668cb0;
+  --color-ai-500: #466f96;
+  --color-ai-600: #35587b;
+  --color-ai-700: #264566;
+  --color-ai-800: #1d3652;
+  --color-ai-900: #162a41;
+  --color-ai-950: #0e1b2b;
 }
 
 :root {
-  --ui-primary: var(--color-forest-700);
+  --ui-primary: var(--color-ai-700);
   --ui-error: var(--color-red-700);
   --ui-warning: var(--color-amber-700);
   --ui-success: var(--color-green-700);
-  --ui-info: var(--color-blue-700);
-  --ui-bg: #f8f7f3;
-  --ui-bg-muted: #eeeee7;
-  --ui-bg-elevated: #ffffff;
-  --ui-text: #223c35;
-  --ui-text-highlighted: #223c35;
-  --ui-text-toned: #41544a;
-  --ui-text-muted: #626f67;
-  --ui-text-dimmed: #626f67;
-  --ui-border: #dedfd6;
-  --ui-container: 80rem;
+  --ui-info: var(--color-ai-600);
+  --ui-bg: #ffffff;
+  --ui-bg-muted: #edf2f6;
+  --ui-bg-elevated: #f6f8fa;
+  --ui-text: #162a41;
+  --ui-text-highlighted: #162a41;
+  --ui-text-toned: #33475d;
+  --ui-text-muted: #55677b;
+  --ui-text-dimmed: #55677b;
+  --ui-border: #d6dfe7;
+  --ui-container: 76rem;
+  --ui-radius: 0.1875rem;
 }
 
-body { line-height: 1.65; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+body { line-height: 1.7; }
 button:not(:disabled), [role="button"]:not([aria-disabled="true"]) { cursor: pointer; }
-:focus-visible { outline: 3px solid var(--ui-primary); outline-offset: 4px; }
-.market-heading { font-family: var(--font-display); font-weight: 500; letter-spacing: .03em; }
-.market-wordmark { font-family: Georgia, serif; letter-spacing: -.055em; }
-.market-price { font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
+:focus-visible { outline: 3px solid var(--ui-primary); outline-offset: 3px; }
+
+.site-heading { font-weight: 600; letter-spacing: .02em; }
+.site-wordmark { font-weight: 700; letter-spacing: .01em; }
+.site-price { font-variant-numeric: tabular-nums; font-weight: 700; }
+
+/* One grid square is half a ken (910 mm), the module of a Japanese floor plan. */
+.plan-grid {
+  background-color: var(--ui-bg-muted);
+  background-image:
+    linear-gradient(var(--color-ai-100) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-ai-100) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+}

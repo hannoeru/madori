@@ -37,23 +37,17 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     appUrl: 'https://madori.yohaku.ink',
-    emailFrom: 'login@madori.yohaku.ink',
-    emailFromName: 'Madori',
+    adminPassword: '',
   },
 
   routeRules: {
     '/api/auth/**': { headers: { 'Cache-Control': 'no-store' } },
     '/api/admin/**': { headers: { 'Cache-Control': 'no-store' } },
-    '/api/buyer/**': { headers: { 'Cache-Control': 'no-store' } },
-    '/buyer/**': { robots: false, headers: { 'Cache-Control': 'no-store' } },
     '/admin/**': {
       robots: false,
       headers: { 'Cache-Control': 'no-store' },
     },
     '/login': {
-      robots: false,
-    },
-    '/register': {
       robots: false,
     },
   },

@@ -1,3 +1,0 @@
-$ nuxt typecheck
-ℹ Nuxt Icon server bundle mode is set to remote
-ℹ Nuxt Icon client bundle consist of 43 icons with 10.40KB(uncompressed) in size

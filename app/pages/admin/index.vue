@@ -1,94 +1,48 @@
 <script setup lang="ts">
-import type { AdminPropertyListItem } from '#shared/admin-property'
+import type { AdminPropertyListItem } from '#shared/property'
 
 definePageMeta({ middleware: 'auth' })
-
-const { user, clear } = useUserSession()
-
-async function logout(): Promise<void> {
-  await $fetch('/api/auth/logout', { method: 'POST' })
-  await clear()
-  await navigateTo('/login')
-}
+useSeoMeta({ title: '物件管理｜Madori', robots: 'noindex, nofollow' })
 
 const { data: properties, error, refresh } = await useFetch<AdminPropertyListItem[]>('/api/admin/properties')
-const { data: queue, error: queueError, refresh: refreshQueue } = await useFetch<AdminPropertyListItem[]>('/api/admin/properties', { query: { review: 'due' } })
-const freshnessQueue = computed(() => queue.value ?? [])
-
-useSeoMeta({ title: '公司後台｜Madori', robots: 'noindex, nofollow' })
 </script>
 
 <template>
-  <AdminDashboardShell title="總覽" sidebar-id="admin" panel-id="admin-home">
-    <template #navbar-right>
-      <span class="text-sm text-muted">{{ user?.name }}</span>
-      <UButton color="neutral" variant="ghost" @click="logout">
-        登出
-      </UButton>
+  <AdminShell>
+    <div class="flex items-center justify-between gap-4">
+      <h1 class="site-heading text-2xl">
+        所有物件
+      </h1>
       <UButton to="/admin/properties/new" icon="i-lucide-plus">
         新增物件
       </UButton>
-    </template>
-
-    <UAlert v-if="error || queueError" color="error" title="無法載入公司物件。">
-      <template #actions>
-        <UButton variant="outline" @click="refresh(); refreshQueue()">
-          重試
-        </UButton>
-      </template>
-    </UAlert>
-    <UAlert v-if="freshnessQueue.length" color="warning" icon="i-lucide-clock-alert" :title="`${freshnessQueue.length} 件已發布物件需要更新`" description="請確認資料後更新、撤下或維持發布。" />
-    <div class="mt-6 grid gap-4 sm:grid-cols-3">
-      <UCard>
-        <p class="text-sm text-muted">
-          已發布
-        </p>
-        <p class="mt-2 text-3xl font-bold">
-          {{ properties?.filter(property => property.status === 'published').length ?? 0 }}
-        </p>
-      </UCard>
-      <UCard>
-        <p class="text-sm text-muted">
-          草稿
-        </p>
-        <p class="mt-2 text-3xl font-bold">
-          {{ properties?.filter(property => property.status === 'draft').length ?? 0 }}
-        </p>
-      </UCard>
-      <UCard>
-        <p class="text-sm text-muted">
-          已撤下
-        </p>
-        <p class="mt-2 text-3xl font-bold">
-          {{ properties?.filter(property => property.status === 'withdrawn').length ?? 0 }}
-        </p>
-      </UCard>
     </div>
-    <UCard class="mt-6">
-      <template #header>
-        <h2 class="font-semibold">
-          新鮮度審查
-        </h2>
-      </template>
-      <UButton to="/admin/reviews" variant="link" class="mb-3">
-        查看審查清單
-      </UButton>
-      <UEmpty v-if="!queueError && !freshnessQueue.length" icon="i-lucide-circle-check" title="沒有逾期物件" />
-      <ul v-else class="divide-y divide-default">
-        <li v-for="property in freshnessQueue" :key="property.id" class="flex items-center justify-between py-3">
-          <div>
-            <p class="font-medium">
+
+    <UAlert v-if="error" class="mt-6" color="error" title="無法載入物件清單" :actions="[{ label: '重試', onClick: () => { refresh() } }]" />
+    <div v-else-if="!properties?.length" class="mt-6 bg-default p-10 text-center">
+      <p class="font-medium">
+        還沒有物件。
+      </p>
+      <p class="mt-1 text-sm text-muted">
+        新增第一間物件，上傳照片後就能發布到網站。
+      </p>
+    </div>
+    <ul v-else class="mt-6 divide-y divide-default bg-default">
+      <li v-for="property in properties" :key="property.id">
+        <NuxtLink :to="`/admin/properties/${property.id}`" class="flex flex-wrap items-center justify-between gap-3 p-4 hover:bg-muted">
+          <div class="min-w-0">
+            <p class="font-medium text-highlighted">
               {{ property.titleZhTw }}
             </p>
             <p class="text-sm text-muted">
-              {{ property.propertyNumber }} · {{ property.nextUpdateOn }}
+              {{ property.ward }}，{{ formatManPrice(property.priceYen) }}
             </p>
           </div>
-          <UButton :to="`/admin/properties/${property.id}`" color="neutral" variant="outline">
-            編輯
-          </UButton>
-        </li>
-      </ul>
-    </UCard>
-  </AdminDashboardShell>
+          <UBadge :color="property.status === 'published' ? 'success' : 'neutral'" variant="subtle">
+            {{ property.status === 'published' ? '已發布' : '草稿' }}
+          </UBadge>
+        </NuxtLink>
+      </li>
+    </ul>
+  </AdminShell>
 </template>

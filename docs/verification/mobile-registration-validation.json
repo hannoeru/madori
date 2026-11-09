@@ -1,3 +1,0 @@
-{
-  "snapshot": "- link \"返回 Madori\" [ref=e1]\n- heading \"買方註冊\" [level=1, ref=e2]\n- textbox \"您的姓名*\" [ref=e6]\n- textbox \"電子郵件*\" [ref=e7]\n- button \"建立帳號並取得登入連結\" [ref=e3]\n- link \"登入\" [ref=e5]\n- link \"房仲公司請由此登入\" [ref=e4]\n- region \"Notifications (F8)\" [ref=e8]\n- button \"Toggle Nuxt DevTools\" [ref=e9]\n- button \"Toggle Component Inspector\" [ref=e10]"
-}

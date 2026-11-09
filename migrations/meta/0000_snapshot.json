@@ -1,175 +1,9 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "e3237f7b-3271-42c8-b635-4c14d8a22d90",
+  "id": "6fb08178-c4f8-44be-9544-bfc44274e232",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "agencies": {
-      "name": "agencies",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "license": {
-          "name": "license",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "line_url": {
-          "name": "line_url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "agencies_email_unique": {
-          "name": "agencies_email_unique",
-          "columns": [
-            "email"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "auth_tokens": {
-      "name": "auth_tokens",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "token_hash": {
-          "name": "token_hash",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "expires_at": {
-          "name": "expires_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "auth_tokens_token_hash_unique": {
-          "name": "auth_tokens_token_hash_unique",
-          "columns": [
-            "token_hash"
-          ],
-          "isUnique": true
-        },
-        "auth_tokens_email_idx": {
-          "name": "auth_tokens_email_idx",
-          "columns": [
-            "email"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "lines": {
-      "name": "lines",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name_ja": {
-          "name": "name_ja",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name_zh_tw": {
-          "name": "name_zh_tw",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "lines_name_ja_unique": {
-          "name": "lines_name_ja_unique",
-          "columns": [
-            "name_ja"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
     "properties": {
       "name": "properties",
       "columns": {
@@ -178,20 +12,6 @@
           "type": "text",
           "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
-        },
-        "property_number": {
-          "name": "property_number",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "agency_id": {
-          "name": "agency_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "status": {
@@ -327,13 +147,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "transaction_mode": {
-          "name": "transaction_mode",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
         "equipment_zh_tw": {
           "name": "equipment_zh_tw",
           "type": "text",
@@ -341,8 +154,8 @@
           "notNull": false,
           "autoincrement": false
         },
-        "next_update_on": {
-          "name": "next_update_on",
+        "transit": {
+          "name": "transit",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -350,13 +163,6 @@
         },
         "published_at": {
           "name": "published_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "withdrawn_at": {
-          "name": "withdrawn_at",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -378,96 +184,19 @@
         }
       },
       "indexes": {
-        "properties_property_number_unique": {
-          "name": "properties_property_number_unique",
-          "columns": [
-            "property_number"
-          ],
-          "isUnique": true
-        },
-        "properties_public_search_idx": {
-          "name": "properties_public_search_idx",
+        "properties_status_idx": {
+          "name": "properties_status_idx",
           "columns": [
             "status",
-            "ward",
-            "property_type",
-            "build_status",
-            "price_yen",
-            "floor_area_sqm"
-          ],
-          "isUnique": false
-        },
-        "properties_freshness_idx": {
-          "name": "properties_freshness_idx",
-          "columns": [
-            "status",
-            "next_update_on"
-          ],
-          "isUnique": false
-        },
-        "properties_agency_idx": {
-          "name": "properties_agency_idx",
-          "columns": [
-            "agency_id"
+            "published_at"
           ],
           "isUnique": false
         }
       },
-      "foreignKeys": {
-        "properties_agency_id_agencies_id_fk": {
-          "name": "properties_agency_id_agencies_id_fk",
-          "tableFrom": "properties",
-          "tableTo": "agencies",
-          "columnsFrom": [
-            "agency_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
-      "checkConstraints": {
-        "properties_status_check": {
-          "name": "properties_status_check",
-          "value": "\"properties\".\"status\" IN ('draft', 'published', 'withdrawn')"
-        },
-        "properties_type_check": {
-          "name": "properties_type_check",
-          "value": "\"properties\".\"property_type\" IN ('condominium', 'detached_house')"
-        },
-        "properties_build_status_check": {
-          "name": "properties_build_status_check",
-          "value": "\"properties\".\"build_status\" IN ('new', 'resale')"
-        },
-        "properties_price_check": {
-          "name": "properties_price_check",
-          "value": "\"properties\".\"price_yen\" > 0"
-        },
-        "properties_floor_area_check": {
-          "name": "properties_floor_area_check",
-          "value": "\"properties\".\"floor_area_sqm\" IS NULL OR \"properties\".\"floor_area_sqm\" > 0"
-        },
-        "properties_land_area_check": {
-          "name": "properties_land_area_check",
-          "value": "\"properties\".\"land_area_sqm\" IS NULL OR \"properties\".\"land_area_sqm\" > 0"
-        },
-        "properties_building_area_check": {
-          "name": "properties_building_area_check",
-          "value": "\"properties\".\"building_area_sqm\" IS NULL OR \"properties\".\"building_area_sqm\" > 0"
-        },
-        "properties_fee_check": {
-          "name": "properties_fee_check",
-          "value": "\"properties\".\"management_fee_yen\" IS NULL OR \"properties\".\"management_fee_yen\" >= 0"
-        },
-        "properties_reserve_check": {
-          "name": "properties_reserve_check",
-          "value": "\"properties\".\"repair_reserve_yen\" IS NULL OR \"properties\".\"repair_reserve_yen\" >= 0"
-        }
-      }
+      "checkConstraints": {}
     },
     "property_images": {
       "name": "property_images",
@@ -481,13 +210,6 @@
         },
         "property_id": {
           "name": "property_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "object_key": {
-          "name": "object_key",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
@@ -514,30 +236,9 @@
           "notNull": true,
           "autoincrement": false,
           "default": false
-        },
-        "alt_zh_tw": {
-          "name": "alt_zh_tw",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
         }
       },
       "indexes": {
-        "property_images_object_key_unique": {
-          "name": "property_images_object_key_unique",
-          "columns": [
-            "object_key"
-          ],
-          "isUnique": true
-        },
         "property_images_position_idx": {
           "name": "property_images_position_idx",
           "columns": [
@@ -555,156 +256,6 @@
           "tableTo": "properties",
           "columnsFrom": [
             "property_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {
-        "property_images_kind_check": {
-          "name": "property_images_kind_check",
-          "value": "\"property_images\".\"kind\" IN ('floor_plan', 'photo')"
-        },
-        "property_images_position_check": {
-          "name": "property_images_position_check",
-          "value": "\"property_images\".\"position\" >= 0"
-        }
-      }
-    },
-    "property_transit_entries": {
-      "name": "property_transit_entries",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "property_id": {
-          "name": "property_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "station_id": {
-          "name": "station_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "walking_minutes": {
-          "name": "walking_minutes",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "property_transit_search_idx": {
-          "name": "property_transit_search_idx",
-          "columns": [
-            "station_id",
-            "walking_minutes",
-            "property_id"
-          ],
-          "isUnique": false
-        }
-      },
-      "foreignKeys": {
-        "property_transit_entries_property_id_properties_id_fk": {
-          "name": "property_transit_entries_property_id_properties_id_fk",
-          "tableFrom": "property_transit_entries",
-          "tableTo": "properties",
-          "columnsFrom": [
-            "property_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "property_transit_entries_station_id_stations_id_fk": {
-          "name": "property_transit_entries_station_id_stations_id_fk",
-          "tableFrom": "property_transit_entries",
-          "tableTo": "stations",
-          "columnsFrom": [
-            "station_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "restrict",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {
-        "property_transit_walk_check": {
-          "name": "property_transit_walk_check",
-          "value": "\"property_transit_entries\".\"walking_minutes\" >= 0"
-        }
-      }
-    },
-    "stations": {
-      "name": "stations",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "line_id": {
-          "name": "line_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name_ja": {
-          "name": "name_ja",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "name_zh_tw": {
-          "name": "name_zh_tw",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "stations_line_name_idx": {
-          "name": "stations_line_name_idx",
-          "columns": [
-            "line_id",
-            "name_ja"
-          ],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {
-        "stations_line_id_lines_id_fk": {
-          "name": "stations_line_id_lines_id_fk",
-          "tableFrom": "stations",
-          "tableTo": "lines",
-          "columnsFrom": [
-            "line_id"
           ],
           "columnsTo": [
             "id"

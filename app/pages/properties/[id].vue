@@ -1,179 +1,153 @@
 <script setup lang="ts">
-definePageMeta({ key: route => route.fullPath })
-const route = useRoute()
-const { data, error } = await useFetch(() => `/api/properties/${route.params.id}`)
-if (error.value)
-  throw createError({ statusCode: error.value.statusCode ?? 500, statusMessage: '目前無法載入此物件。' })
-const property = data.value
-if (!property)
-  throw createError({ statusCode: 404, statusMessage: '找不到此物件。' })
+import type { PropertyDetail } from '#shared/property'
 
-const photos = property.images.filter(image => image.kind === 'photo')
-const floorPlan = property.images.find(image => image.kind === 'floor_plan')
+const { agent } = useAppConfig()
+const route = useRoute()
+const { data: property, error } = await useFetch<PropertyDetail>(`/api/properties/${route.params.id}`)
+if (error.value || !property.value)
+  throw createError({ statusCode: error.value?.statusCode ?? 404, statusMessage: '找不到此物件。', fatal: true })
+
+const detail = property.value
+const photos = detail.images.filter(image => image.kind === 'photo')
+const floorPlan = detail.images.find(image => image.kind === 'floor_plan')
 const selectedIndex = ref(Math.max(0, photos.findIndex(image => image.isCover)))
 const selectedPhoto = computed(() => photos[selectedIndex.value])
-const zoomOpen = ref(false)
-const floorPlanOpen = ref(false)
-const from = route.query.from
-const returnTo = typeof from === 'string' && /^\/search(?:\?|$)/.test(from) ? from : '/search'
+const zoomedImageId = ref<string>()
+const zoomOpen = computed({ get: () => !!zoomedImageId.value, set: (open) => {
+  if (!open)
+    zoomedImageId.value = undefined
+} })
+
 const facts = [
-  { label: '所在地', value: property.addressZhTw },
-  { label: '格局', value: property.layout },
-  { label: '築年月', value: property.builtOn },
-  { label: '建物結構', value: property.structure },
-  property.propertyType === 'condominium'
-    ? { label: '所在樓層／總樓層', value: property.floorNumber !== null || property.totalFloors !== null ? `${property.floorNumber ?? '未提供'}／${property.totalFloors ?? '未提供'}` : null }
-    : { label: '總樓層', value: property.totalFloors },
-  { label: '土地權利', value: property.landRights },
-  { label: '交易型態', value: property.transactionMode },
-]
-useSeoMeta({ title: `${property.titleZhTw}｜Madori`, description: `${property.ward}・${property.layout}・${formatPropertyArea(property)}` })
+  { label: '面積', value: formatPropertyArea(detail) },
+  { label: '格局', value: detail.layout },
+  { label: '所在地', value: detail.addressZhTw },
+  { label: '築年月', value: formatBuiltOn(detail.builtOn) },
+  { label: '屋況', value: detail.buildStatus === 'new' ? '新成屋' : '中古屋' },
+  { label: '建物結構', value: detail.structure },
+  { label: '樓層', value: detail.propertyType === 'condominium' && detail.floorNumber !== null ? `${detail.floorNumber} 樓${detail.totalFloors === null ? '' : `，共 ${detail.totalFloors} 層`}` : detail.totalFloors === null ? null : `共 ${detail.totalFloors} 層` },
+  { label: '土地權利', value: detail.landRights },
+  { label: '設備', value: detail.equipmentZhTw },
+].filter(fact => fact.value)
+
+useSeoMeta({ title: `${detail.titleZhTw}｜Madori`, description: `${detail.ward} ${detail.layout} ${formatManPrice(detail.priceYen)}` })
 </script>
 
 <template>
-  <div>
-    <MarketHeader />
+  <div class="pb-20 lg:pb-0">
+    <SiteHeader />
     <main id="main-content">
-      <UContainer class="py-8 sm:py-10">
-        <UButton :to="returnTo" color="neutral" variant="ghost" icon="i-lucide-arrow-left">
-          返回搜尋結果
+      <UContainer class="py-6 sm:py-8">
+        <UButton to="/#listings" color="neutral" variant="ghost" icon="i-lucide-arrow-left" class="-ml-3">
+          所有物件
         </UButton>
-        <div class="mt-6 flex flex-wrap gap-2">
-          <UBadge variant="soft">
-            {{ property.ward }}
-          </UBadge><UBadge color="neutral" variant="soft">
-            {{ property.propertyType === 'condominium' ? '公寓' : '獨棟住宅' }}
-          </UBadge><UBadge color="neutral" variant="outline">
-            {{ property.buildStatus === 'new' ? '新成屋' : '中古屋' }}
-          </UBadge>
-        </div>
-        <div class="mt-4 flex flex-wrap items-start justify-between gap-4">
-          <h1 class="market-heading max-w-4xl text-3xl leading-relaxed sm:text-4xl">
-            {{ property.titleZhTw }}
-          </h1>
-          <SavePropertyButton :property-id="property.id" />
-        </div>
-        <p class="mt-3 text-muted">
-          {{ property.layout }} · {{ formatPropertyArea(property) }}
-        </p>
-        <div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+
+        <div class="mt-4 grid gap-10 lg:grid-cols-[minmax(0,1fr)_21rem]">
           <article class="min-w-0">
             <section aria-label="物件照片">
-              <button v-if="selectedPhoto" class="block aspect-[4/3] w-full overflow-hidden rounded-md bg-muted" :aria-label="`放大照片：${selectedPhoto.altZhTw}`" @click="zoomOpen = true">
-                <img :src="`/api/property-images/${selectedPhoto.id}`" :alt="selectedPhoto.altZhTw" class="h-full w-full object-cover">
+              <button v-if="selectedPhoto" class="block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-sm bg-muted" aria-label="放大照片" @click="zoomedImageId = selectedPhoto?.id">
+                <img :src="`/api/property-images/${selectedPhoto.id}`" :alt="`${detail.titleZhTw} 照片 ${selectedIndex + 1}`" class="h-full w-full object-cover">
               </button>
-              <div v-else class="flex aspect-[4/3] items-center justify-center rounded-md border border-default bg-muted">
-                <div class="text-center text-muted">
-                  <UIcon name="i-lucide-image" class="size-12" /><p class="mt-3">
-                    刊登公司尚未提供照片
-                  </p>
-                </div>
-              </div>
-              <div v-if="photos.length" class="mt-3 flex flex-wrap gap-2">
-                <button v-for="(image, index) in photos" :key="image.id" class="h-20 w-24 overflow-hidden rounded-sm border-2" :class="selectedIndex === index ? 'border-primary' : 'border-transparent'" :aria-label="`查看照片 ${index + 1}：${image.altZhTw}`" :aria-pressed="selectedIndex === index" @click="selectedIndex = index">
-                  <img :src="`/api/property-images/${image.id}`" :alt="image.altZhTw" loading="lazy" class="h-full w-full object-cover">
+              <div v-if="photos.length > 1" class="mt-2 flex gap-2 overflow-x-auto pb-1">
+                <button v-for="(photo, index) in photos" :key="photo.id" class="h-16 w-20 shrink-0 overflow-hidden rounded-sm border-2 sm:h-20 sm:w-28" :class="index === selectedIndex ? 'border-primary' : 'border-transparent'" :aria-label="`查看照片 ${index + 1}`" :aria-pressed="index === selectedIndex" @click="selectedIndex = index">
+                  <img :src="`/api/property-images/${photo.id}`" alt="" loading="lazy" class="h-full w-full object-cover">
                 </button>
               </div>
-              <p v-if="selectedPhoto" class="mt-3 text-sm text-muted">
-                {{ selectedPhoto.altZhTw }}・{{ selectedIndex + 1 }}／{{ photos.length }}
-              </p>
             </section>
-            <section class="mt-10 border-t border-default pt-8" aria-labelledby="floor-plan-title">
-              <div class="flex items-center justify-between gap-4">
-                <h2 id="floor-plan-title" class="market-heading text-2xl">
-                  格局圖
-                </h2><UButton v-if="floorPlan" variant="outline" icon="i-lucide-expand" @click="floorPlanOpen = true">
-                  放大查看
-                </UButton>
-              </div><img v-if="floorPlan" :src="`/api/property-images/${floorPlan.id}`" :alt="floorPlan.altZhTw" class="mt-5 max-h-96 w-full rounded-md border border-default bg-elevated object-contain p-4"><p v-else class="mt-4 text-muted">
-                尚未提供格局圖，請向刊登公司確認室內配置。
-              </p>
-            </section>
-            <PropertyCosts :property="property" class="mt-8 lg:hidden" />
-            <section class="mt-10 border-t border-default pt-8" aria-labelledby="facts-title">
-              <h2 id="facts-title" class="market-heading text-2xl">
-                物件概要
-              </h2><dl class="mt-5 divide-y divide-default">
-                <div class="grid gap-2 py-4 sm:grid-cols-[9rem_1fr]">
-                  <dt class="text-muted">
-                    {{ property.propertyType === 'condominium' ? '專有面積' : '土地與建物面積' }}
-                  </dt><dd>{{ formatPropertyArea(property) }}</dd>
-                </div><div v-for="fact in facts" :key="fact.label" class="grid gap-2 py-4 sm:grid-cols-[9rem_1fr]">
+
+            <h1 class="site-heading mt-8 text-3xl leading-snug">
+              {{ detail.titleZhTw }}
+            </h1>
+            <p class="mt-2 text-muted">
+              {{ detail.ward }}，{{ propertyTypeLabels[detail.propertyType] }}
+            </p>
+
+            <PropertyCosts :property="detail" class="mt-6 lg:hidden" />
+
+            <section class="mt-10" aria-labelledby="facts-title">
+              <h2 id="facts-title" class="site-heading text-xl">
+                物件資料
+              </h2>
+              <dl class="mt-3 divide-y divide-default border-y border-default">
+                <div v-for="fact in facts" :key="fact.label" class="grid grid-cols-[6rem_1fr] gap-4 py-3">
                   <dt class="text-muted">
                     {{ fact.label }}
-                  </dt><dd>{{ fact.value ?? '未提供，請向房仲確認' }}</dd>
+                  </dt>
+                  <dd class="whitespace-pre-line">
+                    {{ fact.value }}
+                  </dd>
                 </div>
               </dl>
             </section>
-            <section class="mt-10 border-t border-default pt-8" aria-labelledby="transit-title">
-              <h2 id="transit-title" class="market-heading text-2xl">
-                車站與交通
-              </h2><ul class="mt-5 space-y-4">
-                <li v-for="entry in property.transitEntries" :key="entry.id" class="flex gap-3">
-                  <UIcon name="i-lucide-train-front" class="mt-1 size-5 shrink-0 text-primary" /><div>
-                    <p>{{ entry.lineNameZhTw }}・{{ formatStationName(entry.stationNameZhTw, entry.stationNameJa) }}</p><p class="mt-1 text-sm text-muted">
-                      步行 {{ entry.walkingMinutes }} 分鐘
-                    </p>
-                  </div>
+
+            <section v-if="detail.transit.length" class="mt-10" aria-labelledby="transit-title">
+              <h2 id="transit-title" class="site-heading text-xl">
+                交通
+              </h2>
+              <ul class="mt-3 space-y-2">
+                <li v-for="entry in detail.transit" :key="`${entry.line}-${entry.station}`">
+                  {{ entry.line }} {{ entry.station }}站，步行 {{ entry.walkingMinutes }} 分鐘
                 </li>
-              </ul><p v-if="!property.transitEntries.length" class="mt-4 text-muted">
-                交通資訊未提供，請向房仲確認。
-              </p><p class="mt-5 text-xs text-muted">
-                步行時間為刊登資訊，不包含候車或轉乘。請實際確認通勤路徑。
-              </p>
+              </ul>
             </section>
-            <section class="mt-10 border-t border-default pt-8" aria-labelledby="description-title">
-              <h2 id="description-title" class="market-heading text-2xl">
-                關於這個家
-              </h2><p class="mt-5 whitespace-pre-line leading-loose text-toned">
-                {{ property.descriptionZhTw }}
-              </p><h3 v-if="property.equipmentZhTw" class="mt-6 font-semibold">
-                設備與特色
-              </h3><p v-if="property.equipmentZhTw" class="mt-3 whitespace-pre-line text-muted">
-                {{ property.equipmentZhTw }}
-              </p>
+
+            <section v-if="floorPlan" class="mt-10" aria-labelledby="plan-title">
+              <h2 id="plan-title" class="site-heading text-xl">
+                格局圖
+              </h2>
+              <button class="mt-3 block w-full cursor-zoom-in rounded-sm bg-elevated p-4" aria-label="放大格局圖" @click="zoomedImageId = floorPlan?.id">
+                <img :src="`/api/property-images/${floorPlan.id}`" :alt="`${detail.titleZhTw} 格局圖`" loading="lazy" class="mx-auto max-h-[28rem] object-contain">
+              </button>
             </section>
-            <section class="mt-10 rounded-md border border-default p-5">
-              <h2 class="font-semibold">
-                資訊更新
-              </h2><p class="mt-2 text-sm text-muted">
-                更新日期：{{ property.updatedAt.slice(0, 10) }}・下次更新：{{ property.nextUpdateOn }}
-              </p><p class="mt-2 text-sm text-muted">
-                物件由 {{ property.agency.name }} 刊登。成交或條件變動可能早於網站更新，請先確認是否仍可購買。
+
+            <section class="mt-10" aria-labelledby="about-title">
+              <h2 id="about-title" class="site-heading text-xl">
+                物件說明
+              </h2>
+              <p class="mt-3 max-w-2xl whitespace-pre-line text-toned">
+                {{ detail.descriptionZhTw }}
+              </p>
+              <p class="mt-6 text-sm text-muted">
+                資料更新日：{{ detail.updatedAt.slice(0, 10) }}。物件可能已售出或條件已變更，請先向我確認。
               </p>
             </section>
           </article>
-          <aside class="h-fit space-y-5 lg:sticky lg:top-6">
-            <PropertyCosts :property="property" class="hidden lg:block" />
-            <UCard>
-              <h2 class="text-xl font-semibold">
-                向刊登公司確認
-              </h2><p class="mt-4 font-semibold">
-                {{ property.agency.name }}
-              </p><p class="mt-2 text-sm text-muted">
-                {{ property.agency.license }}
-              </p><p class="mt-4 text-sm text-muted">
-                詢問看屋安排、目前狀態與完整費用。Madori 不將公司註冊視為執照驗證。
-              </p>
-              <PropertyInquiry :property-id="property.id" :property-title="property.titleZhTw" class="mt-6" />
-              <UButton :to="property.agency.lineUrl" target="_blank" rel="noopener noreferrer" block size="lg" class="mt-6" icon="i-simple-icons-line">
-                使用 LINE 諮詢
-              </UButton>
-            </UCard>
+
+          <aside class="hidden lg:block">
+            <div class="sticky top-6 space-y-6">
+              <PropertyCosts :property="detail" />
+              <div class="border-t border-default pt-6">
+                <p class="font-semibold text-highlighted">
+                  {{ agent.name }}
+                </p>
+                <p class="text-sm text-muted">
+                  {{ agent.company }}
+                </p>
+                <p class="mt-3 text-sm text-muted">
+                  想看屋或了解完整費用，傳 LINE 告訴我這間物件的名稱。
+                </p>
+                <LineButton class="mt-4 w-full" />
+              </div>
+            </div>
           </aside>
         </div>
-        <UModal v-model:open="zoomOpen" title="物件照片" :description="selectedPhoto?.altZhTw ?? '物件照片'">
-          <template #body>
-            <img v-if="selectedPhoto" :src="`/api/property-images/${selectedPhoto.id}`" :alt="selectedPhoto.altZhTw" class="w-full object-contain">
-          </template>
-        </UModal>
-        <UModal v-model:open="floorPlanOpen" title="格局圖" :description="floorPlan?.altZhTw ?? '格局圖'">
-          <template #body>
-            <img v-if="floorPlan" :src="`/api/property-images/${floorPlan.id}`" :alt="floorPlan.altZhTw" class="w-full object-contain">
-          </template>
-        </UModal>
       </UContainer>
+
+      <UModal v-model:open="zoomOpen" title="放大檢視" description="物件圖片" :ui="{ content: 'sm:max-w-5xl' }">
+        <template #body>
+          <img v-if="zoomedImageId" :src="`/api/property-images/${zoomedImageId}`" :alt="detail.titleZhTw" class="w-full object-contain">
+        </template>
+      </UModal>
+
+      <div class="fixed inset-x-0 bottom-0 z-10 flex items-center justify-between gap-4 border-t border-default bg-default px-4 py-3 lg:hidden">
+        <p class="site-price text-lg text-highlighted">
+          {{ formatManPrice(detail.priceYen) }}
+        </p>
+        <LineButton />
+      </div>
     </main>
-    <MarketFooter />
+    <div class="hidden lg:block">
+      <SiteFooter />
+    </div>
   </div>
 </template>

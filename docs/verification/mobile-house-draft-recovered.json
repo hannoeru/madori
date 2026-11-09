@@ -1,9 +1,0 @@
-{
-  "success": false,
-  "resultCategory": "failure",
-  "data": null,
-  "error": "Evaluation error: TypeError: Cannot read properties of undefined (reading 'status')\n    at <anonymous>:1:205",
-  "failureCategory": "upstream-error",
-  "sessionName": "madori-mobile-workflows",
-  "namespace": ""
-}

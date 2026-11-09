@@ -1,9 +1,0 @@
-$ eslint .
-
-/Users/hanlee/Projects/madori/tests/auth-issuance.regression.test.mjs
-  28:1  error  Expected 1 empty line after require statement not followed by another require  import/newline-after-import
-
-✖ 1 problem (1 error, 0 warnings)
-  1 error and 0 warnings potentially fixable with the `--fix` option.
-
-[ELIFECYCLE] Command failed with exit code 1.

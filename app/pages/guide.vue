@@ -3,21 +3,19 @@ useSeoMeta({ title: '東京購屋指南｜Madori', description: '看懂東京住
 const steps = [
   { title: '先整理你的生活條件', description: '確認用途、可負擔預算、希望居住的區域與步行到車站的時間。不要只用物件總價決定預算。' },
   { title: '比較物件與持有成本', description: '一起查看照片、格局圖、專有或建物面積、屋齡、管理費及修繕積立金。請向房仲確認缺少的資訊。' },
-  { title: '詢問刊登房仲公司', description: '確認物件是否仍可購買、能否看屋、交易型態、土地權利與預計交屋時間。留下你希望了解的具體問題。' },
+  { title: '向房仲確認', description: '確認物件是否仍可購買、能否看屋、交易型態、土地權利與預計交屋時間。留下你希望了解的具體問題。' },
   { title: '確認文件、費用與資格', description: '簽約前由合格專業人員說明重要事項與契約。請確認資金安排、稅費、仲介費及付款時程，不以網站估算代替正式文件。' },
 ]
 </script>
 
 <template>
   <div>
-    <MarketHeader />
+    <SiteHeader />
     <main id="main-content">
       <UContainer class="py-10 sm:py-16">
         <UBreadcrumb :items="[{ label: '首頁', to: '/' }, { label: '購屋指南' }]" />
         <header class="max-w-3xl py-8">
-          <p class="text-xs tracking-widest text-muted">
-            BEFORE YOU BUY
-          </p><h1 class="market-heading mt-3 text-4xl leading-normal sm:text-5xl">
+          <h1 class="site-heading mt-3 text-4xl leading-normal sm:text-5xl">
             先看懂資訊，<br>再決定下一步。
           </h1><p class="mt-5 text-lg text-muted">
             日本房屋資訊有自己的用語。從格局到每月費用，用熟悉的語言整理看屋前需要知道的事。
@@ -25,7 +23,7 @@ const steps = [
         </header>
         <UAlert icon="i-lucide-info" color="neutral" variant="soft" title="這是一般資訊，不是個別交易建議。" description="費用、貸款資格、法律及稅務義務依物件與個人情況而異。請向房仲、金融機構及合格法律或稅務專業人員確認。" />
         <section class="mt-12" aria-labelledby="facts-title">
-          <h2 id="facts-title" class="market-heading text-3xl">
+          <h2 id="facts-title" class="site-heading text-3xl">
             物件資訊，這樣看。
           </h2>
           <div class="mt-6 grid gap-6 md:grid-cols-2">
@@ -78,7 +76,7 @@ const steps = [
               <h3 class="text-xl font-semibold">
                 資訊・看清更新與交易型態
               </h3><p class="mt-3 text-muted">
-                確認物件更新日期、下次更新日期，以及刊登公司的許可字號。仲介、賣主與代理表示不同交易角色。
+                確認物件更新日期、下次更新日期，以及房仲的許可字號。仲介、賣主與代理表示不同交易角色。
               </p><p class="mt-3 text-sm text-muted">
                 Madori 帳號註冊不等於執照審核。請自行確認公司資料與物件狀態，並保留正式交易文件。
               </p>
@@ -86,7 +84,7 @@ const steps = [
           </div>
         </section>
         <section class="mt-14" aria-labelledby="process-title">
-          <h2 id="process-title" class="market-heading text-3xl">
+          <h2 id="process-title" class="site-heading text-3xl">
             從找房到簽約前的確認。
           </h2><ol class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <li v-for="(step, index) in steps" :key="step.title" class="border-t border-default pt-5">
@@ -118,12 +116,12 @@ const steps = [
           </ul>
         </section>
         <div class="mt-10">
-          <UButton to="/search" size="lg" trailing-icon="i-lucide-arrow-right">
-            開始探索東京物件
+          <UButton to="/#listings" size="lg">
+            查看目前物件
           </UButton>
         </div>
       </UContainer>
     </main>
-    <MarketFooter />
+    <SiteFooter />
   </div>
 </template>
