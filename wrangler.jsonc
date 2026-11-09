@@ -23,8 +23,7 @@
     "bucket_name": "madori-preview-images"
   }],
   "send_email": [{
-    "name": "EMAIL",
-    "remote": true
+    "name": "EMAIL"
   }],
   "env": {
     "preview": {

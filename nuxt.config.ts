@@ -1,6 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
+    function keepHydrationIdBoundaries(_options, nuxt) {
+      const client = nuxt.options.optimization.treeShake.composables.client
+      if (client.vue) {
+        // Vue uses this hook to align SSR and hydration ID boundaries.
+        client.vue = client.vue.filter(name => name !== 'onServerPrefetch')
+      }
+    },
     '@nuxt/eslint',
     '@nuxt/ui',
     '@nuxtjs/seo',
@@ -21,21 +28,27 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   site: {
+    defaultLocale: 'zh-TW',
     name: 'Madori',
     url: 'https://madori.yohaku.ink',
   },
 
+  colorMode: { preference: 'light', fallback: 'light' },
+
   runtimeConfig: {
+    appUrl: 'https://madori.yohaku.ink',
     emailFrom: 'login@madori.yohaku.ink',
     emailFromName: 'Madori',
   },
 
   routeRules: {
-    '/api/**': {
-      cors: true,
-    },
+    '/api/auth/**': { headers: { 'Cache-Control': 'no-store' } },
+    '/api/admin/**': { headers: { 'Cache-Control': 'no-store' } },
+    '/api/buyer/**': { headers: { 'Cache-Control': 'no-store' } },
+    '/buyer/**': { robots: false, headers: { 'Cache-Control': 'no-store' } },
     '/admin/**': {
       robots: false,
+      headers: { 'Cache-Control': 'no-store' },
     },
     '/login': {
       robots: false,
@@ -55,6 +68,12 @@ export default defineNuxtConfig({
     config: {
       standalone: false,
     },
+  },
+
+  icon: {
+    clientBundle: { scan: true },
+    serverBundle: { collections: ['lucide', 'simple-icons'] },
+    fallbackToApi: false,
   },
 
   sitemap: {

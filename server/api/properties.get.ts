@@ -1,14 +1,14 @@
-import type { PropertySummary } from '../../shared/property'
-import { and, asc, desc, eq, exists, gte, inArray, lte, sql } from 'drizzle-orm'
+import type { PropertySearchResults } from '../../shared/property'
+import { and, asc, count, desc, eq, exists, gte, inArray, lte, sql } from 'drizzle-orm'
 import { getQuery } from 'h3'
 import * as v from 'valibot'
 import { propertyQuerySchema } from '../../shared/property'
 import { useDatabase } from '../database/client'
 import { properties, propertyImages, propertyTransitEntries, stations } from '../database/schema'
 
-const primaryArea = sql`coalesce(${properties.floorAreaSqm}, ${properties.landAreaSqm})`
+const primaryArea = sql`CASE WHEN ${properties.propertyType} = 'condominium' THEN ${properties.floorAreaSqm} ELSE ${properties.landAreaSqm} END`
 
-export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
+export default defineEventHandler(async (event): Promise<PropertySearchResults> => {
   const parsedQuery = v.safeParse(propertyQuerySchema, getQuery(event))
   if (!parsedQuery.success)
     throw createError({ statusCode: 400, statusMessage: '搜尋條件無效。' })
@@ -35,7 +35,7 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
         ? desc(primaryArea)
         : desc(properties.publishedAt)
 
-  const propertyRows = await database.select().from(properties).where(and(
+  const filters = and(
     eq(properties.status, 'published'),
     query.ward ? eq(properties.ward, query.ward) : undefined,
     query.propertyType ? eq(properties.propertyType, query.propertyType) : undefined,
@@ -47,17 +47,20 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
     query.maxFloorArea === undefined ? undefined : sql`${primaryArea} <= ${query.maxFloorArea}`,
     query.maxAgeYears === undefined ? undefined : gte(properties.builtOn, `${new Date().getFullYear() - query.maxAgeYears}-01`),
     transitFilter,
-  )).orderBy(orderBy)
+  )
+  const [resultCount] = await database.select({ total: count() }).from(properties).where(filters)
+  const total = resultCount?.total ?? 0
+  const propertyRows = await database.select().from(properties).where(filters).orderBy(orderBy, asc(properties.id)).limit(query.pageSize).offset((query.page - 1) * query.pageSize)
 
   const ids = propertyRows.map(property => property.id)
-  const images = ids.length ? await database.select().from(propertyImages).where(inArray(propertyImages.propertyId, ids)) : []
+  const images = ids.length ? await database.select().from(propertyImages).where(inArray(propertyImages.propertyId, ids)).orderBy(asc(propertyImages.kind), asc(propertyImages.position)) : []
   const transitEntries = ids.length
     ? await database.select({
         id: propertyTransitEntries.id,
         propertyId: propertyTransitEntries.propertyId,
         stationNameZhTw: stations.nameZhTw,
         walkingMinutes: propertyTransitEntries.walkingMinutes,
-      }).from(propertyTransitEntries).innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id)).where(inArray(propertyTransitEntries.propertyId, ids))
+      }).from(propertyTransitEntries).innerJoin(stations, eq(propertyTransitEntries.stationId, stations.id)).where(inArray(propertyTransitEntries.propertyId, ids)).orderBy(asc(propertyTransitEntries.walkingMinutes), asc(propertyTransitEntries.id))
     : []
 
   const imagesByProperty = new Map<string, typeof images>()
@@ -77,7 +80,7 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
       transitByProperty.set(entry.propertyId, [entry])
   }
 
-  return propertyRows.map(property => ({
+  const items = propertyRows.map(property => ({
     id: property.id,
     titleZhTw: property.titleZhTw,
     priceYen: property.priceYen,
@@ -88,7 +91,8 @@ export default defineEventHandler(async (event): Promise<PropertySummary[]> => {
     buildingAreaSqm: property.buildingAreaSqm,
     builtOn: property.builtOn,
     propertyType: property.propertyType,
-    images: (imagesByProperty.get(property.id) ?? []).map(image => ({ id: image.id, isCover: image.isCover })),
+    images: (imagesByProperty.get(property.id) ?? []).map(image => ({ id: image.id, isCover: image.isCover, kind: image.kind, position: image.position, altZhTw: image.altZhTw })),
     transitEntries: (transitByProperty.get(property.id) ?? []).map(entry => ({ id: entry.id, stationNameZhTw: entry.stationNameZhTw, walkingMinutes: entry.walkingMinutes })),
   }))
+  return { items, total, page: query.page, pageSize: query.pageSize }
 })

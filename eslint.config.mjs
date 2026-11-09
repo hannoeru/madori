@@ -10,9 +10,16 @@ export default withNuxt(
   {
     ignores: [
       'migrations/**',
+      '.pi/**',
+      '.pi-subagents/**',
+      '.audit/**',
       'pnpm-workspace.yaml',
       'worker-configuration.d.ts',
     ],
+  },
+  {
+    files: ['tests/**/*.mjs'],
+    rules: { 'test/no-import-node-test': 'off' },
   },
   {
     rules: {

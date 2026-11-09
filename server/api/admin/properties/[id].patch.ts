@@ -1,48 +1,31 @@
-import { and, eq } from 'drizzle-orm'
-import { getRouterParam } from 'h3'
-import * as v from 'valibot'
-import { adminPropertyInputSchema, propertyColumns, propertyTypeAreaError } from '../../../../shared/admin-property'
-import { useDatabase } from '../../../database/client'
+import { and, eq, sql } from 'drizzle-orm'
+import { propertyColumns } from '../../../../shared/admin-property'
 import { properties, propertyTransitEntries } from '../../../database/schema'
+import { ownedProperty, parsePropertyInput, publicationMediaPredicate, validatePublication } from '../../../utils/admin-property'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
-  const id = getRouterParam(event, 'id')
-  if (!id)
-    throw createError({ statusCode: 400, statusMessage: '缺少物件識別碼。' })
-
-  const parsed = v.safeParse(adminPropertyInputSchema, await readBody(event))
-  if (!parsed.success)
-    throw createError({ statusCode: 400, statusMessage: '物件資料有誤。' })
-
-  const input = parsed.output
-  const areaError = propertyTypeAreaError(input)
-  if (areaError)
-    throw createError({ statusCode: 400, statusMessage: areaError })
-
-  const database = useDatabase(event)
-  const [existing] = await database.select({ id: properties.id, publishedAt: properties.publishedAt, withdrawnAt: properties.withdrawnAt })
-    .from(properties)
-    .where(and(eq(properties.id, id), eq(properties.agencyId, user.id)))
-    .limit(1)
-  if (!existing)
-    throw createError({ statusCode: 404, statusMessage: '找不到此物件。' })
-
+  const { database, property, user } = await ownedProperty(event)
+  const input = await parsePropertyInput(event)
+  await validatePublication(event, input, property.id)
   const now = new Date().toISOString()
-  await database.update(properties).set({
+  const update = database.update(properties).set({
     ...propertyColumns(input),
-    publishedAt: input.status === 'published' ? (existing.publishedAt ?? now) : null,
-    withdrawnAt: input.status === 'withdrawn' ? (existing.withdrawnAt ?? now) : null,
-  }).where(and(eq(properties.id, id), eq(properties.agencyId, user.id)))
-
-  await database.delete(propertyTransitEntries).where(eq(propertyTransitEntries.propertyId, id))
-  if (input.transitEntries.length) {
-    await database.insert(propertyTransitEntries).values(input.transitEntries.map(entry => ({
-      propertyId: id,
-      stationId: entry.stationId,
-      walkingMinutes: entry.walkingMinutes,
-    })))
+    status: input.status === 'published' ? sql`CASE WHEN ${publicationMediaPredicate(property.id)} THEN 'published' ELSE NULL END` : input.status,
+    publishedAt: input.status === 'published' ? (property.publishedAt ?? now) : property.publishedAt,
+    withdrawnAt: input.status === 'withdrawn' ? (property.withdrawnAt ?? now) : null,
+  }).where(and(eq(properties.id, property.id), eq(properties.agencyId, user.id))).returning({ id: properties.id })
+  const removeTransit = database.delete(propertyTransitEntries).where(eq(propertyTransitEntries.propertyId, property.id))
+  try {
+    const results = input.transitEntries.length
+      ? await database.batch([update, removeTransit, database.insert(propertyTransitEntries).values(input.transitEntries.map(entry => ({ propertyId: property.id, ...entry })))])
+      : await database.batch([update, removeTransit])
+    if (!results[0].length)
+      throw createError({ statusCode: 409, statusMessage: '物件已移除，請重新載入。' })
   }
-
+  catch (error) {
+    if (error instanceof Error && error.cause instanceof Error && error.cause.message.includes('NOT NULL constraint failed: properties.status'))
+      throw createError({ statusCode: 409, statusMessage: '圖片已變更，請重新確認發布條件。資料尚未儲存。' })
+    throw error
+  }
   return { ok: true }
 })

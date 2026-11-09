@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { AdminImageSummary, AdminPropertyDetail } from '#shared/admin-property'
+import type { AdminAgencyOperationScope, AdminImageSummary, AdminPropertyDetail, AdminPropertyInput } from '#shared/admin-property'
+import * as v from 'valibot'
+import { adminPropertyInputSchema, createAgencyViewScope, publicationErrors } from '#shared/admin-property'
 import { TOKYO_23_WARDS } from '#shared/tokyo'
 
 const props = defineProps<{ propertyId?: string }>()
@@ -8,7 +10,6 @@ const router = useRouter()
 
 const propertyTypeOptions = [{ label: '公寓', value: 'condominium' }, { label: '獨棟住宅', value: 'detached_house' }]
 const buildStatusOptions = [{ label: '新成屋', value: 'new' }, { label: '中古', value: 'resale' }]
-const statusOptions = [{ label: '草稿', value: 'draft' }, { label: '已發布', value: 'published' }, { label: '已撤下', value: 'withdrawn' }]
 const landRightsOptions = ['所有權', '借地權', '定期借地權', '舊法借地權']
 const transactionModeOptions = ['仲介', '賣主', '代理']
 
@@ -34,13 +35,34 @@ const repairReserveYen = ref('')
 const transactionMode = ref('')
 const equipmentZhTw = ref('')
 const nextUpdateOn = ref('')
-const transitEntries = ref<{ stationId: string, walkingMinutes: string }[]>([])
+const transitEntries = ref<{ stationId: string, walkingMinutes: string, stationOpen: boolean }[]>([])
 const images = ref<AdminImageSummary[]>([])
-const coverInput = ref<HTMLInputElement>()
 const error = ref('')
+const success = ref('')
+const fieldErrors = ref<Record<string, string>>({})
+const errorSummary = ref<HTMLElement>()
 const saving = ref(false)
+const mediaBusy = ref(false)
+const loaded = ref(!props.propertyId)
+const deleteOpen = ref(false)
+const { user } = useUserSession()
+const view = createAgencyViewScope(() => user.value?.role === 'agency' ? user.value.id : undefined)
 
-const { data: stationData } = await useFetch('/api/stations')
+watch(() => user.value?.role === 'agency' ? user.value.id : undefined, () => {
+  if (!view.ownsView()) {
+    view.retire()
+    images.value = []
+    loaded.value = false
+    error.value = ''
+    success.value = ''
+    saving.value = false
+    mediaBusy.value = false
+  }
+}, { flush: 'sync' })
+onScopeDispose(view.retire)
+
+const initialScope = view.capture()
+const { data: stationData } = await useFetch('/api/stations', { retry: 0 })
 
 const stationOptions = computed(() => {
   const lines = stationData.value?.lines ?? []
@@ -54,15 +76,29 @@ function toNumberOrNull(value: string): number | null {
 }
 
 async function reloadImages(): Promise<void> {
-  if (!props.propertyId)
+  const scope = view.capture()
+  const propertyId = props.propertyId
+  if (!view.isCurrent(scope) || !propertyId)
     return
-  const detail = await $fetch<AdminPropertyDetail>(`/api/admin/properties/${props.propertyId}`)
-  images.value = detail.images
+  try {
+    const detail = await $fetch<AdminPropertyDetail>(`/api/admin/properties/${propertyId}`, { retry: 0 })
+    if (!view.isCurrent(scope))
+      return
+    images.value = detail.images
+    await nextTick()
+  }
+  catch (error) {
+    if (view.isCurrent(scope))
+      throw error
+  }
 }
 
-if (props.propertyId) {
-  const { data } = await useFetch<AdminPropertyDetail>(() => `/api/admin/properties/${props.propertyId}`)
-  if (data.value) {
+if (props.propertyId && view.isCurrent(initialScope)) {
+  const { data, error: loadError } = await useFetch<AdminPropertyDetail>(() => `/api/admin/properties/${props.propertyId}`, { key: `admin-property:${initialScope?.agencyId}:${props.propertyId}:${useId()}`, retry: 0 })
+  if (loadError.value && view.isCurrent(initialScope))
+    error.value = '無法載入此物件，請確認存取權限並重新整理。'
+  if (data.value && view.isCurrent(initialScope)) {
+    loaded.value = true
     const p = data.value
     propertyType.value = p.propertyType
     buildStatus.value = p.buildStatus
@@ -86,98 +122,125 @@ if (props.propertyId) {
     transactionMode.value = p.transactionMode ?? ''
     equipmentZhTw.value = p.equipmentZhTw ?? ''
     nextUpdateOn.value = p.nextUpdateOn
-    transitEntries.value = p.transitEntries.map(entry => ({ stationId: entry.stationId, walkingMinutes: String(entry.walkingMinutes) }))
+    transitEntries.value = p.transitEntries.map(entry => ({ stationId: entry.stationId, walkingMinutes: String(entry.walkingMinutes), stationOpen: false }))
     images.value = p.images
   }
 }
 
 function addTransit(): void {
-  transitEntries.value.push({ stationId: '', walkingMinutes: '' })
+  transitEntries.value.push({ stationId: '', walkingMinutes: '', stationOpen: false })
 }
 
 function removeTransit(index: number): void {
   transitEntries.value.splice(index, 1)
 }
 
-async function onCoverUpload(event: Event): Promise<void> {
-  const input = event.target as HTMLInputElement
-  const file = input.files?.[0]
-  if (!file || !props.propertyId)
+async function showError(message: string, scope: AdminAgencyOperationScope | undefined) {
+  if (!view.isCurrent(scope))
     return
+  error.value = message
+  await nextTick()
+  if (view.isCurrent(scope))
+    errorSummary.value?.focus()
+}
 
-  error.value = ''
+async function removeProperty() {
+  const scope = view.capture()
+  const propertyId = props.propertyId
+  if (!view.isCurrent(scope) || !propertyId || saving.value || mediaBusy.value)
+    return
   saving.value = true
   try {
-    const body = new FormData()
-    body.append('file', file)
-    body.append('kind', 'photo')
-    body.append('isCover', 'true')
-    body.append('alt', titleZhTw.value || '封面圖片')
-    await $fetch(`/api/admin/properties/${props.propertyId}/images`, { method: 'POST', body })
-    await reloadImages()
+    await $fetch(`/api/admin/properties/${propertyId}`, { method: 'DELETE', retry: 0 })
+    if (!view.isCurrent(scope))
+      return
+    await router.push('/admin/properties')
   }
   catch (err) {
-    error.value = (err as { data?: { statusMessage?: string } })?.data?.statusMessage ?? '上傳失敗。'
+    if (view.isCurrent(scope))
+      await showError(requestErrorMessage(err, '刪除失敗。'), scope)
   }
   finally {
-    saving.value = false
-    input.value = ''
+    if (view.isCurrent(scope)) {
+      saving.value = false
+      deleteOpen.value = false
+    }
   }
 }
 
-async function deleteCover(): Promise<void> {
-  const id = coverImageId(images.value)
-  if (!id || !props.propertyId)
+async function submit(targetStatus: AdminPropertyInput['status'] = status.value): Promise<void> {
+  const scope = view.capture()
+  const propertyId = props.propertyId
+  if (!view.isCurrent(scope) || saving.value || mediaBusy.value || !loaded.value)
     return
-  try {
-    await $fetch(`/api/admin/properties/${props.propertyId}/images/${id}`, { method: 'DELETE' })
-    await reloadImages()
-  }
-  catch (err) {
-    error.value = (err as { data?: { statusMessage?: string } })?.data?.statusMessage ?? '刪除失敗。'
-  }
-}
-
-async function submit(): Promise<void> {
   error.value = ''
-  saving.value = true
+  success.value = ''
+  fieldErrors.value = {}
   const payload = {
     propertyType: propertyType.value,
     buildStatus: buildStatus.value,
-    status: status.value,
+    status: targetStatus,
     titleZhTw: titleZhTw.value,
     descriptionZhTw: descriptionZhTw.value,
     priceYen: Number(priceYen.value),
     ward: ward.value,
     addressZhTw: addressZhTw.value,
     layout: layout.value,
-    floorAreaSqm: toNumberOrNull(floorAreaSqm.value),
-    landAreaSqm: toNumberOrNull(landAreaSqm.value),
-    buildingAreaSqm: toNumberOrNull(buildingAreaSqm.value),
+    floorAreaSqm: propertyType.value === 'condominium' ? toNumberOrNull(floorAreaSqm.value) : null,
+    landAreaSqm: propertyType.value === 'detached_house' ? toNumberOrNull(landAreaSqm.value) : null,
+    buildingAreaSqm: propertyType.value === 'detached_house' ? toNumberOrNull(buildingAreaSqm.value) : null,
     builtOn: builtOn.value,
     structure: structure.value || null,
-    floorNumber: toNumberOrNull(floorNumber.value),
+    floorNumber: propertyType.value === 'condominium' ? toNumberOrNull(floorNumber.value) : null,
     totalFloors: toNumberOrNull(totalFloors.value),
     landRights: landRights.value || null,
-    managementFeeYen: toNumberOrNull(managementFeeYen.value),
-    repairReserveYen: toNumberOrNull(repairReserveYen.value),
+    managementFeeYen: propertyType.value === 'condominium' ? toNumberOrNull(managementFeeYen.value) : null,
+    repairReserveYen: propertyType.value === 'condominium' ? toNumberOrNull(repairReserveYen.value) : null,
     transactionMode: transactionMode.value || null,
     equipmentZhTw: equipmentZhTw.value || null,
     nextUpdateOn: nextUpdateOn.value,
-    transitEntries: transitEntries.value.map(entry => ({ stationId: entry.stationId, walkingMinutes: Number(entry.walkingMinutes) })),
+    transitEntries: transitEntries.value.map(entry => ({ stationId: entry.stationId, walkingMinutes: entry.walkingMinutes === '' ? Number.NaN : Number(entry.walkingMinutes) })),
   }
+  const parsed = v.safeParse(adminPropertyInputSchema, payload)
+  if (!parsed.success) {
+    for (const issue of parsed.issues) {
+      const field = issue.path?.map(part => part.key).join('.')
+      if (field)
+        fieldErrors.value[field] = issue.message
+    }
+    await showError('請修正標示的欄位，再儲存物件。', scope)
+    return
+  }
+  if (targetStatus === 'published') {
+    const missing = publicationErrors(parsed.output, images.value)
+    if (missing.length) {
+      await showError(`發布前請補齊：${missing.join('、')}。資料尚未變更。`, scope)
+      return
+    }
+  }
+  saving.value = true
   try {
-    if (props.propertyId)
-      await $fetch(`/api/admin/properties/${props.propertyId}`, { method: 'PATCH', body: payload })
-    else
-      await $fetch('/api/admin/properties', { method: 'POST', body: payload })
-    await router.push('/admin/properties')
+    if (propertyId) {
+      await $fetch(`/api/admin/properties/${propertyId}`, { method: 'PATCH', body: parsed.output, retry: 0 })
+      if (!view.isCurrent(scope))
+        return
+      status.value = targetStatus
+      success.value = targetStatus === 'published' ? '物件已儲存並發布。' : targetStatus === 'withdrawn' ? '物件已撤下，買方無法查看。' : '草稿已儲存。'
+    }
+    else {
+      const created = await $fetch('/api/admin/properties', { method: 'POST', body: parsed.output, retry: 0 })
+      if (!view.isCurrent(scope))
+        return
+      await router.push(`/admin/properties/${created.id}`)
+    }
   }
   catch (err) {
-    error.value = (err as { data?: { statusMessage?: string } })?.data?.statusMessage ?? '儲存失敗。'
+    if (view.isCurrent(scope))
+      await showError(requestErrorMessage(err, '儲存失敗。輸入資料已保留。'), scope)
   }
   finally {
-    saving.value = false
+    if (view.isCurrent(scope))
+      saving.value = false
   }
 }
 </script>
@@ -190,117 +253,114 @@ async function submit(): Promise<void> {
       </h1>
     </template>
 
-    <div class="grid gap-4">
-      <section v-if="propertyId" class="grid gap-2">
-        <p class="text-sm font-medium">
-          封面圖片
+    <div v-if="error" ref="errorSummary" tabindex="-1" class="mb-5" role="alert">
+      <UAlert color="error" :title="error" />
+    </div>
+    <form v-if="loaded" class="grid gap-5" @submit.prevent="submit()">
+      <UAlert v-if="!propertyId" color="info" title="先儲存草稿，再上傳照片與格局圖。" />
+      <div class="flex flex-wrap items-center gap-3">
+        <UBadge :color="status === 'published' ? 'primary' : 'neutral'">
+          {{ status === 'published' ? '已發布' : status === 'withdrawn' ? '已撤下' : '草稿' }}
+        </UBadge>
+        <p class="text-sm text-muted">
+          發布前請確認適用資料、交通與圖片。撤下後可重新發布或永久刪除。
         </p>
-        <div class="flex items-center gap-4">
-          <img v-if="coverImageId(images)" :src="`/api/property-images/${coverImageId(images)}`" alt="封面圖片" class="h-24 w-32 rounded-lg object-cover">
-          <div v-else class="flex h-24 w-32 items-center justify-center rounded-lg bg-muted text-xs text-muted">
-            無封面
-          </div>
-          <div class="flex items-center gap-2">
-            <UButton color="neutral" variant="outline" :loading="saving" icon="i-lucide-upload" @click="coverInput?.click()">
-              上傳封面
-            </UButton>
-            <UButton v-if="coverImageId(images)" color="error" variant="ghost" icon="i-lucide-trash-2" @click="deleteCover">
-              移除封面
-            </UButton>
-          </div>
-        </div>
-        <input ref="coverInput" type="file" accept="image/*" class="hidden" @change="onCoverUpload">
-      </section>
-
-      <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="物件類型" required>
+      </div>
+      <h2 class="text-lg font-semibold">
+        基本資料
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <UFormField label="物件類型" required :error="fieldErrors.propertyType">
           <USelect v-model="propertyType" :items="propertyTypeOptions" />
         </UFormField>
-        <UFormField label="新成屋 / 中古" required>
+        <UFormField label="新成屋 / 中古" required :error="fieldErrors.buildStatus">
           <USelect v-model="buildStatus" :items="buildStatusOptions" />
-        </UFormField>
-        <UFormField label="狀態" required>
-          <USelect v-model="status" :items="statusOptions" />
         </UFormField>
       </div>
 
-      <UFormField label="標題" required>
+      <UFormField label="標題" required :error="fieldErrors.titleZhTw">
         <UInput v-model="titleZhTw" />
       </UFormField>
 
-      <UFormField label="物件說明" required>
+      <UFormField label="物件說明" required :error="fieldErrors.descriptionZhTw">
         <UTextarea v-model="descriptionZhTw" :rows="4" />
       </UFormField>
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="價格（日圓）" required>
+        <UFormField label="價格（日圓）" required :error="fieldErrors.priceYen">
           <UInput v-model="priceYen" type="number" />
         </UFormField>
-        <UFormField label="格局" required>
+        <UFormField label="格局" required :error="fieldErrors.layout">
           <UInput v-model="layout" placeholder="例如 2LDK" />
         </UFormField>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="東京23區" required>
+        <UFormField label="東京23區" required :error="fieldErrors.ward">
           <USelect v-model="ward" :items="TOKYO_23_WARDS" placeholder="選擇區域" />
         </UFormField>
-        <UFormField label="所在地" required>
+        <UFormField label="所在地" required :error="fieldErrors.addressZhTw">
           <UInput v-model="addressZhTw" />
         </UFormField>
       </div>
 
+      <h2 class="text-lg font-semibold">
+        適用資料與費用
+      </h2>
+      <p class="text-sm text-muted">
+        以下適用資料在發布時必填。尚未確認的資料可留空並儲存草稿。
+      </p>
       <div v-if="propertyType === 'condominium'" class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="專有面積（m²）" required>
-          <UInput v-model="floorAreaSqm" type="number" />
+        <UFormField label="專有面積（m²）" required :error="fieldErrors.floorAreaSqm">
+          <UInput v-model="floorAreaSqm" type="number" step="any" />
         </UFormField>
       </div>
       <div v-else class="grid gap-4 sm:grid-cols-2">
-        <UFormField label="土地面積（m²）" required>
-          <UInput v-model="landAreaSqm" type="number" />
+        <UFormField label="土地面積（m²）" required :error="fieldErrors.landAreaSqm">
+          <UInput v-model="landAreaSqm" type="number" step="any" />
         </UFormField>
-        <UFormField label="建物面積（m²）" required>
-          <UInput v-model="buildingAreaSqm" type="number" />
+        <UFormField label="建物面積（m²）" required :error="fieldErrors.buildingAreaSqm">
+          <UInput v-model="buildingAreaSqm" type="number" step="any" />
         </UFormField>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="築年月">
+        <UFormField label="築年月" required :error="fieldErrors.builtOn">
           <UInput v-model="builtOn" type="month" />
         </UFormField>
-        <UFormField label="下次更新日" required>
+        <UFormField label="下次更新日" required :error="fieldErrors.nextUpdateOn">
           <UInput v-model="nextUpdateOn" type="date" />
         </UFormField>
-        <UFormField label="結構">
+        <UFormField label="結構" required :error="fieldErrors.structure">
           <UInput v-model="structure" placeholder="例如 RC / SRC / 木造" />
         </UFormField>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="所在樓層">
+        <UFormField v-if="propertyType === 'condominium'" label="所在樓層" description="地下室可填負數，不可為0；不可高於總樓層。" required :error="fieldErrors.floorNumber">
           <UInput v-model="floorNumber" type="number" />
         </UFormField>
-        <UFormField label="總樓層">
+        <UFormField label="總樓層" required :error="fieldErrors.totalFloors">
           <UInput v-model="totalFloors" type="number" />
         </UFormField>
-        <UFormField label="土地權利">
+        <UFormField label="土地權利" required :error="fieldErrors.landRights">
           <USelect v-model="landRights" :items="landRightsOptions" placeholder="選擇" clear />
         </UFormField>
       </div>
 
       <div class="grid gap-4 sm:grid-cols-3">
-        <UFormField label="管理費（日圓/月）">
+        <UFormField v-if="propertyType === 'condominium'" label="管理費（日圓/月）" description="無費用請填0。" required :error="fieldErrors.managementFeeYen">
           <UInput v-model="managementFeeYen" type="number" />
         </UFormField>
-        <UFormField label="修繕積立金（日圓/月）">
+        <UFormField v-if="propertyType === 'condominium'" label="修繕積立金（日圓/月）" description="無費用請填0。" required :error="fieldErrors.repairReserveYen">
           <UInput v-model="repairReserveYen" type="number" />
         </UFormField>
-        <UFormField label="交易型態">
+        <UFormField label="交易型態" required :error="fieldErrors.transactionMode">
           <USelect v-model="transactionMode" :items="transactionModeOptions" placeholder="選擇" clear />
         </UFormField>
       </div>
 
-      <UFormField label="設備">
+      <UFormField label="設備" :error="fieldErrors.equipmentZhTw">
         <UInput v-model="equipmentZhTw" placeholder="例如 系統廚具、浴室乾濕分離…" />
       </UFormField>
 
@@ -315,9 +375,13 @@ async function submit(): Promise<void> {
         </div>
         <div class="mt-2 grid gap-2">
           <div v-for="(entry, index) in transitEntries" :key="index" class="grid gap-2 sm:grid-cols-[1fr_10rem_auto]">
-            <USelect v-model="entry.stationId" :items="stationOptions" placeholder="選擇車站" searchable />
-            <UInput v-model="entry.walkingMinutes" type="number" placeholder="步行分鐘" />
-            <UButton color="error" variant="ghost" icon="i-lucide-trash-2" aria-label="移除" @click="removeTransit(index)" />
+            <UFormField :label="`交通 ${index + 1} 車站`" :error="fieldErrors[`transitEntries.${index}.stationId`]">
+              <USelectMenu v-model="entry.stationId" v-model:open="entry.stationOpen" v-bind="entry.stationOpen ? {} : { 'aria-controls': undefined }" :items="stationOptions" value-key="value" :aria-label="`交通 ${index + 1} 車站`" class="w-full" placeholder="選擇車站" />
+            </UFormField>
+            <UFormField :label="`交通 ${index + 1} 步行分鐘`" :error="fieldErrors[`transitEntries.${index}.walkingMinutes`]">
+              <UInput v-model="entry.walkingMinutes" type="number" :min="0" :max="180" class="w-full" />
+            </UFormField>
+            <UButton color="error" variant="ghost" class="min-h-11" icon="i-lucide-trash-2" :aria-label="`移除交通 ${index + 1}`" :disabled="saving" @click="removeTransit(index)" />
           </div>
           <p v-if="!transitEntries.length" class="text-sm text-muted">
             尚未新增交通。至少加入一個車站。
@@ -325,16 +389,35 @@ async function submit(): Promise<void> {
         </div>
       </div>
 
-      <UAlert v-if="error" color="error" :title="error" />
-
-      <div class="flex justify-end gap-3">
+      <AdminPropertyImages v-if="propertyId" :property-id="propertyId" :images="images" :disabled="saving" :refresh-images="reloadImages" @busy="mediaBusy = $event" />
+      <UAlert v-if="success" color="success" :title="success" role="status" />
+      <div class="flex flex-wrap justify-end gap-3 border-t border-default pt-5">
         <UButton color="neutral" variant="ghost" @click="router.push('/admin/properties')">
           取消
         </UButton>
-        <UButton :loading="saving" icon="i-lucide-save" @click="submit">
-          儲存
+        <UButton v-if="propertyId && status === 'withdrawn'" color="error" variant="outline" :disabled="saving || mediaBusy" class="min-h-11" @click="deleteOpen = true">
+          永久刪除
+        </UButton>
+        <UButton v-if="propertyId && status === 'published'" color="neutral" variant="outline" :disabled="saving || mediaBusy" class="min-h-11" @click="submit('withdrawn')">
+          撤下物件
+        </UButton>
+        <UButton v-if="propertyId && status !== 'published'" :disabled="saving || mediaBusy" class="min-h-11" @click="submit('published')">
+          {{ status === 'withdrawn' ? '恢復發布' : '發布物件' }}
+        </UButton>
+        <UButton type="submit" :loading="saving" :disabled="saving || mediaBusy" class="min-h-11" icon="i-lucide-save">
+          {{ propertyId ? '儲存資料' : '儲存草稿並新增圖片' }}
         </UButton>
       </div>
-    </div>
+    </form>
+    <UModal v-model:open="deleteOpen" title="永久刪除此物件？" description="物件與所有圖片將永久移除，無法復原。">
+      <template #footer>
+        <UButton color="neutral" variant="outline" :disabled="saving" @click="deleteOpen = false">
+          取消
+        </UButton>
+        <UButton color="error" :loading="saving" @click="removeProperty">
+          確認永久刪除
+        </UButton>
+      </template>
+    </UModal>
   </UCard>
 </template>

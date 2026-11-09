@@ -1,28 +1,21 @@
 import { and, eq } from 'drizzle-orm'
-import { getRouterParam } from 'h3'
-import { useDatabase } from '../../../../../database/client'
-import { properties, propertyImages } from '../../../../../database/schema'
-import { useImagesBucket } from '../../../../../utils/storage'
+import { propertyImages } from '../../../../../database/schema'
+import { ownedProperty } from '../../../../../utils/admin-property'
+import { cleanupForAgency, imageDeletionStatements } from '../../../../../utils/property-media-cleanup'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireUserSession(event)
-  const id = getRouterParam(event, 'id')
+  const { database, property, user } = await ownedProperty(event)
   const imageId = getRouterParam(event, 'imageId')
-  if (!id || !imageId)
+  if (!imageId)
     throw createError({ statusCode: 400, statusMessage: '缺少圖片識別碼。' })
-
-  const database = useDatabase(event)
-  const [property] = await database.select({ id: properties.id }).from(properties).where(and(eq(properties.id, id), eq(properties.agencyId, user.id))).limit(1)
-  if (!property)
-    throw createError({ statusCode: 404, statusMessage: '找不到此物件。' })
-
-  const [image] = await database.select().from(propertyImages).where(and(eq(propertyImages.id, imageId), eq(propertyImages.propertyId, id))).limit(1)
+  const [image] = await database.select().from(propertyImages).where(and(eq(propertyImages.id, imageId), eq(propertyImages.propertyId, property.id))).limit(1)
   if (!image)
     throw createError({ statusCode: 404, statusMessage: '找不到此圖片。' })
-
-  const bucket = useImagesBucket(event)
-  await database.delete(propertyImages).where(eq(propertyImages.id, imageId))
-  await bucket.delete(image.objectKey)
-
-  return { ok: true }
+  const db = event.context.cloudflare?.env.DB
+  if (!db)
+    throw createError({ statusCode: 500, statusMessage: '資料庫不可用。' })
+  const results = await db.batch(imageDeletionStatements(db, property.id, user.id, imageId))
+  if (!results[1]?.meta.changes)
+    throw createError({ statusCode: 409, statusMessage: '已發布物件須保留至少一張照片及一張格局圖。請先撤下，或直接上傳替換格局圖。' })
+  return { ok: true, ...await cleanupForAgency(event, user.id) }
 })

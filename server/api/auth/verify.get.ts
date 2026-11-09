@@ -1,32 +1,26 @@
-import { eq } from 'drizzle-orm'
-import { getQuery } from 'h3'
+import { and, eq, gt } from 'drizzle-orm'
 import { useDatabase } from '../../database/client'
-import { agencies, authTokens } from '../../database/schema'
+import { agencies, authTokens, buyers } from '../../database/schema'
 import { sha256 } from '../../utils/auth'
 
 export default defineEventHandler(async (event) => {
   const token = getQuery(event).token
-  if (typeof token !== 'string')
+  if (typeof token !== 'string' || token.length > 200)
     return sendRedirect(event, '/login?error=invalid')
 
   const database = useDatabase(event)
-  const hash = await sha256(token)
-  const rows = await database.select().from(authTokens).where(eq(authTokens.tokenHash, hash)).limit(1)
-  const authToken = rows[0]
-
-  if (!authToken || authToken.expiresAt <= new Date().toISOString()) {
-    if (authToken)
-      await database.delete(authTokens).where(eq(authTokens.tokenHash, hash))
+  const [authToken] = await database.delete(authTokens).where(and(
+    eq(authTokens.tokenHash, await sha256(token)),
+    gt(authTokens.expiresAt, new Date().toISOString()),
+  )).returning()
+  if (!authToken)
     return sendRedirect(event, '/login?error=expired')
-  }
 
-  const agencyRows = await database.select().from(agencies).where(eq(agencies.email, authToken.email)).limit(1)
-  const agency = agencyRows[0]
-  if (!agency)
+  const table = authToken.role === 'agency' ? agencies : buyers
+  const [account] = await database.select({ id: table.id, name: table.name, email: table.email }).from(table).where(eq(table.email, authToken.email)).limit(1)
+  if (!account)
     return sendRedirect(event, '/login?error=missing')
 
-  await database.delete(authTokens).where(eq(authTokens.tokenHash, hash))
-  await setUserSession(event, { user: { id: agency.id, name: agency.name, email: agency.email } })
-
-  return sendRedirect(event, '/admin')
+  await replaceUserSession(event, { user: { ...account, role: authToken.role } }, { maxAge: 7 * 24 * 60 * 60 })
+  return sendRedirect(event, authToken.role === 'agency' ? '/admin' : '/buyer')
 })

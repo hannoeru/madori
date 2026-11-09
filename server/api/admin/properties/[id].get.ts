@@ -5,7 +5,8 @@ import { useDatabase } from '../../../database/client'
 import { properties, propertyImages, propertyTransitEntries } from '../../../database/schema'
 
 export default defineEventHandler(async (event): Promise<AdminPropertyDetail> => {
-  const { user } = await requireUserSession(event)
+  setResponseHeader(event, 'cache-control', 'no-store')
+  const { user } = await requireAgencySession(event)
   const id = getRouterParam(event, 'id')
   if (!id)
     throw createError({ statusCode: 400, statusMessage: '缺少物件識別碼。' })
@@ -21,7 +22,7 @@ export default defineEventHandler(async (event): Promise<AdminPropertyDetail> =>
     walkingMinutes: propertyTransitEntries.walkingMinutes,
   }).from(propertyTransitEntries).where(eq(propertyTransitEntries.propertyId, id)).orderBy(asc(propertyTransitEntries.walkingMinutes))
 
-  const images = await database.select({ id: propertyImages.id, isCover: propertyImages.isCover }).from(propertyImages).where(eq(propertyImages.propertyId, id))
+  const images = await database.select({ id: propertyImages.id, isCover: propertyImages.isCover, kind: propertyImages.kind, position: propertyImages.position, altZhTw: propertyImages.altZhTw }).from(propertyImages).where(eq(propertyImages.propertyId, id)).orderBy(asc(propertyImages.kind), asc(propertyImages.position))
 
   return {
     propertyType: property.propertyType,

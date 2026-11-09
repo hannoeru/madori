@@ -37,10 +37,10 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
     .orderBy(asc(propertyTransitEntries.walkingMinutes))
 
   const images = await database
-    .select({ id: propertyImages.id, isCover: propertyImages.isCover })
+    .select({ id: propertyImages.id, isCover: propertyImages.isCover, kind: propertyImages.kind, position: propertyImages.position, altZhTw: propertyImages.altZhTw })
     .from(propertyImages)
     .where(eq(propertyImages.propertyId, property.id))
-
+    .orderBy(asc(propertyImages.kind), asc(propertyImages.position))
   return {
     id: property.id,
     titleZhTw: property.titleZhTw,
@@ -64,6 +64,7 @@ export default defineEventHandler(async (event): Promise<PropertyDetail> => {
     propertyType: property.propertyType,
     buildStatus: property.buildStatus,
     nextUpdateOn: property.nextUpdateOn,
+    updatedAt: property.updatedAt,
     images,
     agency: {
       name: row.agencyName,

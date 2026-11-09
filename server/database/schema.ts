@@ -1,6 +1,6 @@
 import { createId } from '@paralleldrive/cuid2'
 import { sql } from 'drizzle-orm'
-import { check, index, integer, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
+import { check, index, integer, primaryKey, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core'
 
 export const agencies = sqliteTable('agencies', {
   id: text().primaryKey().$defaultFn(createId),
@@ -12,14 +12,23 @@ export const agencies = sqliteTable('agencies', {
   updatedAt: text('updated_at').notNull().$defaultFn(() => new Date().toISOString()).$onUpdateFn(() => new Date().toISOString()),
 })
 
+export const buyers = sqliteTable('buyers', {
+  id: text().primaryKey().$defaultFn(createId),
+  name: text().notNull(),
+  email: text().notNull().unique(),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+})
+
 export const authTokens = sqliteTable('auth_tokens', {
   id: text().primaryKey().$defaultFn(createId),
   email: text().notNull(),
+  role: text({ enum: ['agency', 'buyer'] }).notNull(),
   tokenHash: text('token_hash').notNull().unique(),
   expiresAt: text('expires_at').notNull(),
   createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
 }, table => [
-  index('auth_tokens_email_idx').on(table.email),
+  index('auth_tokens_identity_idx').on(table.email, table.role),
+  check('auth_tokens_role_check', sql`${table.role} IN ('agency', 'buyer')`),
 ])
 
 export const lines = sqliteTable('lines', {
@@ -40,7 +49,7 @@ export const stations = sqliteTable('stations', {
 export const properties = sqliteTable('properties', {
   id: text().primaryKey().$defaultFn(createId),
   propertyNumber: text('property_number').notNull().unique(),
-  agencyId: text('agency_id').references(() => agencies.id, { onDelete: 'set null' }),
+  agencyId: text('agency_id').notNull().references(() => agencies.id, { onDelete: 'restrict' }),
   status: text({ enum: ['draft', 'published', 'withdrawn'] }).notNull(),
   propertyType: text('property_type', { enum: ['condominium', 'detached_house'] }).notNull(),
   buildStatus: text('build_status', { enum: ['new', 'resale'] }).notNull(),
@@ -82,6 +91,37 @@ export const properties = sqliteTable('properties', {
   index('properties_agency_idx').on(table.agencyId),
 ])
 
+export const savedProperties = sqliteTable('saved_properties', {
+  buyerId: text('buyer_id').notNull().references(() => buyers.id, { onDelete: 'cascade' }),
+  propertyId: text('property_id').notNull().references(() => properties.id, { onDelete: 'cascade' }),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+}, table => [
+  primaryKey({ columns: [table.buyerId, table.propertyId] }),
+])
+
+export const inquiries = sqliteTable('inquiries', {
+  id: text().primaryKey().$defaultFn(createId),
+  buyerId: text('buyer_id').notNull().references(() => buyers.id, { onDelete: 'restrict' }),
+  agencyId: text('agency_id').notNull().references(() => agencies.id, { onDelete: 'restrict' }),
+  propertyId: text('property_id').references(() => properties.id, { onDelete: 'set null' }),
+  submissionKey: text('submission_key').notNull(),
+  propertyTitle: text('property_title').notNull(),
+  propertyNumber: text('property_number').notNull(),
+  buyerName: text('buyer_name').notNull(),
+  buyerEmail: text('buyer_email').notNull(),
+  message: text().notNull(),
+  notificationStatus: text('notification_status', { enum: ['pending', 'sent', 'failed'] }).notNull().default('pending'),
+  notificationError: text('notification_error'),
+  notifiedAt: text('notified_at'),
+  readAt: text('read_at'),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+}, table => [
+  uniqueIndex('inquiries_submission_idx').on(table.buyerId, table.submissionKey),
+  index('inquiries_buyer_idx').on(table.buyerId, table.createdAt),
+  index('inquiries_agency_idx').on(table.agencyId, table.createdAt),
+  check('inquiries_notification_check', sql`${table.notificationStatus} IN ('pending', 'sent', 'failed')`),
+])
+
 export const propertyTransitEntries = sqliteTable('property_transit_entries', {
   id: text().primaryKey().$defaultFn(createId),
   propertyId: text('property_id').notNull().references(() => properties.id, { onDelete: 'cascade' }),
@@ -90,6 +130,14 @@ export const propertyTransitEntries = sqliteTable('property_transit_entries', {
 }, table => [
   check('property_transit_walk_check', sql`${table.walkingMinutes} >= 0`),
   index('property_transit_search_idx').on(table.stationId, table.walkingMinutes, table.propertyId),
+])
+
+export const pendingImageDeletions = sqliteTable('pending_image_deletions', {
+  objectKey: text('object_key').primaryKey(),
+  agencyId: text('agency_id').notNull().references(() => agencies.id, { onDelete: 'restrict' }),
+  createdAt: text('created_at').notNull().$defaultFn(() => new Date().toISOString()),
+}, table => [
+  index('pending_image_deletions_agency_idx').on(table.agencyId),
 ])
 
 export const propertyImages = sqliteTable('property_images', {

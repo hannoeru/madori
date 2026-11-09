@@ -11,9 +11,9 @@ async function logout(): Promise<void> {
   await navigateTo('/login')
 }
 
-const { data: properties } = await useFetch<AdminPropertyListItem[]>('/api/admin/properties')
-const today = new Date().toISOString().slice(0, 10)
-const freshnessQueue = computed(() => properties.value?.filter(property => property.status === 'published' && property.nextUpdateOn <= today) ?? [])
+const { data: properties, error, refresh } = await useFetch<AdminPropertyListItem[]>('/api/admin/properties')
+const { data: queue, error: queueError, refresh: refreshQueue } = await useFetch<AdminPropertyListItem[]>('/api/admin/properties', { query: { review: 'due' } })
+const freshnessQueue = computed(() => queue.value ?? [])
 
 useSeoMeta({ title: '公司後台｜Madori', robots: 'noindex, nofollow' })
 </script>
@@ -30,6 +30,13 @@ useSeoMeta({ title: '公司後台｜Madori', robots: 'noindex, nofollow' })
       </UButton>
     </template>
 
+    <UAlert v-if="error || queueError" color="error" title="無法載入公司物件。">
+      <template #actions>
+        <UButton variant="outline" @click="refresh(); refreshQueue()">
+          重試
+        </UButton>
+      </template>
+    </UAlert>
     <UAlert v-if="freshnessQueue.length" color="warning" icon="i-lucide-clock-alert" :title="`${freshnessQueue.length} 件已發布物件需要更新`" description="請確認資料後更新、撤下或維持發布。" />
     <div class="mt-6 grid gap-4 sm:grid-cols-3">
       <UCard>
@@ -60,10 +67,13 @@ useSeoMeta({ title: '公司後台｜Madori', robots: 'noindex, nofollow' })
     <UCard class="mt-6">
       <template #header>
         <h2 class="font-semibold">
-          新鮮度佇列
+          新鮮度審查
         </h2>
       </template>
-      <UEmpty v-if="!freshnessQueue.length" icon="i-lucide-circle-check" title="沒有逾期物件" />
+      <UButton to="/admin/reviews" variant="link" class="mb-3">
+        查看審查清單
+      </UButton>
+      <UEmpty v-if="!queueError && !freshnessQueue.length" icon="i-lucide-circle-check" title="沒有逾期物件" />
       <ul v-else class="divide-y divide-default">
         <li v-for="property in freshnessQueue" :key="property.id" class="flex items-center justify-between py-3">
           <div>

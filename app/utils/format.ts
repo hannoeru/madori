@@ -1,8 +1,10 @@
+import type { PropertySummary } from '#shared/property'
+
 export function formatManPrice(yen: number): string {
-  const man = Math.round(yen / 10000)
+  const man = yen / 10000
   if (man < 1)
     return `${new Intl.NumberFormat('zh-TW').format(yen)}日圓`
-  return `${new Intl.NumberFormat('zh-TW').format(man)}萬日圓`
+  return `${new Intl.NumberFormat('zh-TW', { maximumFractionDigits: 4 }).format(man)}萬日圓`
 }
 
 export function formatYen(yen: number): string {
@@ -14,20 +16,15 @@ export function formatArea(sqm: number): string {
   return `${sqm} m²（約 ${tsubo.toFixed(1)} 坪）`
 }
 
-export interface PropertyAreas {
-  propertyType: string
-  floorAreaSqm: number | null
-  landAreaSqm: number | null
-  buildingAreaSqm: number | null
-}
+export type PropertyAreas = Pick<PropertySummary, 'propertyType' | 'floorAreaSqm' | 'landAreaSqm' | 'buildingAreaSqm'>
 
 export function formatPropertyArea(property: PropertyAreas): string {
   if (property.propertyType === 'condominium')
-    return property.floorAreaSqm == null ? '—' : formatArea(property.floorAreaSqm)
+    return property.floorAreaSqm == null ? '未提供面積' : formatArea(property.floorAreaSqm)
   if (property.landAreaSqm == null)
-    return '—'
+    return '未提供面積'
   const land = `土地 ${formatArea(property.landAreaSqm)}`
-  const building = property.buildingAreaSqm == null ? '' : ` / 建物 ${property.buildingAreaSqm} m²`
+  const building = property.buildingAreaSqm == null ? '' : ` / 建物 ${formatArea(property.buildingAreaSqm)}`
   return land + building
 }
 
@@ -39,6 +36,6 @@ export function formatBuiltOn(builtOn: string): string {
   return builtOn ? `${builtOn.slice(0, 4)}年築` : ''
 }
 
-export function coverImageId(images: Array<{ id: string, isCover: boolean }>): string | undefined {
-  return (images.find(image => image.isCover) ?? images[0])?.id
+export function coverImageId(images: Array<{ id: string, isCover: boolean, kind: 'photo' | 'floor_plan' }>): string | undefined {
+  return (images.find(image => image.isCover && image.kind === 'photo') ?? images.find(image => image.kind === 'photo'))?.id
 }
