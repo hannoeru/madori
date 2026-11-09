@@ -1,0 +1,47 @@
+[
+  {
+    "origin": "http://localhost:3010/admin",
+    "result": {
+      "heading": "總覽",
+      "mainCount": 1,
+      "overflow": false,
+      "path": "/admin"
+    }
+  },
+  {
+    "origin": "http://localhost:3010/admin/properties",
+    "result": {
+      "heading": "所有物件",
+      "mainCount": 1,
+      "overflow": false,
+      "path": "/admin/properties"
+    }
+  },
+  {
+    "origin": "http://localhost:3010/admin/reviews",
+    "result": {
+      "heading": "新鮮度審查",
+      "mainCount": 1,
+      "overflow": false,
+      "path": "/admin/reviews"
+    }
+  },
+  {
+    "origin": "http://localhost:3010/admin/inquiries",
+    "result": {
+      "heading": "諮詢收件匣",
+      "mainCount": 1,
+      "overflow": false,
+      "path": "/admin/inquiries"
+    }
+  },
+  {
+    "origin": "http://localhost:3010/admin/properties/new",
+    "result": {
+      "heading": "新增物件",
+      "mainCount": 1,
+      "overflow": false,
+      "path": "/admin/properties/new"
+    }
+  }
+]

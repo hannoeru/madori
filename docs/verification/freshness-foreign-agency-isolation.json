@@ -1,0 +1,10 @@
+{
+  "origin": "http://localhost:3010/admin/properties/new",
+  "result": {
+    "count": 0,
+    "hasForeignDemo": false,
+    "name": "本機・手機註冊公司 C",
+    "role": "agency",
+    "status": 200
+  }
+}

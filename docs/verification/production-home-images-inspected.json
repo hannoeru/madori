@@ -1,0 +1,33 @@
+{
+  "origin": "http://localhost:3011/",
+  "result": {
+    "homeResults": [
+      "示範・諮詢本機測試 13a1f3a8-b",
+      "示範・本機測試 4d30a635",
+      "示範・諮詢本機測試 e490f556-b"
+    ],
+    "images": [
+      {
+        "alt": "示範・諮詢本機測試 13a1f3a8-b",
+        "complete": true,
+        "naturalWidth": 960,
+        "src": "/api/property-images/fm4qq86yinlgqftw2tke16de",
+        "width": 387.328125
+      },
+      {
+        "alt": "示範・本機測試 4d30a635",
+        "complete": true,
+        "naturalWidth": 960,
+        "src": "/api/property-images/cv66qtu3pdyxwhw5l5yj5wts",
+        "width": 387.328125
+      },
+      {
+        "alt": "示範・諮詢本機測試 e490f556-b",
+        "complete": true,
+        "naturalWidth": 960,
+        "src": "/api/property-images/t2zrxj3re14baflopqlsc0z8",
+        "width": 387.34375
+      }
+    ]
+  }
+}

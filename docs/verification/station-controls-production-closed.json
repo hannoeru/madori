@@ -1,0 +1,50 @@
+[
+  {
+    "closed": {
+      "origin": "http://localhost:3011/search",
+      "result": {
+        "emptyControls": 0,
+        "numberLabels": [
+          [
+            "最低價格（日圓）"
+          ],
+          [
+            "最高價格（日圓）"
+          ],
+          [
+            "最小面積（m²）"
+          ],
+          [
+            "最大面積（m²）"
+          ],
+          [
+            "步行時間上限（分鐘）"
+          ],
+          [
+            "屋齡上限（年）"
+          ]
+        ],
+        "overflow": false
+      }
+    }
+  },
+  {
+    "audit": {
+      "counts": {
+        "inapplicable": 35,
+        "incomplete": 1,
+        "passes": 27,
+        "violations": 0
+      },
+      "incomplete": [
+        "color-contrast"
+      ],
+      "violations": []
+    }
+  },
+  {
+    "station": [
+      "- button \"車站\" [expanded=false, ref=e185]"
+    ]
+  }
+]

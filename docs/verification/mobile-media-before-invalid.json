@@ -1,0 +1,30 @@
+{
+  "lifecycle": {
+    "effectiveLaunch": {
+      "browserLaunched": true,
+      "engine": "chrome",
+      "launchHash": 10555201366498914000
+    },
+    "launched": false,
+    "relaunchedBrowser": false,
+    "restartedBackground": false,
+    "restoreStatus": "not_configured",
+    "reused": true,
+    "saveStatus": "not_attempted"
+  },
+  "origin": "http://localhost:3010/admin/properties/t5e4objarsi9ko4gxy7dkbrd",
+  "result": {
+    "images": [
+      {
+        "id": "h8qevnyebjbtgu6h4g6l0x6f",
+        "kind": "floor_plan"
+      },
+      {
+        "id": "yaqrgerlb0flac46wggtywky",
+        "kind": "photo"
+      }
+    ],
+    "overflow": false,
+    "status": 200
+  }
+}

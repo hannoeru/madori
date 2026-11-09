@@ -1,0 +1,214 @@
+[
+  {
+    "path": "/buyer/login",
+    "size": "mobile",
+    "state": {
+      "origin": "http://localhost:3011/buyer/login",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "買方登入｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 23,
+        "violations": 1
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/buyer/login",
+      "violations": [
+        {
+          "help": "Links must be distinguishable without relying on color",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=axeAPI",
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodeCount": 1,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  The link has insufficient color contrast of 1.51:1 with the surrounding text. (Minimum contrast is 3:1, link text: #31584a, surrounding text: #626f67)\n  The link has no styling (such as underline) to distinguish it from the surrounding text",
+              "html": "<a href=\"/buyer/register\" class=\"outline-primary/25 focus-visible:outline-3 rounded-md hover:text-default transition-colors text-primary\"><!--[--><!--[-->註冊<!--]--><!--]--></a>",
+              "target": [
+                "a[href$=\"register\"]"
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2a",
+            "wcag141",
+            "TTv5",
+            "TT13.a",
+            "EN-301-549",
+            "EN-9.1.4.1",
+            "RGAAv4",
+            "RGAA-10.6.1"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "path": "/buyer/register",
+    "size": "mobile",
+    "state": {
+      "origin": "http://localhost:3011/buyer/register",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "買方註冊｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 23,
+        "violations": 1
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/buyer/register",
+      "violations": [
+        {
+          "help": "Links must be distinguishable without relying on color",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=axeAPI",
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodeCount": 1,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  The link has insufficient color contrast of 1.51:1 with the surrounding text. (Minimum contrast is 3:1, link text: #31584a, surrounding text: #626f67)\n  The link has no styling (such as underline) to distinguish it from the surrounding text",
+              "html": "<a href=\"/buyer/login\" class=\"outline-primary/25 focus-visible:outline-3 rounded-md hover:text-default transition-colors text-primary\"><!--[--><!--[-->登入<!--]--><!--]--></a>",
+              "target": [
+                ".hover\\:text-default.text-primary[href$=\"login\"]"
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2a",
+            "wcag141",
+            "TTv5",
+            "TT13.a",
+            "EN-301-549",
+            "EN-9.1.4.1",
+            "RGAAv4",
+            "RGAA-10.6.1"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "path": "/login",
+    "size": "mobile",
+    "state": {
+      "origin": "http://localhost:3011/login",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "房仲公司登入｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 23,
+        "violations": 1
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/login",
+      "violations": [
+        {
+          "help": "Links must be distinguishable without relying on color",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=axeAPI",
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodeCount": 1,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  The link has insufficient color contrast of 1.51:1 with the surrounding text. (Minimum contrast is 3:1, link text: #31584a, surrounding text: #626f67)\n  The link has no styling (such as underline) to distinguish it from the surrounding text",
+              "html": "<a href=\"/register\" class=\"outline-primary/25 focus-visible:outline-3 rounded-md hover:text-default transition-colors text-primary\"><!--[--><!--[-->註冊<!--]--><!--]--></a>",
+              "target": [
+                "a[href$=\"register\"]"
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2a",
+            "wcag141",
+            "TTv5",
+            "TT13.a",
+            "EN-301-549",
+            "EN-9.1.4.1",
+            "RGAAv4",
+            "RGAA-10.6.1"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "path": "/register",
+    "size": "mobile",
+    "state": {
+      "origin": "http://localhost:3011/register",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "房仲公司註冊｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 23,
+        "violations": 1
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/register",
+      "violations": [
+        {
+          "help": "Links must be distinguishable without relying on color",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/link-in-text-block?application=axeAPI",
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodeCount": 1,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  The link has insufficient color contrast of 1.51:1 with the surrounding text. (Minimum contrast is 3:1, link text: #31584a, surrounding text: #626f67)\n  The link has no styling (such as underline) to distinguish it from the surrounding text",
+              "html": "<a href=\"/login\" class=\"outline-primary/25 focus-visible:outline-3 rounded-md hover:text-default transition-colors text-primary\"><!--[--><!--[-->登入<!--]--><!--]--></a>",
+              "target": [
+                ".hover\\:text-default.text-primary[href$=\"login\"]"
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2a",
+            "wcag141",
+            "TTv5",
+            "TT13.a",
+            "EN-301-549",
+            "EN-9.1.4.1",
+            "RGAAv4",
+            "RGAA-10.6.1"
+          ]
+        }
+      ]
+    }
+  }
+]

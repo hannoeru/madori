@@ -1,0 +1,76 @@
+{
+  "lifecycle": {
+    "effectiveLaunch": {
+      "browserLaunched": true,
+      "engine": "chrome",
+      "launchHash": 10555201366498914000
+    },
+    "launched": false,
+    "relaunchedBrowser": false,
+    "restartedBackground": false,
+    "restoreStatus": "not_configured",
+    "reused": true,
+    "saveStatus": "not_attempted"
+  },
+  "origin": "http://localhost:3010/buyer/saved",
+  "refs": {
+    "e116": {
+      "name": "Notifications (F8)",
+      "role": "region"
+    },
+    "e117": {
+      "name": "Madori 買方帳號總覽",
+      "role": "link"
+    },
+    "e118": {
+      "name": "探索物件",
+      "role": "link"
+    },
+    "e119": {
+      "name": "買方帳號導覽",
+      "role": "navigation"
+    },
+    "e120": {
+      "name": "我的收藏",
+      "role": "heading"
+    },
+    "e121": {
+      "name": "重新載入",
+      "role": "button"
+    },
+    "e122": {
+      "name": "登出",
+      "role": "button"
+    },
+    "e125": {
+      "name": "Toggle Nuxt DevTools",
+      "role": "button"
+    },
+    "e126": {
+      "name": "Toggle Component Inspector",
+      "role": "button"
+    },
+    "e129": {
+      "name": "帳號總覽",
+      "role": "link"
+    },
+    "e130": {
+      "name": "我的收藏",
+      "role": "link"
+    },
+    "e131": {
+      "name": "諮詢紀錄",
+      "role": "link"
+    },
+    "e132": {
+      "name": "還沒有收藏物件",
+      "role": "heading"
+    },
+    "e133": {
+      "name": "開始探索物件",
+      "role": "link"
+    }
+  },
+  "removedRefs": [],
+  "snapshot": "- link \"Madori 買方帳號總覽\" [ref=e117]\n- link \"探索物件\" [ref=e118]\n- navigation \"買方帳號導覽\" [ref=e119]\n  - link \"帳號總覽\" [ref=e129]\n  - link \"我的收藏\" [ref=e130]\n  - link \"諮詢紀錄\" [ref=e131]\n- heading \"我的收藏\" [level=1, ref=e120]\n- button \"重新載入\" [ref=e121]\n- heading \"還沒有收藏物件\" [level=2, ref=e132]\n- link \"開始探索物件\" [ref=e133]\n- button \"登出\" [ref=e122]\n- button \"Toggle Nuxt DevTools\" [ref=e125]\n- button \"Toggle Component Inspector\" [ref=e126]\n- region \"Notifications (F8)\" [ref=e116]"
+}

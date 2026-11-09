@@ -1,0 +1,18 @@
+✔ HTTP failed Floor plan replacement rolls back metadata and cleans only its orphan (87.287209ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ HTTP unqueued recovery requires the owning Agency and nonce, and remains retryable through R2 failure (53.926333ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ HTTP lost D1 acknowledgment preserves an accepted Floor plan and its linked bytes (25.591125ms)
+✔ HTTP lost R2 acknowledgment retains owned cleanup through an outage and authorized retry (22.931709ms)
+✔ HTTP upload compensates a rejected R2 write without changing linked media (22.315583ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 890.332208

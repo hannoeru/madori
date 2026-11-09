@@ -1,0 +1,11 @@
+$ eslint .
+
+/Users/hanlee/Projects/madori/docs/verification/mobile-buyer-b-history.json
+  1:3  error  Parsing error: Unexpected identifier 'link'
+
+/Users/hanlee/Projects/madori/docs/verification/mobile-house-published.json
+  1:3  error  Parsing error: Unexpected identifier 'link'
+
+✖ 2 problems (2 errors, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.

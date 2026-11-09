@@ -1,0 +1,29 @@
+{
+  "origin": "http://localhost:3010/admin/properties/fu52j64ig7pzxqm2fwtg0pq0",
+  "result": {
+    "areas": [
+      {
+        "label": "價格（日圓）",
+        "value": "76500000"
+      },
+      {
+        "label": "土地面積（m²）",
+        "value": "91.4"
+      },
+      {
+        "label": "建物面積（m²）",
+        "value": "88.2"
+      },
+      {
+        "label": "總樓層",
+        "value": "2"
+      },
+      {
+        "label": "交通 1 步行分鐘",
+        "value": "8"
+      }
+    ],
+    "date": "2026-10-01",
+    "nativeValid": true
+  }
+}

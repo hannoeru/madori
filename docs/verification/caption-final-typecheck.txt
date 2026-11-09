@@ -1,0 +1,2 @@
+$ nuxt typecheck
+ℹ Nuxt Icon client bundle consist of 65 icons with 17.50KB(uncompressed) in size

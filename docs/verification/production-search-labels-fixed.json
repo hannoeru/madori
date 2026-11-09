@@ -1,0 +1,96 @@
+[
+  {
+    "path": "/label-audit-before",
+    "data": {
+      "origin": "http://localhost:3011/label-audit-before",
+      "result": {
+        "allAssociated": true,
+        "inputs": [
+          {
+            "id": "v-1-7",
+            "labels": [
+              "最低價格（日圓）"
+            ]
+          },
+          {
+            "id": "v-1-8",
+            "labels": [
+              "最高價格（日圓）"
+            ]
+          },
+          {
+            "id": "v-1-11",
+            "labels": [
+              "最小面積（m²）"
+            ]
+          },
+          {
+            "id": "v-1-12",
+            "labels": [
+              "最大面積（m²）"
+            ]
+          },
+          {
+            "id": "v-1-16",
+            "labels": [
+              "步行時間上限（分鐘）"
+            ]
+          },
+          {
+            "id": "v-1-17",
+            "labels": [
+              "屋齡上限（年）"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "path": "/search",
+    "data": {
+      "origin": "http://localhost:3011/search",
+      "result": {
+        "allAssociated": true,
+        "inputs": [
+          {
+            "id": "v-0-3-7",
+            "labels": [
+              "最低價格（日圓）"
+            ]
+          },
+          {
+            "id": "v-0-3-8",
+            "labels": [
+              "最高價格（日圓）"
+            ]
+          },
+          {
+            "id": "v-0-3-11",
+            "labels": [
+              "最小面積（m²）"
+            ]
+          },
+          {
+            "id": "v-0-3-12",
+            "labels": [
+              "最大面積（m²）"
+            ]
+          },
+          {
+            "id": "v-0-3-16",
+            "labels": [
+              "步行時間上限（分鐘）"
+            ]
+          },
+          {
+            "id": "v-0-3-17",
+            "labels": [
+              "屋齡上限（年）"
+            ]
+          }
+        ]
+      }
+    }
+  }
+]

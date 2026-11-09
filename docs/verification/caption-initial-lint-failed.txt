@@ -1,0 +1,8 @@
+$ eslint .
+
+/Users/hanlee/Projects/madori/tests/marketplace.integration.test.mjs
+  34:44  error  The quantifier '[^>]*' is always entered despite having a minimum of 0. This is because the assertion '\b' contradicts with the element(s) after the quantifier. Either set the minimum to 1 (+) or change the assertion  regexp/no-contradiction-with-assertion
+
+✖ 1 problem (1 error, 0 warnings)
+
+[ELIFECYCLE] Command failed with exit code 1.

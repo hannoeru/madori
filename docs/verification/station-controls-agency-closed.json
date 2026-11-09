@@ -1,0 +1,15 @@
+[
+  {
+    "station": [
+      "- button \"交通 1 車站\" [expanded=false, ref=e30]"
+    ]
+  },
+  {
+    "origin": "http://localhost:3010/admin/properties/fu52j64ig7pzxqm2fwtg0pq0",
+    "result": {
+      "controls": null,
+      "emptyControls": 0,
+      "overflow": false
+    }
+  }
+]

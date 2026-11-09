@@ -1,0 +1,157 @@
+[
+  {
+    "opened": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "關閉",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Shift+Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "房仲入口",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(49, 88, 74) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "關閉",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "探索物件",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "購屋指南",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "我的收藏",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "買方登入",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "房仲入口",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(49, 88, 74) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "key": "Tab",
+    "focus": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "active": "關閉",
+        "boxShadow": "none",
+        "dialogName": "Madori 導覽",
+        "dialogWidth": 320,
+        "focusVisible": true,
+        "inside": true,
+        "modal": null,
+        "outline": "rgb(49, 88, 74) solid 3px",
+        "overflow": false
+      }
+    }
+  },
+  {
+    "dismissed": true
+  }
+]

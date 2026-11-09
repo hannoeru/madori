@@ -1,0 +1,91 @@
+{
+  "origin": "http://localhost:3011/search",
+  "result": {
+    "controls": [
+      {
+        "current": null,
+        "disabled": true,
+        "height": 44,
+        "label": "第一頁",
+        "left": 18,
+        "right": 62,
+        "row": 7356.890625,
+        "width": 44
+      },
+      {
+        "current": null,
+        "disabled": true,
+        "height": 44,
+        "label": "上一頁",
+        "left": 66,
+        "right": 110,
+        "row": 7356.890625,
+        "width": 44
+      },
+      {
+        "current": "page",
+        "disabled": false,
+        "height": 44,
+        "label": "第 1 頁",
+        "left": 114,
+        "right": 158,
+        "row": 7356.890625,
+        "width": 44
+      },
+      {
+        "current": null,
+        "disabled": false,
+        "height": 44,
+        "label": "第 2 頁",
+        "left": 162,
+        "right": 206,
+        "row": 7356.890625,
+        "width": 44
+      },
+      {
+        "current": null,
+        "disabled": false,
+        "height": 44,
+        "label": "第 3 頁",
+        "left": 210,
+        "right": 254,
+        "row": 7356.890625,
+        "width": 44
+      },
+      {
+        "current": null,
+        "disabled": false,
+        "height": 44,
+        "label": "第 4 頁",
+        "left": 258,
+        "right": 302,
+        "row": 7356.890625,
+        "width": 44
+      },
+      {
+        "current": null,
+        "disabled": false,
+        "height": 44,
+        "label": "下一頁",
+        "left": 114,
+        "right": 158,
+        "row": 7404.890625,
+        "width": 44
+      },
+      {
+        "current": null,
+        "disabled": false,
+        "height": 44,
+        "label": "最後一頁",
+        "left": 162,
+        "right": 206,
+        "row": 7404.890625,
+        "width": 44
+      }
+    ],
+    "overflow": false,
+    "scrollWidth": 320,
+    "viewport": 320,
+    "wrap": "wrap"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "lifecycle": {
+    "effectiveLaunch": {
+      "browserLaunched": true,
+      "engine": "chrome",
+      "launchHash": 10555201366498914000
+    },
+    "launched": false,
+    "relaunchedBrowser": false,
+    "restartedBackground": false,
+    "restoreStatus": "not_configured",
+    "reused": true,
+    "saveStatus": "not_attempted"
+  },
+  "origin": "http://localhost:3010/buyer/inquiries",
+  "result": {
+    "acceptedCount": 1,
+    "overflow": false,
+    "records": [
+      {
+        "agencyName": "本機瀏覽驗證公司 B",
+        "id": "d39f92e0ec77cf5103d019a06a6746038a4b845ba2946f6e2886db39ecc03357",
+        "notificationStatus": "failed",
+        "propertyId": "t5e4objarsi9ko4gxy7dkbrd"
+      }
+    ],
+    "status": 200
+  }
+}

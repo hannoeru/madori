@@ -1,0 +1,9 @@
+{
+  "origin": "http://localhost:3010/admin/inquiries",
+  "result": {
+    "buyerOnlyStatus": 403,
+    "foreignPropertyStatus": 404,
+    "hasAMessage": false,
+    "inboxTotal": 0
+  }
+}

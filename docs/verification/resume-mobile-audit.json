@@ -1,0 +1,96 @@
+[
+  {
+    "route": "/",
+    "state": {
+      "origin": "http://localhost:3010/",
+      "result": {
+        "brokenImages": 0,
+        "heading": "東京的下一站，是你的日常。",
+        "overflow": false,
+        "path": "/"
+      }
+    },
+    "screenshotVerified": true,
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 38,
+        "incomplete": 1,
+        "passes": 22,
+        "violations": 0
+      },
+      "incomplete": [
+        {
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodeCount": 2,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<div class=\"nuxt-devtools-label-main\">54</div>",
+              "target": [
+                [
+                  "nuxt-devtools-frame",
+                  ".nuxt-devtools-label-main"
+                ]
+              ]
+            },
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span class=\"nuxt-devtools-label-secondary\">ms</span>",
+              "target": [
+                [
+                  "nuxt-devtools-frame",
+                  ".nuxt-devtools-label-secondary"
+                ]
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ]
+        }
+      ],
+      "url": "http://localhost:3010/",
+      "violations": []
+    }
+  },
+  {
+    "success": false,
+    "resultCategory": "failure",
+    "data": null,
+    "error": "Wait timed out after 25000ms",
+    "failureCategory": "timeout",
+    "nextActions": [
+      {
+        "id": "inspect-after-timeout",
+        "params": {
+          "args": [
+            "--namespace",
+            "",
+            "--session",
+            "madori-resume-qa",
+            "snapshot",
+            "-i"
+          ]
+        },
+        "reason": "Inspect the current page after the wait condition timed out before retrying with a different selector or timeout.",
+        "safety": "Read-only snapshot; do not assume the timed-out interaction completed.",
+        "tool": "agent_browser"
+      }
+    ],
+    "sessionName": "madori-resume-qa",
+    "namespace": ""
+  }
+]

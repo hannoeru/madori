@@ -1,0 +1,208 @@
+[
+  {
+    "case": "condo",
+    "state": {
+      "origin": "http://localhost:3011/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "示範・完整瀏覽建立公寓｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 35,
+        "incomplete": 1,
+        "passes": 25,
+        "violations": 0
+      },
+      "incomplete": [
+        {
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodeCount": 3,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span data-slot=\"linkLabel\" class=\"truncate\"><!--[-->探索物件<!--]--><!----></span>",
+              "target": [
+                "li[data-menu-item=\"\"][data-slot=\"item\"]:nth-child(1) > .group.before\\:absolute.before\\:z-\\[-1\\] > .truncate[data-slot=\"linkLabel\"]"
+              ]
+            },
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span data-slot=\"linkLabel\" class=\"truncate\"><!--[-->購屋指南<!--]--><!----></span>",
+              "target": [
+                "li[data-menu-item=\"\"][data-slot=\"item\"]:nth-child(2) > .group.before\\:absolute.before\\:z-\\[-1\\] > .truncate[data-slot=\"linkLabel\"]"
+              ]
+            },
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span data-slot=\"linkLabel\" class=\"truncate\"><!--[-->我的收藏<!--]--><!----></span>",
+              "target": [
+                "a[href$=\"saved\"] > .truncate[data-slot=\"linkLabel\"]"
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ]
+        }
+      ],
+      "url": "http://localhost:3011/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "violations": []
+    }
+  },
+  {
+    "case": "condo-mobile",
+    "state": {
+      "origin": "http://localhost:3011/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "示範・完整瀏覽建立公寓｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 35,
+        "incomplete": 0,
+        "passes": 25,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "violations": []
+    }
+  },
+  {
+    "case": "house",
+    "state": {
+      "origin": "http://localhost:3011/properties/qik2imt3volkgn7udiwn2vr3",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "示範・完整瀏覽建立獨棟住宅｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 35,
+        "incomplete": 1,
+        "passes": 25,
+        "violations": 0
+      },
+      "incomplete": [
+        {
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=axeAPI",
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodeCount": 3,
+          "nodes": [
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span data-slot=\"linkLabel\" class=\"truncate\"><!--[-->探索物件<!--]--><!----></span>",
+              "target": [
+                "li[data-menu-item=\"\"][data-slot=\"item\"]:nth-child(1) > .group.before\\:absolute.before\\:z-\\[-1\\] > .truncate[data-slot=\"linkLabel\"]"
+              ]
+            },
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span data-slot=\"linkLabel\" class=\"truncate\"><!--[-->購屋指南<!--]--><!----></span>",
+              "target": [
+                "li[data-menu-item=\"\"][data-slot=\"item\"]:nth-child(2) > .group.before\\:absolute.before\\:z-\\[-1\\] > .truncate[data-slot=\"linkLabel\"]"
+              ]
+            },
+            {
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+              "html": "<span data-slot=\"linkLabel\" class=\"truncate\"><!--[-->我的收藏<!--]--><!----></span>",
+              "target": [
+                "a[href$=\"saved\"] > .truncate[data-slot=\"linkLabel\"]"
+              ]
+            }
+          ],
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143",
+            "TTv5",
+            "TT13.c",
+            "EN-301-549",
+            "EN-9.1.4.3",
+            "ACT",
+            "RGAAv4",
+            "RGAA-3.2.1"
+          ]
+        }
+      ],
+      "url": "http://localhost:3011/properties/qik2imt3volkgn7udiwn2vr3",
+      "violations": []
+    }
+  },
+  {
+    "case": "house-mobile",
+    "state": {
+      "origin": "http://localhost:3011/properties/qik2imt3volkgn7udiwn2vr3",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "示範・完整瀏覽建立獨棟住宅｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 35,
+        "incomplete": 0,
+        "passes": 25,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/properties/qik2imt3volkgn7udiwn2vr3",
+      "violations": []
+    }
+  },
+  {
+    "case": "home-mobile",
+    "state": {
+      "origin": "http://localhost:3011/",
+      "result": {
+        "devtools": false,
+        "lang": "zh-TW",
+        "overflow": false,
+        "title": "Madori｜用熟悉的語言，找到東京的家"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 38,
+        "incomplete": 0,
+        "passes": 22,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/",
+      "violations": []
+    }
+  }
+]

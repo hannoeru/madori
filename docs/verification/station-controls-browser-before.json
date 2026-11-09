@@ -1,0 +1,12 @@
+{
+  "origin": "http://localhost:3011/search",
+  "result": {
+    "emptyControls": [
+      {
+        "expanded": "false",
+        "label": "車站",
+        "tag": "BUTTON"
+      }
+    ]
+  }
+}

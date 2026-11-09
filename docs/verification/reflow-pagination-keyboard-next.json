@@ -1,0 +1,9 @@
+{
+  "origin": "http://localhost:3011/search?page=2",
+  "result": {
+    "current": "第 2 頁",
+    "headings": 12,
+    "overflow": false,
+    "path": "/search?page=2"
+  }
+}

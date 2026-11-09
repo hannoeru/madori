@@ -1,0 +1,11 @@
+ts	phase	decision	why	evidence	result
+2026-10-09T15:09:48Z	frame	Kept the confirmed Nuxt and Cloudflare architecture	Existing public search and Agency management already work	CONTEXT.md	VERIFIED
+2026-10-09T15:09:48Z	research	Inspected SUUMO and Sinyi directly	Use observed property conventions instead of copying a portal design	docs/research/marketplace-ux.md	VERIFIED
+2026-10-09T15:09:48Z	baseline	Captured the real Madori homepage on port 3010	Port 3000 belongs to another application	docs/research/screenshots/madori-baseline-desktop.png	VERIFIED
+2026-10-09T15:09:48Z	baseline	Build and typecheck passed before application edits	Record the starting state before changes	/tmp/madori-baseline-build.log	VERIFIED
+2026-10-09T15:09:48Z	baseline	Lint failed on generated goal state	Exclude runtime artifacts rather than format them as application source	/tmp/madori-baseline-lint.log	NOT VERIFIED
+2026-10-09T15:16:37Z	design	Chose warm editorial styling with compact mobile and search layouts	Photo-led discovery needs room; mobile needs earlier search and results	docs/research/design-system.md	VERIFIED
+2026-10-09T15:16:37Z	architecture	Reviewed separate Buyer and Agency account options	Preserve the existing one-account-per-Agency ownership model	docs/research/architecture-baseline.md	VERIFIED
+2026-10-09T15:31:52Z	domain	Added separate Buyer records and explicit session roles	Keep Agency ownership intact and reject cross-role access at API boundaries	docs/verification/domain.md	VERIFIED
+2026-10-09T15:31:52Z	auth	Consumed login tokens atomically and replaced sessions	Concurrent verification must create only one authenticated session	docs/verification/domain-integration.txt	VERIFIED
+2026-10-09T15:31:52Z	build	Used the Nuxt shared alias for the account form schema	The relative import passed development but failed the production SSR bundle	docs/verification/domain-build.txt	VERIFIED

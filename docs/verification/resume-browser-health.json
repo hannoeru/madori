@@ -1,0 +1,157 @@
+{
+  "checks": [
+    {
+      "category": "Environment",
+      "id": "env.version",
+      "message": "CLI version 0.38.1 (macos aarch64)",
+      "status": "pass"
+    },
+    {
+      "category": "Environment",
+      "id": "env.home",
+      "message": "Home directory /Users/hanlee",
+      "status": "pass"
+    },
+    {
+      "category": "Environment",
+      "id": "env.state_dir",
+      "message": "State directory /Users/hanlee/.agent-browser",
+      "status": "pass"
+    },
+    {
+      "category": "Environment",
+      "id": "env.socket_dir",
+      "message": "Socket directory /private/tmp/piab-501",
+      "status": "pass"
+    },
+    {
+      "category": "Environment",
+      "id": "env.disk_free",
+      "message": "43.6 GB free at state dir",
+      "status": "pass"
+    },
+    {
+      "category": "Chrome",
+      "id": "chrome.installed",
+      "message": "Google Chrome for Testing 148.0.7778.56 at /Users/hanlee/.agent-browser/browsers/chrome-148.0.7778.56/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "status": "pass"
+    },
+    {
+      "category": "Chrome",
+      "id": "chrome.cache_dir",
+      "message": "Cache dir /Users/hanlee/.agent-browser/browsers",
+      "status": "info"
+    },
+    {
+      "category": "Chrome",
+      "id": "chrome.user_data_dir",
+      "message": "Chrome user data dir found (/Users/hanlee/Library/Application Support/Google/Chrome), no profiles parsed",
+      "status": "info"
+    },
+    {
+      "category": "Recording",
+      "fix": "brew install ffmpeg",
+      "id": "recording.ffmpeg",
+      "message": "ffmpeg not found on PATH (only needed for `record`)",
+      "status": "warn"
+    },
+    {
+      "category": "Daemons",
+      "id": "daemon.session.default",
+      "message": "Session default (pid 83108)",
+      "status": "pass"
+    },
+    {
+      "category": "Daemons",
+      "id": "daemon.session.madori-date-followup",
+      "message": "Session madori-date-followup (pid 19341)",
+      "status": "pass"
+    },
+    {
+      "category": "Daemons",
+      "id": "daemon.session.madori-date-isolation",
+      "message": "Session madori-date-isolation (pid 35961)",
+      "status": "pass"
+    },
+    {
+      "category": "Daemons",
+      "id": "daemon.session.madori-resume-agency-b",
+      "message": "Session madori-resume-agency-b (pid 17931)",
+      "status": "pass"
+    },
+    {
+      "category": "Daemons",
+      "id": "daemon.session.madori-resume-qa",
+      "message": "Session madori-resume-qa (pid 78126)",
+      "status": "pass"
+    },
+    {
+      "category": "Security",
+      "fix": "export AGENT_BROWSER_ENCRYPTION_KEY=$(openssl rand -hex 32)",
+      "id": "security.encryption_key",
+      "message": "No encryption key set (will be auto-generated on first auth save)",
+      "status": "info"
+    },
+    {
+      "category": "Security",
+      "id": "security.state_count",
+      "message": "4 saved state file(s)",
+      "status": "pass"
+    },
+    {
+      "category": "Providers",
+      "id": "providers.browserless",
+      "message": "Browserless: BROWSERLESS_API_KEY not set",
+      "status": "info"
+    },
+    {
+      "category": "Providers",
+      "id": "providers.browserbase",
+      "message": "Browserbase: BROWSERBASE_API_KEY not set",
+      "status": "info"
+    },
+    {
+      "category": "Providers",
+      "id": "providers.browseruse",
+      "message": "Browser Use: BROWSER_USE_API_KEY not set",
+      "status": "info"
+    },
+    {
+      "category": "Providers",
+      "id": "providers.kernel",
+      "message": "Kernel: KERNEL_API_KEY not set",
+      "status": "info"
+    },
+    {
+      "category": "Providers",
+      "id": "providers.agentcore",
+      "message": "AgentCore: no AWS credentials in env (AWS_ACCESS_KEY_ID / AWS_PROFILE)",
+      "status": "info"
+    },
+    {
+      "category": "Providers",
+      "fix": "export AI_GATEWAY_API_KEY=[REDACTED]",
+      "id": "providers.chat",
+      "message": "AI_GATEWAY_API_KEY not set (chat command disabled)",
+      "status": "info"
+    },
+    {
+      "category": "Network",
+      "id": "net.chrome_cdn",
+      "message": "Chrome for Testing CDN reachable (62ms, HTTP 200)",
+      "status": "pass"
+    },
+    {
+      "category": "Launch test",
+      "id": "launch.elapsed",
+      "message": "Headless launch + about:blank in 3.31s",
+      "status": "pass"
+    }
+  ],
+  "fixed": [],
+  "summary": {
+    "fail": 0,
+    "pass": "[REDACTED]",
+    "warn": 1
+  }
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "origin": "http://localhost:3010/search",
+    "result": {
+      "emptyControls": [],
+      "stationControls": null
+    }
+  },
+  {
+    "snapshot": "- button \"車站\" [expanded=false, ref=e108]"
+  }
+]

@@ -1,0 +1,377 @@
+[
+  {
+    "command": [
+      "fill",
+      "@e68",
+      "50000000"
+    ],
+    "result": {
+      "filled": "@e68",
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      }
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "fill",
+      "@e69",
+      "80000000"
+    ],
+    "result": {
+      "filled": "@e69",
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      }
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "click",
+      "@e60"
+    ],
+    "result": {
+      "clicked": "@e60",
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      }
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "wait",
+      "--fn",
+      "location.search.includes('minPrice=50000000')&&location.search.includes('maxPrice=80000000')"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "result": true
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "snapshot",
+      "-i"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "origin": "http://localhost:3011/search?minPrice=50000000&maxPrice=80000000",
+      "refs": {
+        "e1": {
+          "name": "Notifications (F8)",
+          "role": "region"
+        },
+        "e10": {
+          "name": "購屋指南",
+          "role": "link"
+        },
+        "e100": {
+          "name": "示範・完整瀏覽建立獨棟住宅",
+          "role": "heading"
+        },
+        "e101": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e102": {
+          "name": "示範・完整瀏覽建立公寓",
+          "role": "heading"
+        },
+        "e103": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e104": {
+          "name": "示範・諮詢本機測試 4d389fcf-b",
+          "role": "heading"
+        },
+        "e105": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e106": {
+          "name": "示範・本機測試 b4ba6e02",
+          "role": "heading"
+        },
+        "e107": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e108": {
+          "name": "示範・諮詢本機測試 616c2b40-b",
+          "role": "heading"
+        },
+        "e109": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e11": {
+          "name": "房仲公司註冊",
+          "role": "link"
+        },
+        "e110": {
+          "name": "示範・本機測試 305bc154",
+          "role": "heading"
+        },
+        "e111": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e112": {
+          "name": "示範・本機測試 5cac7eb4",
+          "role": "heading"
+        },
+        "e113": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e114": {
+          "name": "示範・獨棟住宅本機測試",
+          "role": "heading"
+        },
+        "e115": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e116": {
+          "name": "示範・本機測試 b5275a24",
+          "role": "heading"
+        },
+        "e117": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e118": {
+          "name": "示範・諮詢本機測試 ebb18f00-b",
+          "role": "heading"
+        },
+        "e119": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e13": {
+          "name": "物件排序",
+          "role": "combobox"
+        },
+        "e2": {
+          "name": "Madori 首頁",
+          "role": "link"
+        },
+        "e3": {
+          "name": "開啟導覽選單",
+          "role": "button"
+        },
+        "e33": {
+          "name": "首頁",
+          "role": "link"
+        },
+        "e4": {
+          "name": "breadcrumb",
+          "role": "navigation"
+        },
+        "e5": {
+          "name": "在東京，找到你的生活。",
+          "role": "heading"
+        },
+        "e6": {
+          "name": "篩選",
+          "role": "button"
+        },
+        "e7": {
+          "name": "搜尋結果",
+          "role": "region"
+        },
+        "e74": {
+          "name": "移除最低價格條件",
+          "role": "button"
+        },
+        "e75": {
+          "name": "移除最高價格條件",
+          "role": "button"
+        },
+        "e76": {
+          "name": "搜尋結果分頁",
+          "role": "navigation"
+        },
+        "e77": {
+          "name": "查看 示範・諮詢本機測試 3508ce91-b",
+          "role": "link"
+        },
+        "e78": {
+          "name": "查看 示範・本機測試 0b002933",
+          "role": "link"
+        },
+        "e79": {
+          "name": "查看 示範・完整瀏覽建立獨棟住宅",
+          "role": "link"
+        },
+        "e8": {
+          "name": "madori",
+          "role": "link"
+        },
+        "e80": {
+          "name": "查看 示範・完整瀏覽建立公寓",
+          "role": "link"
+        },
+        "e81": {
+          "name": "查看 示範・諮詢本機測試 4d389fcf-b",
+          "role": "link"
+        },
+        "e82": {
+          "name": "查看 示範・本機測試 b4ba6e02",
+          "role": "link"
+        },
+        "e83": {
+          "name": "查看 示範・諮詢本機測試 616c2b40-b",
+          "role": "link"
+        },
+        "e84": {
+          "name": "查看 示範・本機測試 305bc154",
+          "role": "link"
+        },
+        "e85": {
+          "name": "查看 示範・本機測試 5cac7eb4",
+          "role": "link"
+        },
+        "e86": {
+          "name": "查看 示範・獨棟住宅本機測試",
+          "role": "link"
+        },
+        "e87": {
+          "name": "查看 示範・本機測試 b5275a24",
+          "role": "link"
+        },
+        "e88": {
+          "name": "查看 示範・諮詢本機測試 ebb18f00-b",
+          "role": "link"
+        },
+        "e89": {
+          "name": "第一頁",
+          "role": "button"
+        },
+        "e9": {
+          "name": "探索物件",
+          "role": "link"
+        },
+        "e90": {
+          "name": "上一頁",
+          "role": "button"
+        },
+        "e91": {
+          "name": "第 1 頁",
+          "role": "button"
+        },
+        "e92": {
+          "name": "第 2 頁",
+          "role": "button"
+        },
+        "e93": {
+          "name": "第 3 頁",
+          "role": "button"
+        },
+        "e94": {
+          "name": "下一頁",
+          "role": "button"
+        },
+        "e95": {
+          "name": "最後一頁",
+          "role": "button"
+        },
+        "e96": {
+          "name": "示範・諮詢本機測試 3508ce91-b",
+          "role": "heading"
+        },
+        "e97": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        },
+        "e98": {
+          "name": "示範・本機測試 0b002933",
+          "role": "heading"
+        },
+        "e99": {
+          "name": "登入買方帳號以收藏",
+          "role": "link"
+        }
+      },
+      "removedRefs": [
+        "@e58",
+        "@e59",
+        "@e60",
+        "@e61",
+        "@e62",
+        "@e63",
+        "@e64",
+        "@e65",
+        "@e66",
+        "@e67",
+        "@e68",
+        "@e69",
+        "@e70",
+        "@e71",
+        "@e72",
+        "@e73"
+      ],
+      "snapshot": "- link \"Madori 首頁\" [ref=e2]\n- button \"開啟導覽選單\" [ref=e3]\n- navigation \"breadcrumb\" [ref=e4]\n  - link \"首頁\" [ref=e33]\n- heading \"在東京，找到你的生活。\" [level=1, ref=e5]\n- button \"篩選\" [ref=e6]\n- region \"搜尋結果\" [ref=e7]\n  - button \"移除最低價格條件\" [ref=e74]\n  - button \"移除最高價格條件\" [ref=e75]\n  - combobox \"物件排序\" [expanded=false, ref=e13]: 最新刊登\n  - link \"查看 示範・諮詢本機測試 3508ce91-b\" [ref=e77]\n    - heading \"示範・諮詢本機測試 3508ce91-b\" [level=3, ref=e96]\n  - link \"登入買方帳號以收藏\" [ref=e97]\n  - link \"查看 示範・本機測試 0b002933\" [ref=e78]\n    - heading \"示範・本機測試 0b002933\" [level=3, ref=e98]\n  - link \"登入買方帳號以收藏\" [ref=e99]\n  - link \"查看 示範・完整瀏覽建立獨棟住宅\" [ref=e79]\n    - heading \"示範・完整瀏覽建立獨棟住宅\" [level=3, ref=e100]\n  - link \"登入買方帳號以收藏\" [ref=e101]\n  - link \"查看 示範・完整瀏覽建立公寓\" [ref=e80]\n    - heading \"示範・完整瀏覽建立公寓\" [level=3, ref=e102]\n  - link \"登入買方帳號以收藏\" [ref=e103]\n  - link \"查看 示範・諮詢本機測試 4d389fcf-b\" [ref=e81]\n    - heading \"示範・諮詢本機測試 4d389fcf-b\" [level=3, ref=e104]\n  - link \"登入買方帳號以收藏\" [ref=e105]\n  - link \"查看 示範・本機測試 b4ba6e02\" [ref=e82]\n    - heading \"示範・本機測試 b4ba6e02\" [level=3, ref=e106]\n  - link \"登入買方帳號以收藏\" [ref=e107]\n  - link \"查看 示範・諮詢本機測試 616c2b40-b\" [ref=e83]\n    - heading \"示範・諮詢本機測試 616c2b40-b\" [level=3, ref=e108]\n  - link \"登入買方帳號以收藏\" [ref=e109]\n  - link \"查看 示範・本機測試 305bc154\" [ref=e84]\n    - heading \"示範・本機測試 305bc154\" [level=3, ref=e110]\n  - link \"登入買方帳號以收藏\" [ref=e111]\n  - link \"查看 示範・本機測試 5cac7eb4\" [ref=e85]\n    - heading \"示範・本機測試 5cac7eb4\" [level=3, ref=e112]\n  - link \"登入買方帳號以收藏\" [ref=e113]\n  - link \"查看 示範・獨棟住宅本機測試\" [ref=e86]\n    - heading \"示範・獨棟住宅本機測試\" [level=3, ref=e114]\n  - link \"登入買方帳號以收藏\" [ref=e115]\n  - link \"查看 示範・本機測試 b5275a24\" [ref=e87]\n    - heading \"示範・本機測試 b5275a24\" [level=3, ref=e116]\n  - link \"登入買方帳號以收藏\" [ref=e117]\n  - link \"查看 示範・諮詢本機測試 ebb18f00-b\" [ref=e88]\n    - heading \"示範・諮詢本機測試 ebb18f00-b\" [level=3, ref=e118]\n  - link \"登入買方帳號以收藏\" [ref=e119]\n  - navigation \"搜尋結果分頁\" [ref=e76]\n    - button \"第一頁\" [disabled, ref=e89]\n    - button \"上一頁\" [disabled, ref=e90]\n    - button \"第 1 頁\" [ref=e91]\n    - button \"第 2 頁\" [ref=e92]\n    - button \"第 3 頁\" [ref=e93]\n    - button \"下一頁\" [ref=e94]\n    - button \"最後一頁\" [ref=e95]\n- link \"madori\" [ref=e8]\n- link \"探索物件\" [ref=e9]\n- link \"購屋指南\" [ref=e10]\n- link \"房仲公司註冊\" [ref=e11]\n- region \"Notifications (F8)\" [ref=e1]"
+    },
+    "success": true
+  }
+]

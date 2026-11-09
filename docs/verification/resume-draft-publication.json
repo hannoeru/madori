@@ -1,0 +1,15 @@
+{
+  "origin": "http://localhost:3010/admin/properties/qg3phpdaddksuj1hnb0q8tk5",
+  "result": {
+    "dates": {
+      "builtOn": "2010-01",
+      "nextUpdateOn": "2026-11-09"
+    },
+    "id": "qg3phpdaddksuj1hnb0q8tk5",
+    "publicStatus": 404,
+    "publicationError": [
+      "發布前請補齊：結構、總樓層、土地權利、交易型態、專有面積、所在樓層、管理費，無費用請填0、修繕積立金，無費用請填0、至少一筆交通、1至20張照片、一張格局圖、一張照片封面。資料尚未變更。"
+    ],
+    "status": "draft"
+  }
+}

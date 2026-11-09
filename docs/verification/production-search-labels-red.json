@@ -1,0 +1,27 @@
+{
+  "success": false,
+  "resultCategory": "failure",
+  "data": null,
+  "error": "Wait timed out after 25000ms",
+  "failureCategory": "timeout",
+  "nextActions": [
+    {
+      "id": "inspect-after-timeout",
+      "params": {
+        "args": [
+          "--namespace",
+          "",
+          "--session",
+          "madori-production-local",
+          "snapshot",
+          "-i"
+        ]
+      },
+      "reason": "Inspect the current page after the wait condition timed out before retrying with a different selector or timeout.",
+      "safety": "Read-only snapshot; do not assume the timed-out interaction completed.",
+      "tool": "agent_browser"
+    }
+  ],
+  "sessionName": "madori-production-local",
+  "namespace": ""
+}

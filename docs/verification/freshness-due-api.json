@@ -1,0 +1,22 @@
+{
+  "origin": "http://localhost:3010/admin/properties/fu52j64ig7pzxqm2fwtg0pq0",
+  "result": {
+    "areas": {
+      "building": 88.2,
+      "land": 91.4
+    },
+    "images": [
+      {
+        "id": "kpr3wyrzeicce0ufz8jhd7ot",
+        "kind": "floor_plan"
+      },
+      {
+        "id": "bbl2pjh7uece9ti1vianpabm",
+        "kind": "photo"
+      }
+    ],
+    "inDueQueue": true,
+    "nextUpdateOn": "2026-10-01",
+    "status": "published"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "content": "{\n  \"id\": \"t5e4objarsi9ko4gxy7dkbrd\",\n  \"titleZhTw\": \"示範・完整瀏覽建立公寓\",\n  \"descriptionZhTw\": \"原創本機示範測試，不提供交易服務。以原生表單與原創媒體建立公寓。\",\n  \"priceYen\": 64000000,\n  \"ward\": \"目黑區\",\n  \"addressZhTw\": \"東京都目黑區・示範地址・本機測試\",\n  \"layout\": \"2LDK\",\n  \"floorAreaSqm\": 53.2,\n  \"landAreaSqm\": null,\n  \"buildingAreaSqm\": null,\n  \"builtOn\": \"2015-04\",\n  \"structure\": \"RC\",\n  \"floorNumber\": 2,\n  \"totalFloors\": 8,\n  \"landRights\": \"所有權\",\n  \"managementFeeYen\": 11000,\n  \"repairReserveYen\": 12000,\n  \"transactionMode\": \"仲介\",\n  \"equipmentZhTw\": null,\n  \"propertyType\": \"condominium\",\n  \"buildStatus\": \"resale\",\n  \"nextUpdateOn\": \"2026-11-10\",\n  \"updatedAt\": \"2026-10-10T06:04:11.249Z\",\n  \"images\": [\n    {\n      \"id\": \"h8qevnyebjbtgu6h4g6l0x6f\",\n      \"isCover\": false,\n      \"kind\": \"floor_plan\",\n      \"position\": 0,\n      \"altZhTw\": \"示範・完整建立公寓格局圖\"\n    },\n    {\n      \"id\": \"yaqrgerlb0flac46wggtywky\",\n      \"isCover\": true,\n      \"kind\": \"photo\",\n      \"position\": 0,\n      \"altZhTw\": \"示範・完整建立公寓照片\"\n    }\n  ],\n  \"agency\": {\n    \"name\": \"本機瀏覽驗證公司 B\",\n    \"license\": \"東京都知事（1）第000000號・本機示範測試\",\n    \"lineUrl\": \"https://line.me/ti/p/madori-test\"\n  },\n  \"transitEntries\": [\n    {\n      \"id\": \"lxoqt98vjroewegeh5az9381\",\n      \"lineNameZhTw\": \"東急東橫線\",\n      \"stationNameZhTw\": \"中目黑\",\n      \"lineNameJa\": \"東急東横線\",\n      \"stationNameJa\": \"中目黒\",\n      \"walkingMinutes\": 6\n    }\n  ]\n}",
+  "contentType": "application/json",
+  "finalUrl": "http://localhost:3010/api/properties/t5e4objarsi9ko4gxy7dkbrd",
+  "lifecycle": {
+    "effectiveLaunch": {
+      "browserLaunched": false,
+      "engine": "chrome",
+      "launchHash": null
+    },
+    "launched": false,
+    "relaunchedBrowser": false,
+    "restartedBackground": false,
+    "restoreStatus": "not_configured",
+    "reused": false,
+    "saveStatus": "not_attempted"
+  },
+  "source": "raw",
+  "status": 200,
+  "truncated": false,
+  "url": "http://localhost:3010/api/properties/t5e4objarsi9ko4gxy7dkbrd"
+}

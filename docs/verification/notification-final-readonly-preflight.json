@@ -1,0 +1,16 @@
+{
+  "scope": "Read-only checked-in config and anonymous local public API checks",
+  "bindings": [
+    { "environment": "top", "emailRemoteConfigured": false, "d1RemoteConfigured": false, "r2RemoteConfigured": false },
+    { "environment": "preview", "emailRemoteConfigured": false, "d1RemoteConfigured": false, "r2RemoteConfigured": false },
+    { "environment": "production", "emailRemoteConfigured": false, "d1RemoteConfigured": false, "r2RemoteConfigured": false }
+  ],
+  "publicApi": [
+    { "port": 3010, "status": 200, "total": 61, "items": 12 },
+    { "port": 3011, "status": 200, "total": 61, "items": 12 }
+  ],
+  "diffCheckExit": 0,
+  "emailTestAuthorized": false,
+  "actualReceiptVerified": false,
+  "limits": "Config flags and public GET responses do not prove effective remote bindings, sender eligibility, authentication or mail delivery. No form, mail send, remote account command or configuration mutation was performed."
+}

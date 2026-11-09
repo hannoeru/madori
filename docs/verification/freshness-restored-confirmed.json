@@ -1,0 +1,25 @@
+[
+  {
+    "accepted": {
+      "origin": "http://localhost:3010/admin/properties/fu52j64ig7pzxqm2fwtg0pq0",
+      "result": {
+        "images": [
+          {
+            "id": "kpr3wyrzeicce0ufz8jhd7ot",
+            "kind": "floor_plan"
+          },
+          {
+            "id": "bbl2pjh7uece9ti1vianpabm",
+            "kind": "photo"
+          }
+        ],
+        "inDueQueue": false,
+        "nextUpdateOn": "2026-11-12",
+        "status": "published"
+      }
+    }
+  },
+  {
+    "queue": "- button \"開啟側邊欄\" [ref=e188]\n- heading \"新鮮度審查\" [level=1, ref=e189]\n- heading \"確認物件仍可出售\" [level=2, ref=e190]\n- heading \"沒有到期物件\" [level=2, ref=e191]"
+  }
+]

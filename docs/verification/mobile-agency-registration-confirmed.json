@@ -1,0 +1,20 @@
+[
+  {
+    "snapshot": "- button \"開啟側邊欄\" [ref=e43]\n- heading \"總覽\" [level=1, ref=e44]\n- button \"登出\" [ref=e45]\n- link \"新增物件\" [ref=e46]\n- heading \"新鮮度審查\" [level=2, ref=e47]\n- link \"查看審查清單\" [ref=e48]\n- heading \"沒有逾期物件\" [level=2, ref=e51]\n- button \"Toggle Nuxt DevTools\" [ref=e49]\n- button \"Toggle Component Inspector\" [ref=e50]\n- region \"Notifications (F8)\" [ref=e42]"
+  },
+  {
+    "accepted": {
+      "origin": "http://localhost:3010/admin",
+      "result": {
+        "agencyPropertiesStatus": 200,
+        "buyerApiStatus": 403,
+        "foreignPropertyStatus": 404,
+        "mainCount": 0,
+        "name": "本機・手機註冊公司 C",
+        "overflow": false,
+        "ownCount": 0,
+        "role": "agency"
+      }
+    }
+  }
+]

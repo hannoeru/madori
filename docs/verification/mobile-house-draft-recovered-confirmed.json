@@ -1,0 +1,12 @@
+{
+  "origin": "http://localhost:3010/admin/properties/fu52j64ig7pzxqm2fwtg0pq0",
+  "result": {
+    "images": [],
+    "property": {
+      "builtOn": "2019-06",
+      "nextUpdateOn": "2026-11-12",
+      "status": "draft"
+    },
+    "status": 200
+  }
+}

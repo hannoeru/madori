@@ -1,0 +1,17 @@
+[
+  {
+    "snapshot": "- link \"Madori 買方帳號總覽\" [ref=e13]\n- link \"探索物件\" [ref=e14]\n- navigation \"買方帳號導覽\" [ref=e15]\n  - link \"帳號總覽\" [ref=e22]\n  - link \"我的收藏\" [ref=e23]\n  - link \"諮詢紀錄\" [ref=e24]\n- heading \"本機・手機註冊買方 C，歡迎回來。\" [level=1, ref=e16]\n- heading \"我的收藏\" [level=2, ref=e17]\n- link \"查看收藏\" [ref=e18]\n- heading \"諮詢紀錄\" [level=2, ref=e19]\n- link \"查看諮詢紀錄\" [ref=e20]\n- button \"登出\" [ref=e21]"
+  },
+  {
+    "accepted": {
+      "origin": "http://localhost:3010/buyer",
+      "result": {
+        "agencyApiStatus": 403,
+        "heading": "本機・手機註冊買方 C，歡迎回來。",
+        "name": "本機・手機註冊買方 C",
+        "overflow": false,
+        "role": "buyer"
+      }
+    }
+  }
+]

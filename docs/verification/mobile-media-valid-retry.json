@@ -1,0 +1,317 @@
+[
+  {
+    "command": [
+      "fill",
+      "@e234",
+      "示範・手機失敗後重新上傳照片"
+    ],
+    "result": {
+      "filled": "@e234",
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      }
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "upload",
+      "input[aria-label=\"新增照片\"]",
+      "/Users/hanlee/Projects/madori/tests/fixtures/interior-demo.png"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "selector": "input[aria-label=\"新增照片\"]",
+      "uploaded": 1
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "wait",
+      "--text",
+      "照片已上傳。"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "text": "照片已上傳。",
+      "waited": "text"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "snapshot",
+      "-i",
+      "--search",
+      "照片"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "origin": "http://localhost:3010/admin/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "refs": {
+        "e193": {
+          "name": "Notifications (F8)",
+          "role": "region"
+        },
+        "e194": {
+          "name": "返回所有物件",
+          "role": "link"
+        },
+        "e195": {
+          "name": "編輯物件",
+          "role": "heading"
+        },
+        "e196": {
+          "name": "基本資料",
+          "role": "heading"
+        },
+        "e197": {
+          "name": "適用資料與費用",
+          "role": "heading"
+        },
+        "e198": {
+          "name": "新增",
+          "role": "button"
+        },
+        "e199": {
+          "name": "移除交通 1",
+          "role": "button"
+        },
+        "e200": {
+          "name": "照片與格局圖",
+          "role": "region"
+        },
+        "e201": {
+          "name": "取消",
+          "role": "button"
+        },
+        "e202": {
+          "name": "撤下物件",
+          "role": "button"
+        },
+        "e203": {
+          "name": "儲存資料",
+          "role": "button"
+        },
+        "e204": {
+          "name": "Toggle Nuxt DevTools",
+          "role": "button"
+        },
+        "e205": {
+          "name": "Toggle Component Inspector",
+          "role": "button"
+        },
+        "e206": {
+          "name": "物件類型*",
+          "role": "combobox"
+        },
+        "e207": {
+          "name": "新成屋 / 中古*",
+          "role": "combobox"
+        },
+        "e208": {
+          "name": "東京23區*",
+          "role": "combobox"
+        },
+        "e209": {
+          "name": "土地權利*",
+          "role": "combobox"
+        },
+        "e210": {
+          "name": "交易型態*",
+          "role": "combobox"
+        },
+        "e211": {
+          "name": "交通 1 車站",
+          "role": "button"
+        },
+        "e212": {
+          "name": "照片與格局圖",
+          "role": "heading"
+        },
+        "e213": {
+          "name": "新增照片 1/20",
+          "role": "button"
+        },
+        "e214": {
+          "name": "替換格局圖",
+          "role": "button"
+        },
+        "e215": {
+          "name": "格局圖",
+          "role": "heading"
+        },
+        "e216": {
+          "name": "刪除格局圖",
+          "role": "button"
+        },
+        "e217": {
+          "name": "儲存圖片設定",
+          "role": "button"
+        },
+        "e218": {
+          "name": "標題*",
+          "role": "textbox"
+        },
+        "e219": {
+          "name": "物件說明*",
+          "role": "textbox"
+        },
+        "e220": {
+          "name": "價格（日圓）*",
+          "role": "spinbutton"
+        },
+        "e221": {
+          "name": "格局*",
+          "role": "textbox"
+        },
+        "e222": {
+          "name": "所在地*",
+          "role": "textbox"
+        },
+        "e223": {
+          "name": "專有面積（m²）*",
+          "role": "spinbutton"
+        },
+        "e224": {
+          "name": "結構*",
+          "role": "textbox"
+        },
+        "e225": {
+          "name": "所在樓層*",
+          "role": "spinbutton"
+        },
+        "e226": {
+          "name": "總樓層*",
+          "role": "spinbutton"
+        },
+        "e227": {
+          "name": "管理費（日圓/月）*",
+          "role": "spinbutton"
+        },
+        "e228": {
+          "name": "修繕積立金（日圓/月）*",
+          "role": "spinbutton"
+        },
+        "e229": {
+          "name": "設備",
+          "role": "textbox"
+        },
+        "e230": {
+          "name": "交通 1 步行分鐘",
+          "role": "spinbutton"
+        },
+        "e231": {
+          "name": "載入上傳復原資料",
+          "role": "button"
+        },
+        "e232": {
+          "name": "月選択ツールを表示します",
+          "role": "button"
+        },
+        "e233": {
+          "name": "日付選択ツールを表示",
+          "role": "button"
+        },
+        "e234": {
+          "name": "新圖片說明*",
+          "role": "textbox"
+        },
+        "e235": {
+          "name": "照片 1 向前移",
+          "role": "button"
+        },
+        "e236": {
+          "name": "照片 1 向後移",
+          "role": "button"
+        },
+        "e237": {
+          "name": "設為封面",
+          "role": "button"
+        },
+        "e238": {
+          "name": "刪除照片 1",
+          "role": "button"
+        },
+        "e239": {
+          "name": "格局圖說明*",
+          "role": "textbox"
+        },
+        "e240": {
+          "name": "年 年",
+          "role": "spinbutton"
+        },
+        "e241": {
+          "name": "月 月",
+          "role": "spinbutton"
+        },
+        "e242": {
+          "name": "年 年",
+          "role": "spinbutton"
+        },
+        "e243": {
+          "name": "月 月",
+          "role": "spinbutton"
+        },
+        "e244": {
+          "name": "日 日",
+          "role": "spinbutton"
+        },
+        "e245": {
+          "name": "照片 1 說明*",
+          "role": "textbox"
+        }
+      },
+      "removedRefs": [],
+      "snapshot": "- link \"返回所有物件\" [ref=e194]\n- heading \"編輯物件\" [level=1, ref=e195]\n- heading \"基本資料\" [level=2, ref=e196]\n- combobox \"物件類型*\" [expanded=false, ref=e206]: 公寓\n- combobox \"新成屋 / 中古*\" [expanded=false, ref=e207]: 中古\n- textbox \"標題*\" [ref=e218]: 示範・完整瀏覽建立公寓\n- textbox \"物件說明*\" [ref=e219]: 原創本機示範測試，不提供交易服務。以原生表單與原創媒體建立公寓。\n- spinbutton \"價格（日圓）*\" [ref=e220]: 64000000\n- textbox \"格局*\" [ref=e221]: 2LDK\n- combobox \"東京23區*\" [expanded=false, ref=e208]: 目黑區\n- textbox \"所在地*\" [ref=e222]: 東京都目黑區・示範地址・本機測試\n- heading \"適用資料與費用\" [level=2, ref=e197]\n- spinbutton \"專有面積（m²）*\" [ref=e223]: 53.20000076293945\n- spinbutton \"年 年\" [ref=e240]: 2015\n- spinbutton \"月 月\" [ref=e241]: 4\n- button \"月選択ツールを表示します\" [ref=e232]\n- spinbutton \"年 年\" [ref=e242]: 2026\n- spinbutton \"月 月\" [ref=e243]: 11\n- spinbutton \"日 日\" [ref=e244]: 10\n- button \"日付選択ツールを表示\" [ref=e233]\n- textbox \"結構*\" [ref=e224]: RC\n- spinbutton \"所在樓層*\" [ref=e225]: 2\n- spinbutton \"總樓層*\" [ref=e226]: 8\n- combobox \"土地權利*\" [expanded=false, ref=e209]: 所有權\n- spinbutton \"管理費（日圓/月）*\" [ref=e227]: 11000\n- spinbutton \"修繕積立金（日圓/月）*\" [ref=e228]: 12000\n- combobox \"交易型態*\" [expanded=false, ref=e210]: 仲介\n- textbox \"設備\" [ref=e229]\n- button \"新增\" [ref=e198]\n- button \"交通 1 車站\" [expanded=false, ref=e211]\n- spinbutton \"交通 1 步行分鐘\" [ref=e230]: 6\n- button \"移除交通 1\" [ref=e199]\n- region \"照片與格局圖\" [ref=e200]\n  - heading \"照片與格局圖\" [level=2, ref=e212]\n  - textbox \"新圖片說明*\" [disabled, ref=e234]: 示範・手機失敗後重新上傳照片\n  - button \"新增照片 1/20\" [disabled, ref=e213]\n  - button \"替換格局圖\" [disabled, ref=e214]\n  - textbox \"照片 1 說明*\" [disabled, ref=e245]: 示範・完整建立公寓照片\n  - button \"照片 1 向前移\" [disabled, ref=e235]\n  - button \"照片 1 向後移\" [disabled, ref=e236]\n  - button \"設為封面\" [disabled, ref=e237]\n  - button \"刪除照片 1\" [disabled, ref=e238]\n  - heading \"格局圖\" [level=3, ref=e215]\n  - textbox \"格局圖說明*\" [disabled, ref=e239]: 示範・完整建立公寓格局圖\n  - button \"刪除格局圖\" [disabled, ref=e216]\n  - button \"載入上傳復原資料\" [disabled, ref=e231]\n  - button \"儲存圖片設定\" [disabled, ref=e217]\n- button \"取消\" [ref=e201]\n- button \"撤下物件\" [disabled, ref=e202]\n- button \"儲存資料\" [disabled, ref=e203]\n- region \"Notifications (F8)\" [ref=e193]\n- button \"Toggle Nuxt DevTools\" [ref=e204]\n- button \"Toggle Component Inspector\" [ref=e205]"
+    },
+    "success": true
+  }
+]

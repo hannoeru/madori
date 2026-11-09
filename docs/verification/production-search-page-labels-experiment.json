@@ -1,0 +1,32 @@
+{
+  "origin": "http://localhost:3011/search",
+  "result": {
+    "allAssociated": false,
+    "inputs": [
+      {
+        "id": "v-0-0-7",
+        "labels": []
+      },
+      {
+        "id": "v-0-0-8",
+        "labels": []
+      },
+      {
+        "id": "v-0-0-11",
+        "labels": []
+      },
+      {
+        "id": "v-0-0-12",
+        "labels": []
+      },
+      {
+        "id": "v-0-0-16",
+        "labels": []
+      },
+      {
+        "id": "v-0-0-17",
+        "labels": []
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "success": true
+  },
+  {
+    "origin": "http://localhost:3010/search",
+    "result": {
+      "errorStillPresent": false,
+      "path": "/search",
+      "resultCount": 12
+    }
+  }
+]

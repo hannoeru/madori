@@ -1,0 +1,172 @@
+$ node --test --test-concurrency=1 tests/*.test.mjs
+<Suspense> is an experimental feature and its API will likely change.
+✔ the root integrates the boundary without overriding Nuxt page-key behavior (1.455292ms)
+✔ same-principal changes preserve local state, query behavior, and the async cache (6.993833ms)
+✔ a Buyer change synchronously clears all cache keys before the new page starts (1.514875ms)
+✔ the whole NuxtPage remount removes an old Suspense branch and ignores late success (1.371291ms)
+✔ the whole NuxtPage remount removes an old Suspense branch and ignores late failure (0.853833ms)
+✔ same-tick Buyer A to B to A invalidates the old view and pending request twice (0.866792ms)
+✔ wrong-role transition gates /admin/properties/new and redirects only to /login (0.536917ms)
+✔ wrong-role transition gates /admin/properties/a and redirects only to /buyer (0.360333ms)
+✔ wrong-role transition gates /buyer/inquiries and redirects only to /buyer/login (0.33275ms)
+✔ wrong-role transition gates /buyer/saved and redirects only to /admin (0.373958ms)
+✔ the actual router path gates a wrong-role pending private navigation before child setup (0.398209ms)
+✔ Guest can enter public account or marketplace path /buyer/login (0.261167ms)
+✔ Guest can enter public account or marketplace path /buyer/register/ (0.219834ms)
+✔ Guest can enter public account or marketplace path /login (0.18025ms)
+✔ Guest can enter public account or marketplace path /register (0.198084ms)
+✔ Guest can enter public account or marketplace path /search (0.201292ms)
+✔ SSR and hydrated client start with the same whole-page key and do not clear initial data (1.31175ms)
+✔ installed Nuxt clear behavior detaches pending operations rather than aborting transport (0.112875ms)
+<Suspense> is an experimental feature and its API will likely change.
+✔ Agency view scopes retire permanently and reject old principal/epoch captures (0.485791ms)
+✔ compiled Form callbacks discard late submit/create/delete/reload results and deferred events (122.15775ms)
+✔ compiled Form setup cannot start a private request after a stale station response (0.288208ms)
+✔ compiled Images discard stale mutation and parent-refresh callbacks without unlocking a newer operation (18.990125ms)
+✔ compiled Media cleanup discards stale mutation/refresh callbacks and keeps newer busy state (8.205125ms)
+✔ compiled specific recovery drops stale callbacks and cannot download credentials from a retired view (8.911875ms)
+✔ authenticated Agency pages expose one main landmark in server-rendered HTML (1095.786833ms)
+▶ Agency lifecycle, local R2 bytes, publication rules and private media
+  ✔ cleanup retry endpoints require the Agency session and report its own queue (384.601167ms)
+  ✔ writes validate dates, Applicable facts and Transit entries without partial persistence (1166.973833ms)
+  ✔ two Agencies cannot read or mutate foreign Listings or media (719.049625ms)
+  ✔ specific recovery denies foreign or tampered credentials and keeps image metadata private (162.571375ms)
+  ✔ uploads reject SVG, MIME spoofing, truncated bytes, bad checksums and oversize (1808.224208ms)
+  ✔ photo order, alt labels and cover selection persist and exclude foreign media (538.648208ms)
+  ✔ Published Floor plan replacement is atomic and failed uploads keep publication (826.144958ms)
+  ✔ photo limit holds for concurrent uploads and delete preserves a valid Published cover (4131.512958ms)
+  ✔ Freshness review queue is Agency-owned and only includes due Published Properties (375.146417ms)
+  ✔ withdrawal hides images immediately, restoration revalidates and deletion removes media (993.36775ms)
+  ✔ publication and image deletion cannot race into an incomplete Published Property (2083.612792ms)
+  ✔ detached-house publication requires applicable areas, not condo floor or monthly fees (955.257583ms)
+✔ Agency lifecycle, local R2 bytes, publication rules and private media (14575.644ms)
+ℹ Published original-fixture demo Property id: ys9i6ifrjzc9t5vw62w3qtch
+ℹ Local demo Agency email: agency-4d30a635-7b0a-4f8a-ad1f-c0ac6e2b907a-a@example.invalid
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ strict jpeg-js decoding rejects fabricated JPEGs and preserves valid JPEG bytes (3.251417ms)
+✔ JPEG decoding enforces both small resolution and memory limits (283.816208ms)
+✔ completion dates use the Tokyo month at UTC month and year boundaries (14.664792ms)
+✔ removal and durable cleanup keys commit together; R2 failure does not reverse domain success (17.600583ms)
+✔ Floor plan replacement retains Published status and queued keys through cleanup failure (2.160375ms)
+✔ failed D1 batches roll back cleanup keys and retain compensation for failed uploads (2.91725ms)
+✔ an acknowledged compensation queue keeps normal retries and does not expose recovery credentials (1.909833ms)
+✔ queue-write failure still directly removes the failed upload when R2 is healthy (2.118ms)
+✔ queue and R2 failure return an unqueued owned recovery key for authorized later deletion (2.752042ms)
+✔ specific recovery denies the wrong Agency and tampered token or key (1.913625ms)
+✔ recovery never deletes a linked key, including a link made during its R2 lookup (3.976958ms)
+✔ unavailable D1 reads prevent unsafe deletion and unavailable R2 never reports recovery success (2.011083ms)
+✔ recovery credentials are bounded and ownership metadata stays private on success (5.321792ms)
+✔ cleanup retains keys when queue removal fails and never deletes referenced media (2.292291ms)
+✔ linked compensation is canceled only for its Agency and later deletion enqueues fresh cleanup (2.006625ms)
+✔ current-reference cancellation retains work when metadata deletion occurs first (1.850916ms)
+✔ permanent deletion preserves cleanup keys without a Property foreign key (2.571667ms)
+✔ stale Floor plan captions conflict inside the batch, including Floor-plan-only drafts (3.61525ms)
+✔ settings reject a deleted Property at the batch boundary instead of accepting no-op writes (2.497417ms)
+✔ photo settings use collision-free temporary positions for sparse, high and dense collections (15.170125ms)
+✔ fractional area controls use step=any and media inputs stay disabled through refresh (0.643458ms)
+✔ the real media component awaits parent refresh before clearing busy or accepting another action (117.336125ms)
+✔ role-bound sessions isolate two agencies and two buyers (1233.436083ms)
+▶ Saved Properties persist and remain private for two Buyers and an Agency
+  ✔ guests and Agency accounts cannot read, save or remove Buyer records (142.057666ms)
+  ✔ only Published Properties can be saved, including with a supplied Buyer id (721.501917ms)
+  ✔ PUT saves once under concurrent requests and preserves the original date (290.7165ms)
+  ✔ each Buyer has an independent collection and DELETE ignores supplied Buyer ids (252.442667ms)
+  ✔ a new request client and account changes keep persisted collections separate (413.346208ms)
+  ✔ withdrawal preserves the entry but hides all Property details in API and SSR (247.3015ms)
+  ✔ a saved Property changed to draft also keeps only its unavailable entry (183.087791ms)
+  ✔ restoration reveals the current summary and unavailable entries remain removable (453.267042ms)
+✔ Saved Properties persist and remain private for two Buyers and an Agency (3548.314458ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ PUT returns accepted persistence when withdrawal commits immediately after insert (9.925083ms)
+✔ new withdrawn and draft saves are denied, while Published saves keep one owned key (5.568875ms)
+✔ registration accepts both roles and rejects unsafe agency links (1.333334ms)
+✔ domain migration preserves media and transit and enforces ownership (3.525375ms)
+✔ production scans application icons into its local bundle without an external fallback (1481.3445ms)
+✔ production keeps Vue server-prefetch ID boundaries on the client (170.446125ms)
+✔ compiled PropertyInquiry clears private draft and ignores an old response when Buyer changes (10.068292ms)
+✔ compiled PropertyInquiry rejects stale success across same-tick A to B to A changes (2.087208ms)
+✔ compiled PropertyInquiry rejects stale failure across same-tick A to B to A changes (1.648ms)
+✔ compiled PropertyInquiry retains same-Buyer retries but clears failure and confirmation on logout (2.713291ms)
+✔ compiled PropertyInquiry ignores a pending success after switching to guest (1.212125ms)
+✔ compiled PropertyInquiry ignores a pending success after switching to agency (0.891792ms)
+<Suspense> is an experimental feature and its API will likely change.
+✔ compiled buyer Inquiry view clears previous identity data during a live session switch (110.430708ms)
+✔ compiled buyer Inquiry view rejects lost success across same-tick A to B to A (22.668042ms)
+✔ compiled buyer Inquiry view rejects lost failure across same-tick A to B to A (19.4865ms)
+✔ compiled buyer Inquiry view hides data and ignores a pending response after logout loss (14.32125ms)
+✔ compiled buyer Inquiry view hides data and ignores a pending response after role loss (16.921458ms)
+✔ compiled buyer Inquiry view hides data and ignores a pending response after readiness loss (13.458791ms)
+✔ compiled buyer Inquiry view resets pagination and clears all previous-owner page caches (11.659125ms)
+✔ compiled agency Inquiry view clears previous identity data during a live session switch (21.134ms)
+✔ compiled agency Inquiry view rejects lost success across same-tick A to B to A (18.296792ms)
+✔ compiled agency Inquiry view rejects lost failure across same-tick A to B to A (15.194709ms)
+✔ compiled agency Inquiry view hides data and ignores a pending response after logout loss (14.721166ms)
+✔ compiled agency Inquiry view hides data and ignores a pending response after role loss (14.352584ms)
+✔ compiled agency Inquiry view hides data and ignores a pending response after readiness loss (13.020917ms)
+✔ compiled agency Inquiry view resets pagination and clears all previous-owner page caches (14.153375ms)
+✔ compiled Agency read action rejects stale success and cleanup across A to B to A (15.321959ms)
+✔ compiled Agency read action rejects stale failure and cleanup across A to B to A (13.669ms)
+✔ compiled Agency inbox reconciles an accepted read after refresh returns a replacement unread row (12.100833ms)
+✔ compiled Agency inbox preserves an accepted read when a held unread GET completes afterward (13.093666ms)
+✔ compiled Agency inbox clears a private read error and guards a replaced inbox row (12.31125ms)
+▶ persisted Inquiries isolate two Agencies and two Buyers on the real local API
+  ✔ recipient and verified Buyer contact derive from the session and Published Property (405.468416ms)
+  ✔ guests, cross-role requests, query spoofing and cross-Agency read cannot expose private data (214.137375ms)
+  ✔ duplicate and concurrent keys produce one stored Inquiry and changed payloads conflict (545.303875ms)
+  ✔ invalid and unpublished inputs do not persist or notify (283.785334ms)
+  ✔ Agency read state is idempotent and separate from failed Notification (88.211709ms)
+  ✔ withdrawal and deletion retain snapshots without private current Property details (472.364416ms)
+✔ persisted Inquiries isolate two Agencies and two Buyers on the real local API (3431.919125ms)
+ℹ Published source fixture preserved: rs8wd4ganbe7beb921xpz772
+ℹ Buyer A local email: buyer-inquiry-13a1f3a8-4dbd-4f0b-9e9a-425f078a0564-a@example.invalid
+ℹ Buyer B local email: buyer-inquiry-13a1f3a8-4dbd-4f0b-9e9a-425f078a0564-b@example.invalid
+ℹ Agency B local email: agency-inquiry-13a1f3a8-4dbd-4f0b-9e9a-425f078a0564-b@example.invalid
+ℹ Agency B complete Published fixture: leyg59aea8ihfl4t3lxbl6v4
+ℹ All Notification statuses remain failed locally. No email was sent.
+✔ bounded Inquiry validation rejects recipient and contact spoofing (1.500458ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ concurrent persistence has one Notification attempt and rejects changed payloads (32.853042ms)
+✔ simultaneous first submissions with the same key create one Inquiry and one Notification attempt (4.857875ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ racing different payloads with the same key creates only the winning Inquiry (2.97725ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ two Agencies and Buyers retain isolated snapshots after withdrawal and deletion (6.403333ms)
+✔ history and inbox pagination have bounded pages and stable ordering (15.873792ms)
+✔ Notification uses plain text and configured appUrl; absent binding fails safely (0.346083ms)
+✔ Traditional Chinese pages keep their language in server-rendered HTML (454.914ms)
+✔ the illustration notice has an opaque caption background (82.223417ms)
+✔ Search pagination keeps its controls in a wrapping list (120.809416ms)
+✔ public search validates, filters, sorts and paginates Published Properties (674.387208ms)
+✔ HTTP failed Floor plan replacement rolls back metadata and cleans only its orphan (51.816333ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ HTTP unqueued recovery requires the owning Agency and nonce, and remains retryable through R2 failure (29.083208ms)
+[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default.
+✔ HTTP lost D1 acknowledgment preserves an accepted Floor plan and its linked bytes (15.799834ms)
+✔ HTTP lost R2 acknowledgment retains owned cleanup through an outage and authorized retry (15.13525ms)
+✔ HTTP upload compensates a rejected R2 write without changing linked media (17.116625ms)
+ℹ tests 124
+ℹ suites 0
+ℹ pass 124
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31398.34325

@@ -1,0 +1,131 @@
+[
+  {
+    "command": [
+      "open",
+      "http://localhost:3010/buyer/saved"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "targetId": "8734FC6B1DA94F21DACCB4DE64DB11AC",
+      "title": "我的收藏｜Madori",
+      "url": "http://localhost:3010/buyer/saved"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "wait",
+      "--text",
+      "示範・完整瀏覽建立公寓"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "text": "示範・完整瀏覽建立公寓",
+      "waited": "text"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "snapshot",
+      "-i"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "origin": "http://localhost:3010/buyer/saved",
+      "refs": {
+        "e53": {
+          "name": "Madori 買方帳號總覽",
+          "role": "link"
+        },
+        "e54": {
+          "name": "探索物件",
+          "role": "link"
+        },
+        "e55": {
+          "name": "買方帳號導覽",
+          "role": "navigation"
+        },
+        "e56": {
+          "name": "我的收藏",
+          "role": "heading"
+        },
+        "e57": {
+          "name": "重新載入",
+          "role": "button"
+        },
+        "e58": {
+          "name": "登出",
+          "role": "button"
+        },
+        "e59": {
+          "name": "查看 示範・完整瀏覽建立公寓",
+          "role": "link"
+        },
+        "e60": {
+          "name": "移除收藏",
+          "role": "button"
+        },
+        "e61": {
+          "name": "示範・完整瀏覽建立公寓",
+          "role": "heading"
+        },
+        "e62": {
+          "name": "移除收藏",
+          "role": "button"
+        },
+        "e63": {
+          "name": "帳號總覽",
+          "role": "link"
+        },
+        "e64": {
+          "name": "我的收藏",
+          "role": "link"
+        },
+        "e65": {
+          "name": "諮詢紀錄",
+          "role": "link"
+        }
+      },
+      "removedRefs": [],
+      "snapshot": "- link \"Madori 買方帳號總覽\" [ref=e53]\n- link \"探索物件\" [ref=e54]\n- navigation \"買方帳號導覽\" [ref=e55]\n  - link \"帳號總覽\" [ref=e63]\n  - link \"我的收藏\" [ref=e64]\n  - link \"諮詢紀錄\" [ref=e65]\n- heading \"我的收藏\" [level=1, ref=e56]\n- button \"重新載入\" [ref=e57]\n- link \"查看 示範・完整瀏覽建立公寓\" [ref=e59]\n  - heading \"示範・完整瀏覽建立公寓\" [level=3, ref=e61]\n- button \"移除收藏\" [ref=e62]\n- button \"移除收藏\" [ref=e60]\n- button \"登出\" [ref=e58]"
+    },
+    "success": true
+  }
+]

@@ -1,0 +1,4 @@
+{
+  "url": "http://localhost:3010/",
+  "snapshot": "- button \"Toggle Nuxt DevTools\" [ref=e541]\n- button \"Toggle Component Inspector\" [ref=e542]\n- region \"Notifications (F8)\" [ref=e533]"
+}

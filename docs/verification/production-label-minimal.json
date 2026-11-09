@@ -1,0 +1,29 @@
+{
+  "origin": "http://localhost:3011/label-audit",
+  "result": {
+    "inputs": [
+      {
+        "id": "v-1",
+        "labels": [
+          "最低價格（日圓）"
+        ]
+      },
+      {
+        "id": "v-2",
+        "labels": [
+          "最高價格（日圓）"
+        ]
+      }
+    ],
+    "labels": [
+      {
+        "for": "v-1",
+        "text": "最低價格（日圓）"
+      },
+      {
+        "for": "v-2",
+        "text": "最高價格（日圓）"
+      }
+    ]
+  }
+}

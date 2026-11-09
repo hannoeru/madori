@@ -1,0 +1,11 @@
+{
+  "origin": "http://localhost:3010/buyer/inquiries",
+  "result": {
+    "agencyApiStatus": 403,
+    "hasBuyerAMessage": false,
+    "historyCount": 0,
+    "name": "本機瀏覽驗證買方 B",
+    "overflow": false,
+    "role": "buyer"
+  }
+}

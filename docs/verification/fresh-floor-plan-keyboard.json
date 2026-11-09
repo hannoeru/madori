@@ -1,0 +1,13 @@
+[
+  {
+    "success": true
+  },
+  {
+    "origin": "http://localhost:3010/properties/qik2imt3volkgn7udiwn2vr3",
+    "result": {
+      "focusedTag": "BUTTON",
+      "focusedText": "放大查看",
+      "hasDialog": false
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "content": "{\n  \"id\": \"qik2imt3volkgn7udiwn2vr3\",\n  \"titleZhTw\": \"示範・完整瀏覽建立獨棟住宅\",\n  \"descriptionZhTw\": \"原創本機示範測試，不提供交易服務。以原生表單與原創媒體建立獨棟住宅。\",\n  \"priceYen\": 72000000,\n  \"ward\": \"世田谷區\",\n  \"addressZhTw\": \"東京都世田谷區・示範地址・本機測試\",\n  \"layout\": \"2LDK\",\n  \"floorAreaSqm\": null,\n  \"landAreaSqm\": 92.5,\n  \"buildingAreaSqm\": 84.3,\n  \"builtOn\": \"2018-09\",\n  \"structure\": \"木造\",\n  \"floorNumber\": null,\n  \"totalFloors\": 2,\n  \"landRights\": \"所有權\",\n  \"managementFeeYen\": null,\n  \"repairReserveYen\": null,\n  \"transactionMode\": \"仲介\",\n  \"equipmentZhTw\": null,\n  \"propertyType\": \"detached_house\",\n  \"buildStatus\": \"resale\",\n  \"nextUpdateOn\": \"2026-11-10\",\n  \"updatedAt\": \"2026-10-10T06:10:57.348Z\",\n  \"images\": [\n    {\n      \"id\": \"flmkuut4al6w3ywf2m7byimq\",\n      \"isCover\": false,\n      \"kind\": \"floor_plan\",\n      \"position\": 0,\n      \"altZhTw\": \"示範・完整建立獨棟格局圖\"\n    },\n    {\n      \"id\": \"nugrb7m5uvrbeossq9swr7dv\",\n      \"isCover\": true,\n      \"kind\": \"photo\",\n      \"position\": 0,\n      \"altZhTw\": \"示範・完整建立獨棟照片\"\n    }\n  ],\n  \"agency\": {\n    \"name\": \"本機瀏覽驗證公司 B\",\n    \"license\": \"東京都知事（1）第000000號・本機示範測試\",\n    \"lineUrl\": \"https://line.me/ti/p/madori-test\"\n  },\n  \"transitEntries\": [\n    {\n      \"id\": \"qeq3liqa0quseyolwh7lx5w2\",\n      \"lineNameZhTw\": \"田園都市線\",\n      \"stationNameZhTw\": \"三軒茶屋\",\n      \"lineNameJa\": \"田園都市線\",\n      \"stationNameJa\": \"三軒茶屋\",\n      \"walkingMinutes\": 9\n    }\n  ]\n}",
+  "contentType": "application/json",
+  "finalUrl": "http://localhost:3010/api/properties/qik2imt3volkgn7udiwn2vr3",
+  "lifecycle": {
+    "effectiveLaunch": {
+      "browserLaunched": false,
+      "engine": "chrome",
+      "launchHash": null
+    },
+    "launched": false,
+    "relaunchedBrowser": false,
+    "restartedBackground": false,
+    "restoreStatus": "not_configured",
+    "reused": false,
+    "saveStatus": "not_attempted"
+  },
+  "source": "raw",
+  "status": 200,
+  "truncated": false,
+  "url": "http://localhost:3010/api/properties/qik2imt3volkgn7udiwn2vr3"
+}

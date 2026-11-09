@@ -1,0 +1,9 @@
+{
+  "origin": "http://localhost:3010/admin/properties/fu52j64ig7pzxqm2fwtg0pq0",
+  "result": {
+    "error": [
+      "發布前請補齊：至少一筆交通、1至20張照片、一張格局圖、一張照片封面。資料尚未變更。"
+    ],
+    "publicStatus": 404
+  }
+}

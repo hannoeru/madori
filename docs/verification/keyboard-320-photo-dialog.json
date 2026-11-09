@@ -1,0 +1,25 @@
+[
+  {
+    "opened": {
+      "origin": "http://localhost:3011/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "result": {
+        "activeName": "關閉",
+        "buttons": [
+          "關閉"
+        ],
+        "focusInside": true,
+        "imageLoaded": true,
+        "overflow": false
+      }
+    }
+  },
+  {
+    "dismissed": {
+      "origin": "http://localhost:3011/properties/t5e4objarsi9ko4gxy7dkbrd",
+      "result": {
+        "focusName": "放大照片：示範・完整建立公寓照片",
+        "overflow": false
+      }
+    }
+  }
+]

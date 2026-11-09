@@ -1,0 +1,135 @@
+[
+  {
+    "command": [
+      "open",
+      "http://localhost:3010/buyer/saved"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "targetId": "8734FC6B1DA94F21DACCB4DE64DB11AC",
+      "title": "我的收藏｜Madori",
+      "url": "http://localhost:3010/buyer/saved"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "wait",
+      "--text",
+      "還沒有收藏物件"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "text": "還沒有收藏物件",
+      "waited": "text"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "snapshot",
+      "-i"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "origin": "http://localhost:3010/buyer/saved",
+      "refs": {
+        "e134": {
+          "name": "Notifications (F8)",
+          "role": "region"
+        },
+        "e135": {
+          "name": "Madori 買方帳號總覽",
+          "role": "link"
+        },
+        "e136": {
+          "name": "探索物件",
+          "role": "link"
+        },
+        "e137": {
+          "name": "買方帳號導覽",
+          "role": "navigation"
+        },
+        "e138": {
+          "name": "我的收藏",
+          "role": "heading"
+        },
+        "e139": {
+          "name": "重新載入",
+          "role": "button"
+        },
+        "e140": {
+          "name": "還沒有收藏物件",
+          "role": "heading"
+        },
+        "e141": {
+          "name": "開始探索物件",
+          "role": "link"
+        },
+        "e142": {
+          "name": "登出",
+          "role": "button"
+        },
+        "e143": {
+          "name": "Toggle Nuxt DevTools",
+          "role": "button"
+        },
+        "e144": {
+          "name": "Toggle Component Inspector",
+          "role": "button"
+        },
+        "e145": {
+          "name": "帳號總覽",
+          "role": "link"
+        },
+        "e146": {
+          "name": "我的收藏",
+          "role": "link"
+        },
+        "e147": {
+          "name": "諮詢紀錄",
+          "role": "link"
+        }
+      },
+      "removedRefs": [],
+      "snapshot": "- link \"Madori 買方帳號總覽\" [ref=e135]\n- link \"探索物件\" [ref=e136]\n- navigation \"買方帳號導覽\" [ref=e137]\n  - link \"帳號總覽\" [ref=e145]\n  - link \"我的收藏\" [ref=e146]\n  - link \"諮詢紀錄\" [ref=e147]\n- heading \"我的收藏\" [level=1, ref=e138]\n- button \"重新載入\" [ref=e139]\n- heading \"還沒有收藏物件\" [level=2, ref=e140]\n- link \"開始探索物件\" [ref=e141]\n- button \"登出\" [ref=e142]\n- button \"Toggle Nuxt DevTools\" [ref=e143]\n- button \"Toggle Component Inspector\" [ref=e144]\n- region \"Notifications (F8)\" [ref=e134]"
+    },
+    "success": true
+  }
+]

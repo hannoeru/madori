@@ -1,0 +1,102 @@
+[
+  {
+    "path": "/buyer/login",
+    "size": "desktop",
+    "state": {
+      "origin": "http://localhost:3011/buyer/login",
+      "result": {
+        "lang": "zh-TW",
+        "linkDecoration": "underline",
+        "overflow": false,
+        "title": "買方登入｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 24,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/buyer/login",
+      "violations": []
+    }
+  },
+  {
+    "path": "/buyer/register",
+    "size": "desktop",
+    "state": {
+      "origin": "http://localhost:3011/buyer/register",
+      "result": {
+        "lang": "zh-TW",
+        "linkDecoration": "underline",
+        "overflow": false,
+        "title": "買方註冊｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 24,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/buyer/register",
+      "violations": []
+    }
+  },
+  {
+    "path": "/login",
+    "size": "desktop",
+    "state": {
+      "origin": "http://localhost:3011/login",
+      "result": {
+        "lang": "zh-TW",
+        "linkDecoration": "underline",
+        "overflow": false,
+        "title": "房仲公司登入｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 24,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/login",
+      "violations": []
+    }
+  },
+  {
+    "path": "/register",
+    "size": "desktop",
+    "state": {
+      "origin": "http://localhost:3011/register",
+      "result": {
+        "lang": "zh-TW",
+        "linkDecoration": "underline",
+        "overflow": false,
+        "title": "房仲公司註冊｜Madori"
+      }
+    },
+    "audit": {
+      "axeVersion": "4.12.1",
+      "counts": {
+        "inapplicable": 36,
+        "incomplete": 0,
+        "passes": 24,
+        "violations": 0
+      },
+      "incomplete": [],
+      "url": "http://localhost:3011/register",
+      "violations": []
+    }
+  }
+]

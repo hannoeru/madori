@@ -1,0 +1,115 @@
+[
+  {
+    "command": [
+      "open",
+      "http://localhost:3010/admin/inquiries"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "targetId": "8734FC6B1DA94F21DACCB4DE64DB11AC",
+      "title": "諮詢收件匣｜Madori",
+      "url": "http://localhost:3010/admin/inquiries"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "wait",
+      "--text",
+      "示範・手機流程驗證"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "text": "示範・手機流程驗證",
+      "waited": "text"
+    },
+    "success": true
+  },
+  {
+    "command": [
+      "snapshot",
+      "-i"
+    ],
+    "result": {
+      "lifecycle": {
+        "effectiveLaunch": {
+          "browserLaunched": true,
+          "engine": "chrome",
+          "launchHash": 10555201366498914000
+        },
+        "launched": false,
+        "relaunchedBrowser": false,
+        "restartedBackground": false,
+        "restoreStatus": "not_configured",
+        "reused": true,
+        "saveStatus": "not_attempted"
+      },
+      "origin": "http://localhost:3010/admin/inquiries",
+      "refs": {
+        "e169": {
+          "name": "Notifications (F8)",
+          "role": "region"
+        },
+        "e170": {
+          "name": "開啟側邊欄",
+          "role": "button"
+        },
+        "e171": {
+          "name": "諮詢收件匣",
+          "role": "heading"
+        },
+        "e172": {
+          "name": "Toggle Nuxt DevTools",
+          "role": "button"
+        },
+        "e173": {
+          "name": "Toggle Component Inspector",
+          "role": "button"
+        },
+        "e174": {
+          "name": "買方諮詢",
+          "role": "heading"
+        },
+        "e175": {
+          "name": "重新整理",
+          "role": "button"
+        },
+        "e176": {
+          "name": "示範・完整瀏覽建立公寓",
+          "role": "heading"
+        },
+        "e177": {
+          "name": "管理物件",
+          "role": "link"
+        }
+      },
+      "removedRefs": [],
+      "snapshot": "- button \"開啟側邊欄\" [ref=e170]\n- heading \"諮詢收件匣\" [level=1, ref=e171]\n- heading \"買方諮詢\" [level=2, ref=e174]\n- button \"重新整理\" [ref=e175]\n- heading \"示範・完整瀏覽建立公寓\" [level=3, ref=e176]\n- link \"管理物件\" [ref=e177]\n- region \"Notifications (F8)\" [ref=e169]\n- button \"Toggle Nuxt DevTools\" [ref=e172]\n- button \"Toggle Component Inspector\" [ref=e173]"
+    },
+    "success": true
+  }
+]

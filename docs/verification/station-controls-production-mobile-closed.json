@@ -1,0 +1,34 @@
+[
+  {
+    "station": [
+      "- button \"車站\" [expanded=false, ref=e230]"
+    ]
+  },
+  {
+    "origin": "http://localhost:3011/search",
+    "result": {
+      "emptyControls": 0,
+      "labels": [
+        [
+          "最低價格（日圓）"
+        ],
+        [
+          "最高價格（日圓）"
+        ],
+        [
+          "最小面積（m²）"
+        ],
+        [
+          "最大面積（m²）"
+        ],
+        [
+          "步行時間上限（分鐘）"
+        ],
+        [
+          "屋齡上限（年）"
+        ]
+      ],
+      "overflow": false
+    }
+  }
+]

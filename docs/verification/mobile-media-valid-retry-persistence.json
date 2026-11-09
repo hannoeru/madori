@@ -1,0 +1,42 @@
+{
+  "lifecycle": {
+    "effectiveLaunch": {
+      "browserLaunched": true,
+      "engine": "chrome",
+      "launchHash": 10555201366498914000
+    },
+    "launched": false,
+    "relaunchedBrowser": false,
+    "restartedBackground": false,
+    "restoreStatus": "not_configured",
+    "reused": true,
+    "saveStatus": "not_attempted"
+  },
+  "origin": "http://localhost:3010/admin/properties/t5e4objarsi9ko4gxy7dkbrd",
+  "result": {
+    "errorPresent": false,
+    "images": [
+      {
+        "alt": "示範・完整建立公寓格局圖",
+        "id": "h8qevnyebjbtgu6h4g6l0x6f",
+        "isCover": false,
+        "kind": "floor_plan"
+      },
+      {
+        "alt": "示範・完整建立公寓照片",
+        "id": "yaqrgerlb0flac46wggtywky",
+        "isCover": true,
+        "kind": "photo"
+      },
+      {
+        "alt": "示範・手機失敗後重新上傳照片",
+        "id": "xjtg7f80iq94bi39cby7vati",
+        "isCover": false,
+        "kind": "photo"
+      }
+    ],
+    "overflow": false,
+    "photoCount": 2,
+    "status": 200
+  }
+}

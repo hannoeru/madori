@@ -1,0 +1,22 @@
+{
+  "origin": "http://localhost:3010/buyer/register",
+  "result": {
+    "alerts": [],
+    "formText": "您的姓名電子郵件使用一次性連結登入，不需要密碼。建立帳號並取得登入連結已有帳號？ 登入",
+    "hydrating": false,
+    "invalid": [
+      {
+        "id": "v-1",
+        "invalid": "false",
+        "nativeValid": true,
+        "value": "本機・手機註冊買方 C"
+      },
+      {
+        "id": "v-2",
+        "invalid": "false",
+        "nativeValid": true,
+        "value": "browser-form-c-1791629@example.invalid"
+      }
+    ]
+  }
+}

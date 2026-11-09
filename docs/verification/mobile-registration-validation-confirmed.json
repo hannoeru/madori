@@ -1,0 +1,27 @@
+{
+  "origin": "http://localhost:3010/buyer/register",
+  "result": {
+    "activeName": null,
+    "formText": "您的姓名請填寫名稱。電子郵件使用一次性連結登入，不需要密碼。請填寫有效電子郵件。建立帳號並取得登入連結已有帳號？ 登入",
+    "inputs": [
+      {
+        "description": "v-1-error",
+        "invalid": "true",
+        "labels": [
+          "您的姓名"
+        ],
+        "nativeValid": true,
+        "required": false
+      },
+      {
+        "description": "v-2-error v-2-description",
+        "invalid": "true",
+        "labels": [
+          "電子郵件"
+        ],
+        "nativeValid": true,
+        "required": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+✔ production scans application icons into its local bundle without an external fallback (1660.926333ms)
+✔ production keeps Vue server-prefetch ID boundaries on the client (244.968375ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2186.557833

@@ -1,0 +1,9 @@
+{
+  "success": false,
+  "resultCategory": "failure",
+  "data": null,
+  "error": "Evaluation error: TypeError: q.some is not a function\n    at <anonymous>:1:268",
+  "failureCategory": "upstream-error",
+  "sessionName": "madori-auth-atomic-browser",
+  "namespace": ""
+}
