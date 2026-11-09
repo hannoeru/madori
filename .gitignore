@@ -27,5 +27,10 @@ logs
 # VSC
 .history
 
+# Agent runtime state
+.pi
+.pi-subagents
+.audit
+
 # Wrangler local state
 .wrangler
