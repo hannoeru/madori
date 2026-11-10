@@ -32,3 +32,6 @@ jobs:
 
       - name: Typecheck
         run: pnpm run typecheck
+
+      - name: Build and test the Worker
+        run: pnpm run test:worker
