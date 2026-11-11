@@ -126,3 +126,10 @@ test('deleting the cover photo makes the next photo the cover', options, async (
 
   assert.equal((await request(adminPath, { method: 'DELETE' }, cookie)).status, 200)
 })
+
+test('too many login attempts are blocked', options, async () => {
+  let status
+  for (let attempt = 0; attempt < 40 && status !== 429; attempt++)
+    status = (await request('/api/auth/login', { method: 'POST', ...json({ password: 'wrong' }) })).status
+  assert.equal(status, 429)
+})
