@@ -111,3 +111,18 @@ test('a Listing goes from draft to public and is removed with its images', optio
   assert.equal((await request(`/api/properties/${created.id}`)).status, 404)
   assert.equal((await request(`/api/property-images/${second.id}`)).status, 404)
 })
+
+test('deleting the cover photo makes the next photo the cover', options, async () => {
+  const cookie = await login()
+  const created = await (await request('/api/admin/properties', { method: 'POST', ...json(draft) }, cookie)).json()
+  const adminPath = `/api/admin/properties/${created.id}`
+  const bytes = await readFile(new URL('./fixtures/interior-demo.png', import.meta.url))
+  const first = await (await request(`${adminPath}/images`, imageForm(bytes), cookie)).json()
+  const second = await (await request(`${adminPath}/images`, imageForm(bytes), cookie)).json()
+
+  assert.equal((await request(`${adminPath}/images/${first.id}`, { method: 'DELETE' }, cookie)).status, 200)
+  const detail = await (await request(adminPath, {}, cookie)).json()
+  assert.deepEqual(detail.images.map(image => [image.id, image.isCover]), [[second.id, true]])
+
+  assert.equal((await request(adminPath, { method: 'DELETE' }, cookie)).status, 200)
+})

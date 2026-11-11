@@ -15,9 +15,11 @@ export default defineEventHandler(async (event) => {
   if (image.kind === 'photo' && property.status === 'published' && !photosLeft.length)
     throw createError({ statusCode: 409, statusMessage: '已發布物件至少要有一張照片。請先改為草稿。' })
 
-  await database.delete(propertyImages).where(and(eq(propertyImages.id, imageId), eq(propertyImages.propertyId, property.id)))
+  const removeImage = database.delete(propertyImages).where(and(eq(propertyImages.id, imageId), eq(propertyImages.propertyId, property.id)))
   if (image.isCover && photosLeft[0])
-    await database.update(propertyImages).set({ isCover: true }).where(eq(propertyImages.id, photosLeft[0].id))
+    await database.batch([removeImage, database.update(propertyImages).set({ isCover: true }).where(eq(propertyImages.id, photosLeft[0].id))])
+  else
+    await removeImage
   await useImagesBucket(event).delete(imageId)
   return { ok: true }
 })

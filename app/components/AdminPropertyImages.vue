@@ -33,6 +33,7 @@ async function run(action: () => Promise<void>) {
 function upload(event: Event, kind: PropertyImage['kind']) {
   const input = event.target as HTMLInputElement
   const files = Array.from(input.files ?? [])
+  input.value = ''
   return run(async () => {
     for (const [index, file] of files.entries()) {
       busyLabel.value = `上傳中 ${index + 1}／${files.length}`
@@ -41,7 +42,6 @@ function upload(event: Event, kind: PropertyImage['kind']) {
       body.append('kind', kind)
       await $fetch(`/api/admin/properties/${props.propertyId}/images`, { method: 'POST', body })
     }
-    input.value = ''
   })
 }
 
