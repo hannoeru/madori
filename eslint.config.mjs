@@ -13,6 +13,7 @@ export default withNuxt(
       '.pi/**',
       '.pi-subagents/**',
       '.audit/**',
+      'plans/**',
       'pnpm-workspace.yaml',
       'worker-configuration.d.ts',
     ],
