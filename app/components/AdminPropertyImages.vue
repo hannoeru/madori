@@ -38,7 +38,7 @@ function upload(event: Event, kind: PropertyImage['kind']) {
     for (const [index, file] of files.entries()) {
       busyLabel.value = `上傳中 ${index + 1}／${files.length}`
       const body = new FormData()
-      body.append('file', file)
+      body.append('file', await prepareImage(file, kind === 'photo' ? 0.82 : 0.92), 'image.jpg')
       body.append('kind', kind)
       await $fetch(`/api/admin/properties/${props.propertyId}/images`, { method: 'POST', body })
     }
@@ -72,7 +72,7 @@ function confirmDelete() {
           照片與格局圖
         </h2>
         <p class="text-sm text-muted">
-          JPEG 或 PNG，單張最多 10 MB，最多 20 張照片。圖片選好後會立即儲存。
+          JPEG 或 PNG，最多 20 張照片。上傳前會自動縮小並移除拍攝位置等資料。圖片選好後會立即儲存。
         </p>
       </div>
       <div class="flex flex-wrap gap-2">
