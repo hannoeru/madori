@@ -103,6 +103,9 @@ test('a Listing goes from draft to public and is removed with its images', optio
 
   const page = await (await request(`/properties/${created.id}`)).text()
   assert.ok(page.includes(draft.titleZhTw))
+  assert.match(page, new RegExp(`<meta[^>]*og:image[^>]*property-images/${second.id}`))
+  const home = await (await request('/')).text()
+  assert.match(home, new RegExp(`<meta[^>]*og:image[^>]*property-images/${second.id}`))
 
   assert.equal((await request(`${adminPath}/images/${first.id}`, { method: 'DELETE' }, cookie)).status, 200)
   assert.equal((await request(`${adminPath}/images/${second.id}`, { method: 'DELETE' }, cookie)).status, 409)
@@ -125,6 +128,11 @@ test('deleting the cover photo makes the next photo the cover', options, async (
   assert.deepEqual(detail.images.map(image => [image.id, image.isCover]), [[second.id, true]])
 
   assert.equal((await request(adminPath, { method: 'DELETE' }, cookie)).status, 200)
+})
+
+test('server-rendered pages include their icons', options, async () => {
+  const page = await (await request('/')).text()
+  assert.match(page, /<svg[^>]*iconify|data:image\/svg\+xml/)
 })
 
 test('too many login attempts are blocked', options, async () => {

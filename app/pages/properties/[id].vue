@@ -30,7 +30,13 @@ const facts = [
   { label: '設備', value: detail.equipmentZhTw },
 ].filter(fact => fact.value)
 
-useSeoMeta({ title: `${detail.titleZhTw}｜瑞哥看房`, description: `${detail.ward} ${detail.layout} ${formatManPrice(detail.priceYen)}` })
+const cover = photos.find(image => image.isCover) ?? photos[0]
+const origin = useRequestURL().origin
+useSeoMeta({
+  title: `${detail.titleZhTw}｜瑞哥看房`,
+  description: `${detail.ward} ${detail.layout} ${formatManPrice(detail.priceYen)}`,
+  ogImage: cover ? `${origin}/api/property-images/${cover.id}` : undefined,
+})
 </script>
 
 <template>

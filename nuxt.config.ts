@@ -66,9 +66,11 @@ export default defineNuxtConfig({
 
   icon: {
     clientBundle: { scan: true },
-    serverBundle: { collections: ['lucide', 'simple-icons'] },
+    serverBundle: false,
     fallbackToApi: false,
   },
+
+  ogImage: { enabled: false },
 
   sitemap: {
     sources: ['/api/sitemap-urls'],

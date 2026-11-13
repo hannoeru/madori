@@ -6,7 +6,12 @@ const route = useRoute()
 const router = useRouter()
 const { data: properties, error, status, refresh } = await useFetch<PropertySummary[]>('/api/properties')
 
-useSeoMeta({ title: '瑞哥看房｜東京購屋，用中文看懂', description: '東京23區的公寓與獨棟住宅，用繁體中文看懂價格、格局與每月費用，直接用 LINE 詢問房仲。' })
+const origin = useRequestURL().origin
+useSeoMeta({
+  title: '瑞哥看房｜東京購屋，用中文看懂',
+  description: '東京23區的公寓與獨棟住宅，用繁體中文看懂價格、格局與每月費用，直接用 LINE 詢問房仲。',
+  ogImage: () => properties.value?.[0]?.coverImageId ? `${origin}/api/property-images/${properties.value[0].coverImageId}` : undefined,
+})
 
 function queryFilter(key: string, fallback = 'all') {
   return computed({
